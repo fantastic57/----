@@ -256,6 +256,15 @@
   .check-btn .check-mark { font-size: 11px; opacity: 0; }
   .check-btn.active .check-mark { opacity: 1; }
 
+  /* 备注输入框 */
+  #noteInput {
+    width: 100%; min-height: 80px; padding: 10px 12px;
+    border: 1.5px solid var(--color-border); border-radius: var(--radius);
+    font-family: inherit; font-size: 13px; color: var(--color-text);
+    background: #fff; outline: none; resize: vertical; transition: border-color 0.15s;
+  }
+  #noteInput:focus { border-color: var(--color-blue); }
+
   /* 详情面板底部危险按钮 */
   .danger-btn {
     width: 100%; padding: 10px; margin-top: 8px;
@@ -423,6 +432,11 @@
         <button class="radio-btn" data-val="稍微找">稍微找</button>
         <button class="radio-btn" data-val="难停">难停</button>
       </div>
+    </div>
+
+    <div class="field-group">
+      <span class="field-label">备注</span>
+      <textarea id="noteInput" placeholder="可以写一些额外信息..." maxlength="500"></textarea>
     </div>
 
     <button id="deleteMarkerBtn" class="danger-btn">🗑 删除该点</button>
@@ -634,6 +648,9 @@ function renderPanel(data) {
   document.querySelectorAll("#parkingGroup .radio-btn").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.val === data.parking);
   });
+
+  // 备注
+  document.getElementById("noteInput").value = data.note || "";
 }
 
 function renderStars(rating) {
@@ -737,6 +754,13 @@ document.querySelectorAll("#parkingGroup .radio-btn").forEach(btn => {
     saveAll();
     applyFilters();
   });
+});
+
+// ---- 备注 ----
+document.getElementById("noteInput").addEventListener("input", function() {
+  if (!panelDataId || !markerDataMap[panelDataId]) return;
+  markerDataMap[panelDataId].note = this.value;
+  saveAll();
 });
 
 // ---- 删除当前点 ----

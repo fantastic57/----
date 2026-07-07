@@ -13,7 +13,8 @@
       "板楼",
       "塔楼"
     ],
-    "parking": "随便停"
+    "parking": "随便停",
+    "note": "123"
   },
   {
     "id": "mr9bac5w8zyi",
@@ -585,6 +586,448 @@
     "position": [
       121.477779,
       31.278173
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapl0qjhvwz",
+    "name": "中山大楼",
+    "position": [
+      121.477578,
+      31.276552
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapl6zqa86b",
+    "name": "西二小区",
+    "position": [
+      121.479621,
+      31.276136
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mraplphtkz8n",
+    "name": "东体小区",
+    "position": [
+      121.488532,
+      31.280724
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mraplta2cxv8",
+    "name": "西南小区",
+    "position": [
+      121.489133,
+      31.278884
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapm0ejvo9u",
+    "name": "密三小区",
+    "position": [
+      121.491694,
+      31.281437
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapm6ptv8r6",
+    "name": "玉四小区",
+    "position": [
+      121.491619,
+      31.278242
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapmfixf009",
+    "name": "曲一花苑",
+    "position": [
+      121.490117,
+      31.277907
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapmmkozuev",
+    "name": "马华大楼",
+    "position": [
+      121.486713,
+      31.277037
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapo0kcrdre",
+    "name": "东体育会路309弄",
+    "position": [
+      121.484602,
+      31.275996
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapomq90eg5",
+    "name": "欧阳小区",
+    "position": [
+      121.486761,
+      31.275384
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapovrahq7g",
+    "name": "芦讯大厦",
+    "position": [
+      121.486185,
+      31.273739
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapp6sll2cv",
+    "name": "欧阳路555弄",
+    "position": [
+      121.488058,
+      31.273678
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrappcuiolax",
+    "name": "兴业公寓",
+    "position": [
+      121.488912,
+      31.275217
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapqdzf0lkj",
+    "name": "建设新村",
+    "position": [
+      121.48637,
+      31.270326
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapr790j1gz",
+    "name": "虹仪小区",
+    "position": [
+      121.488476,
+      31.270019
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mraprn4pjwca",
+    "name": "祥德新苑",
+    "position": [
+      121.488105,
+      31.272018
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapu2uypg4m",
+    "name": "振大公寓",
+    "position": [
+      121.489242,
+      31.270869
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapujhi4r55",
+    "name": "机施公寓",
+    "position": [
+      121.480336,
+      31.273883
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapv0kx5otr",
+    "name": "金属新村",
+    "position": [
+      121.473204,
+      31.276846
+    ],
+    "rating": 3,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapv8va1q03",
+    "name": "广中路368弄",
+    "position": [
+      121.472871,
+      31.278322
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapvoiuqxco",
+    "name": "水电路386弄",
+    "position": [
+      121.474573,
+      31.277082
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapvu9q0c50",
+    "name": "金鸿苑",
+    "position": [
+      121.47403,
+      31.275969
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapvzpzfl78",
+    "name": "商业一村",
+    "position": [
+      121.476091,
+      31.275605
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapw6hji52c",
+    "name": "何家宅小区",
+    "position": [
+      121.476508,
+      31.273466
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrapzwkdplgb",
+    "name": "华博科技大楼",
+    "position": [
+      121.47637,
+      31.270301
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mraq033lk96l",
+    "name": "嘉和国际大厦",
+    "position": [
+      121.477903,
+      31.269641
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mraq09lzpy1g",
+    "name": "华星公寓",
+    "position": [
+      121.477687,
+      31.268999
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mraq0gztcgax",
+    "name": "嘉苑公寓",
+    "position": [
+      121.476462,
+      31.269359
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mraq1p3ct7vq",
+    "name": "同心路125弄",
+    "position": [
+      121.477858,
+      31.26688
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mraq1wqsb7l6",
+    "name": "恒业路118弄",
+    "position": [
+      121.476301,
+      31.268727
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mraq2jb4p331",
+    "name": "恒业路311弄",
+    "position": [
+      121.473624,
+      31.266426
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mraq2s1pw4vx",
+    "name": "恒业公寓",
+    "position": [
+      121.473282,
+      31.265014
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mraq317a8y7a",
+    "name": "虹口花苑",
+    "position": [
+      121.476344,
+      31.265171
+    ],
+    "rating": 0,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mraq3fqgm1sq",
+    "name": "天通庵路657弄",
+    "position": [
+      121.476887,
+      31.263303
     ],
     "rating": 0,
     "exclude": "",
