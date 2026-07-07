@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>看房地图</title>
+<style>
+  :root {
+    --panel-width: 360px;
+    --topbar-height: 56px;
+    --color-blue: #4A90D9;
+    --color-red: #E74C3C;
+    --color-yellow: #F39C12;
+    --color-green: #27AE60;
+    --color-gray: #C8C8C8;
+    --color-bg: #f5f0eb;
+    --color-text: #333;
+    --color-text-light: #666;
+    --color-border: #e0dcd5;
+    --color-white: #fff;
+    --radius: 8px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    height: 100vh; overflow: hidden; background: #f5f0eb;
+  }
+
+  /* ===== 顶栏 ===== */
+  #topbar {
+    position: absolute; top: 0; left: 0; right: var(--panel-width); height: var(--topbar-height);
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 8px 16px; z-index: 100; pointer-events: none;
+    gap: 12px;
+  }
+  #topbar > * { pointer-events: auto; }
+  #topbarLeft { display: flex; gap: 12px; align-items: flex-start; }
+  #actionGroup { margin-left: auto; }
+
+  #searchBox {
+    width: 320px; height: 40px; border: none; border-radius: var(--radius);
+    padding: 0 16px; font-size: 14px; outline: none;
+    box-shadow: var(--shadow); background: var(--color-white); color: var(--color-text);
+  }
+  #searchBox::placeholder { color: #bbb; }
+
+  #searchDropdown {
+    position: absolute; top: 48px; left: 16px;
+    width: 320px; max-height: 240px; overflow-y: auto;
+    background: #fff; border-radius: var(--radius);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15); display: none; z-index: 110;
+  }
+  #searchDropdown.show { display: block; }
+  .search-item {
+    padding: 10px 16px; cursor: pointer; font-size: 14px;
+    color: var(--color-text); border-bottom: 1px solid #f0f0f0;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .search-item:last-child { border-bottom: none; }
+  .search-item:hover { background: #f5f8ff; }
+  .search-item .dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+
+  /* 筛选按钮 */
+  #filterBtn {
+    height: 40px; padding: 0 16px; border: none; border-radius: var(--radius);
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    background: #fff; color: var(--color-text); box-shadow: var(--shadow);
+    white-space: nowrap; display: flex; align-items: center; gap: 6px;
+  }
+  #filterBtn:hover { background: #f5f8ff; }
+  #filterBtn.active { background: var(--color-blue); color: #fff; }
+
+  /* 操作按钮组（上下排列） */
+  #actionGroup {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  /* 筛选下拉面板 */
+  #filterPanel {
+    display: none;
+    position: absolute; top: 56px; left: 200px;
+    width: 280px; max-height: 70vh; overflow-y: auto;
+    background: #fff; border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    padding: 16px; z-index: 105;
+  }
+  #filterPanel.show { display: block; }
+  #filterPanel h4 {
+    font-size: 14px; font-weight: 600; color: var(--color-text);
+    margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0;
+  }
+  .filter-section { margin-bottom: 12px; }
+  .filter-label {
+    display: block; font-size: 12px; color: var(--color-text-light);
+    margin-bottom: 6px; font-weight: 500;
+  }
+  .filter-options { display: flex; flex-wrap: wrap; gap: 6px; }
+  .filter-chip {
+    padding: 5px 12px; border: 1px solid var(--color-border);
+    border-radius: 14px; font-size: 12px; cursor: pointer;
+    background: #fff; color: var(--color-text-light); transition: all 0.15s;
+  }
+  .filter-chip:hover { border-color: #bbb; }
+  .filter-chip.active {
+    background: var(--color-blue); border-color: var(--color-blue);
+    color: #fff; font-weight: 600;
+  }
+  .filter-footer {
+    display: flex; justify-content: flex-end; gap: 8px;
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+  }
+  .filter-footer .modal-btn { padding: 6px 16px; font-size: 13px; }
+
+  #addBtn {
+    height: 40px; padding: 0 20px; border: none; border-radius: var(--radius);
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    background: var(--color-blue); color: #fff; box-shadow: var(--shadow);
+    transition: all 0.2s; display: flex; align-items: center; gap: 6px; white-space: nowrap;
+  }
+  #addBtn:hover { opacity: 0.9; transform: translateY(-1px); }
+  #addBtn.active { background: var(--color-red); animation: pulse 1.5s infinite; }
+  #circleBtn {
+    height: 40px; padding: 0 20px; border: none; border-radius: var(--radius);
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    background: #E67E22; color: #fff; box-shadow: var(--shadow);
+    transition: all 0.2s; display: flex; align-items: center; gap: 6px; white-space: nowrap;
+  }
+  #circleBtn:hover { opacity: 0.9; transform: translateY(-1px); }
+  #circleBtn.active { background: #E74C3C; animation: pulseCircle 1.5s infinite; }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(231,76,60,0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(231,76,60,0); }
+  }
+  @keyframes pulseCircle {
+    0%,100% { box-shadow: 0 0 0 0 rgba(230,126,34,0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(230,126,34,0); }
+  }
+  #addHint {
+    display: none;
+    position: absolute; top: calc(var(--topbar-height) + 8px);
+    left: 50%; transform: translateX(calc(-50% - var(--panel-width) / 2));
+    background: rgba(0,0,0,0.75); color: #fff; padding: 6px 16px;
+    border-radius: 20px; font-size: 13px; z-index: 101; pointer-events: none;
+    white-space: nowrap;
+  }
+  #addHint.show { display: block; }
+
+  /* 圆选中操作菜单 */
+  #circleMenu {
+    display: none;
+    position: absolute; top: calc(var(--topbar-height) + 8px);
+    left: 50%; transform: translateX(-50%);
+    background: #fff; border-radius: var(--radius);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    padding: 8px 16px; z-index: 105;
+    align-items: center; gap: 12px;
+    white-space: nowrap;
+  }
+  #circleMenu.show { display: flex; }
+  #circleMenu .menu-title { font-size: 13px; color: var(--color-text); font-weight: 500; }
+  #circleMenu .menu-btn {
+    padding: 6px 14px; border: none; border-radius: 14px;
+    font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+  }
+  #circleMenu .menu-btn.delete { background: var(--color-red); color: #fff; }
+  #circleMenu .menu-btn.delete:hover { background: #C0392B; }
+  #circleMenu .menu-btn.merge { background: #E67E22; color: #fff; }
+  #circleMenu .menu-btn.merge:hover { background: #D35400; }
+  #circleMenu .menu-btn.unmerge { background: var(--color-blue); color: #fff; }
+  #circleMenu .menu-btn.unmerge:hover { background: #357ABD; }
+  #circleMenu .menu-btn.close {
+    background: transparent; color: var(--color-text-light);
+    font-size: 18px; padding: 6px 8px; line-height: 1; font-weight: 400;
+  }
+  #circleMenu .menu-btn.close:hover { color: var(--color-text); }
+
+  /* ===== 地图容器 ===== */
+  #mapContainer {
+    position: absolute; top: 0; left: 0; right: var(--panel-width); bottom: 0;
+  }
+  #mapContainer.crosshair,
+  #mapContainer.crosshair * { cursor: crosshair !important; }
+
+  /* ===== 右侧详情面板 ===== */
+  #panel {
+    position: absolute; top: 0; right: 0; bottom: 0; width: var(--panel-width);
+    background: var(--color-white); border-left: 1px solid var(--color-border);
+    display: flex; flex-direction: column; z-index: 99;
+    box-shadow: -2px 0 16px rgba(0,0,0,0.08); overflow-y: auto;
+  }
+  #panelEmpty {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    color: #ccc; font-size: 15px; text-align: center; padding: 40px; line-height: 1.8;
+  }
+  #panelContent { display: none; flex-direction: column; padding: 24px; gap: 20px; }
+  #panelContent.show { display: flex; }
+
+  /* 名称 */
+  #nameInput {
+    width: 100%; font-size: 20px; font-weight: 700; border: none;
+    border-bottom: 2px solid transparent; padding: 8px 0; outline: none;
+    color: var(--color-text); background: transparent; transition: border-color 0.2s;
+  }
+  #nameInput:focus { border-bottom-color: var(--color-blue); }
+
+  /* 评分 + 排除行 */
+  .rating-exclude-row {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  #starGroup { display: flex; gap: 4px; cursor: pointer; user-select: none; }
+  .star { font-size: 30px; color: #ddd; transition: color 0.15s, transform 0.15s; }
+  .star.hover, .star.filled { color: #f0c040; }
+  .star.hover { transform: scale(1.18); }
+
+  .exclude-btns { display: flex; gap: 8px; }
+  .exclude-btn {
+    padding: 6px 14px; border: 1.5px solid var(--color-border); border-radius: 20px;
+    font-size: 13px; cursor: pointer; background: #fff; color: var(--color-text-light);
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .exclude-btn:hover { border-color: #bbb; }
+  .exclude-btn.expensive.active { background: #ffe0e0; border-color: var(--color-red); color: var(--color-red); font-weight: 600; }
+  .exclude-btn.old.active { background: #e8e0d0; border-color: #a09080; color: #706050; font-weight: 600; }
+  .exclude-btn.nohouse.active { background: #d0e8f0; border-color: #5a8aa0; color: #4a7088; font-weight: 600; }
+
+  /* 分隔 */
+  .section-divider { border: none; border-top: 1px solid var(--color-border); margin: 4px 0; }
+
+  /* 字段 */
+  .field-group { display: flex; flex-direction: column; gap: 10px; }
+  .field-label { font-size: 14px; font-weight: 600; color: var(--color-text); }
+  .field-options { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  /* 单选 */
+  .radio-btn {
+    padding: 8px 16px; border: 1.5px solid var(--color-border); border-radius: 20px;
+    font-size: 13px; cursor: pointer; background: #fff; color: var(--color-text-light);
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .radio-btn:hover { border-color: #bbb; }
+  .radio-btn.active { background: #e8f0fe; border-color: var(--color-blue); color: var(--color-blue); font-weight: 600; }
+
+  /* 多选 */
+  .check-btn {
+    padding: 8px 16px; border: 1.5px solid var(--color-border); border-radius: 20px;
+    font-size: 13px; cursor: pointer; background: #fff; color: var(--color-text-light);
+    transition: all 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 4px;
+  }
+  .check-btn:hover { border-color: #bbb; }
+  .check-btn.active { background: #e8f0fe; border-color: var(--color-blue); color: var(--color-blue); font-weight: 600; }
+  .check-btn .check-mark { font-size: 11px; opacity: 0; }
+  .check-btn.active .check-mark { opacity: 1; }
+
+  /* 详情面板底部危险按钮 */
+  .danger-btn {
+    width: 100%; padding: 10px; margin-top: 8px;
+    border: 1.5px solid var(--color-red); border-radius: var(--radius);
+    background: #fff5f5; color: var(--color-red);
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .danger-btn:hover { background: var(--color-red); color: #fff; }
+
+  /* ===== 弹窗 ===== */
+  #modalOverlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+    z-index: 200; align-items: center; justify-content: center;
+  }
+  #modalOverlay.show { display: flex; }
+  #modalBox {
+    background: #fff; border-radius: 12px; padding: 28px 32px; width: 380px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2); display: flex; flex-direction: column; gap: 16px;
+  }
+  #modalBox h3 { font-size: 16px; color: var(--color-text); margin: 0; }
+  #modalNameInput {
+    width: 100%; height: 44px; border: 1.5px solid var(--color-border); border-radius: var(--radius);
+    padding: 0 14px; font-size: 15px; outline: none; color: var(--color-text);
+  }
+  #modalNameInput:focus { border-color: var(--color-blue); }
+  .modal-btns { display: flex; justify-content: flex-end; gap: 10px; }
+  .modal-btn {
+    padding: 9px 22px; border: none; border-radius: var(--radius); font-size: 14px;
+    cursor: pointer; font-weight: 600; transition: all 0.2s;
+  }
+  .modal-btn.cancel { background: #f0f0f0; color: var(--color-text-light); }
+  .modal-btn.cancel:hover { background: #e0e0e0; }
+  .modal-btn.confirm { background: var(--color-blue); color: #fff; }
+  .modal-btn.confirm:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<!-- 顶栏 -->
+<div id="topbar">
+  <div id="topbarLeft">
+    <input id="searchBox" type="text" placeholder="搜索小区或地址...">
+    <button id="filterBtn">🔍 筛选</button>
+  </div>
+  <div id="actionGroup">
+    <button id="addBtn">➕ 添加点</button>
+    <button id="circleBtn">⭕ 添加面</button>
+  </div>
+</div>
+<div id="searchDropdown"></div>
+<div id="filterPanel">
+  <h4>筛选条件</h4>
+  <div class="filter-section">
+    <span class="filter-label">评分</span>
+    <div class="filter-options" id="filterRating">
+      <button class="filter-chip" data-val="0">未评</button>
+      <button class="filter-chip" data-val="1">⭐</button>
+      <button class="filter-chip" data-val="2">⭐⭐</button>
+      <button class="filter-chip" data-val="3">⭐⭐⭐</button>
+    </div>
+  </div>
+  <div class="filter-section">
+    <span class="filter-label">排除</span>
+    <div class="filter-options" id="filterExclude">
+      <button class="filter-chip" data-val="太贵">太贵</button>
+      <button class="filter-chip" data-val="太老">太老</button>
+      <button class="filter-chip" data-val="无房">无房</button>
+    </div>
+  </div>
+  <div class="filter-section">
+    <span class="filter-label">年代</span>
+    <div class="filter-options" id="filterEra">
+      <button class="filter-chip" data-val="00后">00后</button>
+      <button class="filter-chip" data-val="95后">95后</button>
+      <button class="filter-chip" data-val="90后">90后</button>
+      <button class="filter-chip" data-val="80后">80后</button>
+      <button class="filter-chip" data-val="其他">其他</button>
+    </div>
+  </div>
+  <div class="filter-section">
+    <span class="filter-label">楼型</span>
+    <div class="filter-options" id="filterBuilding">
+      <button class="filter-chip" data-val="板楼">板楼</button>
+      <button class="filter-chip" data-val="塔楼">塔楼</button>
+      <button class="filter-chip" data-val="电梯板楼">电梯板楼</button>
+    </div>
+  </div>
+  <div class="filter-section">
+    <span class="filter-label">停车</span>
+    <div class="filter-options" id="filterParking">
+      <button class="filter-chip" data-val="随便停">随便停</button>
+      <button class="filter-chip" data-val="稍微找">稍微找</button>
+      <button class="filter-chip" data-val="难停">难停</button>
+    </div>
+  </div>
+  <div class="filter-footer">
+    <button class="modal-btn cancel" id="filterClear">清空</button>
+    <button class="modal-btn confirm" id="filterApply">应用</button>
+  </div>
+</div>
+<div id="addHint">点击地图添加标记点</div>
+
+<!-- 圆选中操作菜单 -->
+<div id="circleMenu">
+  <span class="menu-title"></span>
+  <button class="menu-btn delete">🗑 删除</button>
+  <button class="menu-btn merge">⭕ 并集</button>
+  <button class="menu-btn unmerge">↩ 取消合并</button>
+  <button class="menu-btn close">×</button>
+</div>
+
+<!-- 地图 -->
+<div id="mapContainer"></div>
+
+<!-- 详情面板 -->
+<div id="panel">
+  <div id="panelEmpty">👆 点击地图上的标记<br>查看详细信息</div>
+  <div id="panelContent">
+    <input id="nameInput" type="text" placeholder="小区名称" maxlength="30">
+
+    <div class="rating-exclude-row">
+      <div id="starGroup">
+        <span class="star" data-idx="0">☆</span>
+        <span class="star" data-idx="1">☆</span>
+        <span class="star" data-idx="2">☆</span>
+      </div>
+      <div class="exclude-btns">
+        <button class="exclude-btn expensive" data-val="太贵">太贵</button>
+        <button class="exclude-btn old" data-val="太老">太老</button>
+        <button class="exclude-btn nohouse" data-val="无房">无房</button>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <div class="field-group">
+      <span class="field-label">小区年代</span>
+      <div class="field-options" id="eraGroup">
+        <button class="radio-btn" data-val="00后">00后</button>
+        <button class="radio-btn" data-val="95后">95后</button>
+        <button class="radio-btn" data-val="90后">90后</button>
+        <button class="radio-btn" data-val="80后">80后</button>
+        <button class="radio-btn" data-val="其他">其他</button>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <div class="field-group">
+      <span class="field-label">楼型（多选）</span>
+      <div class="field-options" id="buildingGroup">
+        <button class="check-btn" data-val="板楼"><span class="check-mark">✓</span>板楼</button>
+        <button class="check-btn" data-val="塔楼"><span class="check-mark">✓</span>塔楼</button>
+        <button class="check-btn" data-val="电梯板楼"><span class="check-mark">✓</span>电梯板楼</button>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <div class="field-group">
+      <span class="field-label">小区停车</span>
+      <div class="field-options" id="parkingGroup">
+        <button class="radio-btn" data-val="随便停">随便停</button>
+        <button class="radio-btn" data-val="稍微找">稍微找</button>
+        <button class="radio-btn" data-val="难停">难停</button>
+      </div>
+    </div>
+
+    <button id="deleteMarkerBtn" class="danger-btn">🗑 删除该点</button>
+  </div>
+</div>
+
+<!-- 名称弹窗 -->
+<div id="modalOverlay">
+  <div id="modalBox">
+    <h3>输入小区名称</h3>
+    <input id="modalNameInput" type="text" placeholder="请输入名称" maxlength="30">
+    <div class="modal-btns">
+      <button class="modal-btn cancel" id="modalCancel">取消</button>
+      <button class="modal-btn confirm" id="modalConfirm">确认</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ==================== 主程序 ====================
+const AMAP_KEY = "141c940165c2979027d697512d8d5fdf";
+
+// ---- 全局状态 ----
+let map = null;
+let markers = [];           // AMap.Marker 实例
+let markerDataMap = {};     // id → data
+let addMode = false;
+let circleMode = false;     // 画圆模式
+let circles = [];           // AMap.Circle 实例
+let circleDataMap = {};     // id → circle data
+let drawingCircle = null;   // 预览中的临时圆
+let circleCenter = null;    // 画圆第一步确定的圆心
+let centerMarker = null;    // 圆心标记
+let selectedMarkerId = null;
+let panelDataId = null;
+let currentRating = 0;      // 当前面板显示的评分
+let selectedCircles = new Set(); // 选中的圆/并集
+let filterState = {
+  rating: [],
+  exclude: [],
+  era: [],
+  buildingTypes: [],
+  parking: [],
+};
+
+// ---- 工具函数 ----
+function escapeHTML(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ---- Marker 颜色 ----
+function getMarkerColor(data) {
+  if (data.exclude) return "#C8C8C8";
+  if (data.rating === 3) return "#27AE60";
+  if (data.rating === 2) return "#F39C12";
+  if (data.rating === 1) return "#E74C3C";
+  return "#4A90D9";
+}
+function getMarkerBorder(data) {
+  if (data.exclude) return "#B0B0B0";
+  if (data.rating === 3) return "#1E8449";
+  if (data.rating === 2) return "#D68910";
+  if (data.rating === 1) return "#C0392B";
+  return "#3A7BC8";
+}
+
+function buildBubbleHTML(name, color, border, highlight) {
+  const bw = highlight ? "3px" : "2px";
+  const shadow = highlight
+    ? "0 0 14px rgba(0,0,0,0.4)"
+    : "0 2px 8px rgba(0,0,0,0.2)";
+  const fw = highlight ? "700" : "600";
+  return `<div style="
+    background:${color};color:#fff;padding:6px 14px;border-radius:20px;
+    font-size:13px;font-weight:${fw};white-space:nowrap;cursor:pointer;
+    border:${bw} solid ${border};box-shadow:${shadow};position:relative;
+  ">${escapeHTML(name)}<div style="
+    position:absolute;bottom:-7px;left:50%;transform:translateX(-50%) rotate(45deg);
+    width:10px;height:10px;background:${color};
+    border-right:${bw} solid ${border};border-bottom:${bw} solid ${border};
+  "></div></div>`;
+}
+
+// ---- 创建/更新 Marker ----
+function createMarker(data) {
+  const color = getMarkerColor(data);
+  const border = getMarkerBorder(data);
+  const html = buildBubbleHTML(data.name || "未命名", color, border, false);
+
+  const marker = new AMap.Marker({
+    position: data.position,
+    content: html,
+    offset: new AMap.Pixel(-50, -35),
+    zIndex: data.exclude ? 80 : 100,
+  });
+
+  marker.on("click", () => selectMarker(data.id));
+  marker._dataId = data.id;
+  map.add(marker);
+  return marker;
+}
+
+function updateMarkerContent(marker, data) {
+  const isSelected = marker._dataId === selectedMarkerId;
+  const color = getMarkerColor(data);
+  const border = getMarkerBorder(data);
+  const html = buildBubbleHTML(data.name || "未命名", color, border, isSelected);
+  marker.setContent(html);
+  marker.setzIndex(data.exclude ? 80 : (isSelected ? 110 : 100));
+}
+
+// ---- API ----
+async function loadAll() {
+  try {
+    const res = await fetch("/api/markers");
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch (e) { console.error("加载失败:", e); return []; }
+}
+async function saveAll() {
+  try {
+    const allData = [...Object.values(markerDataMap), ...Object.values(circleDataMap)];
+    await fetch("/api/markers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(allData),
+    });
+  } catch (e) { console.error("保存失败:", e); }
+}
+
+// ---- 初始化标记 ----
+async function initMarkers() {
+  const list = await loadAll();
+  list.forEach(data => {
+    if (data.type === "circle") {
+      circleDataMap[data.id] = data;
+    } else {
+      markerDataMap[data.id] = data;
+      markers.push(createMarker(data));
+    }
+  });
+  restoreCircles();
+}
+
+// ---- 选中/取消选中 ----
+function selectMarker(id) {
+  // 取消旧选中
+  if (selectedMarkerId && selectedMarkerId !== id) {
+    const prev = markers.find(m => m._dataId === selectedMarkerId);
+    if (prev && markerDataMap[selectedMarkerId]) {
+      updateMarkerContent(prev, markerDataMap[selectedMarkerId]);
+    }
+  }
+  selectedMarkerId = id;
+  const data = markerDataMap[id];
+  if (!data) return;
+
+  renderPanel(data);
+
+  // 高亮当前
+  const marker = markers.find(m => m._dataId === id);
+  if (marker) updateMarkerContent(marker, data);
+}
+
+function deselectMarker() {
+  if (selectedMarkerId) {
+    const prev = markers.find(m => m._dataId === selectedMarkerId);
+    if (prev && markerDataMap[selectedMarkerId]) {
+      updateMarkerContent(prev, markerDataMap[selectedMarkerId]);
+    }
+    selectedMarkerId = null;
+    panelDataId = null;
+    currentRating = 0;
+    document.getElementById("panelEmpty").style.display = "flex";
+    document.getElementById("panelContent").classList.remove("show");
+  }
+}
+
+// ---- 面板渲染 ----
+function renderPanel(data) {
+  panelDataId = data.id;
+  document.getElementById("panelEmpty").style.display = "none";
+  document.getElementById("panelContent").classList.add("show");
+
+  document.getElementById("nameInput").value = data.name || "";
+
+  // 评分
+  currentRating = data.rating || 0;
+  renderStars(currentRating);
+
+  // 排除
+  document.querySelectorAll(".exclude-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.val === data.exclude);
+  });
+
+  // 年代
+  document.querySelectorAll("#eraGroup .radio-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.val === data.era);
+  });
+
+  // 楼型
+  document.querySelectorAll("#buildingGroup .check-btn").forEach(btn => {
+    btn.classList.toggle("active", (data.buildingTypes || []).includes(btn.dataset.val));
+  });
+
+  // 停车
+  document.querySelectorAll("#parkingGroup .radio-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.val === data.parking);
+  });
+}
+
+function renderStars(rating) {
+  const stars = document.querySelectorAll("#starGroup .star");
+  stars.forEach((star, i) => {
+    star.textContent = i < rating ? "★" : "☆";
+    star.classList.toggle("filled", i < rating);
+  });
+}
+
+// ---- 星级交互 ----
+(function() {
+  const stars = document.querySelectorAll("#starGroup .star");
+  stars.forEach(star => {
+    star.addEventListener("mouseenter", function() {
+      const idx = parseInt(this.dataset.idx);
+      stars.forEach((s, i) => {
+        s.classList.toggle("hover", i <= idx);
+        s.textContent = i <= idx ? "★" : "☆";
+      });
+    });
+    star.addEventListener("mouseleave", function() {
+      stars.forEach((s, i) => {
+        s.classList.remove("hover");
+        s.textContent = i < currentRating ? "★" : "☆";
+        s.classList.toggle("filled", i < currentRating);
+      });
+    });
+    star.addEventListener("click", function() {
+      const idx = parseInt(this.dataset.idx);
+      currentRating = (idx + 1 === currentRating) ? 0 : idx + 1;
+      renderStars(currentRating);
+      if (panelDataId && markerDataMap[panelDataId]) {
+        markerDataMap[panelDataId].rating = currentRating;
+        const marker = markers.find(m => m._dataId === panelDataId);
+        if (marker) updateMarkerContent(marker, markerDataMap[panelDataId]);
+        saveAll();
+      }
+    });
+  });
+})();
+
+// ---- 名称编辑 ----
+document.getElementById("nameInput").addEventListener("input", function() {
+  if (!panelDataId || !markerDataMap[panelDataId]) return;
+  markerDataMap[panelDataId].name = this.value;
+  const marker = markers.find(m => m._dataId === panelDataId);
+  if (marker) updateMarkerContent(marker, markerDataMap[panelDataId]);
+  saveAll();
+});
+
+// ---- 排除按钮 ----
+document.querySelectorAll(".exclude-btn").forEach(btn => {
+  btn.addEventListener("click", function() {
+    if (!panelDataId || !markerDataMap[panelDataId]) return;
+    const val = this.dataset.val;
+    const cur = markerDataMap[panelDataId].exclude;
+    markerDataMap[panelDataId].exclude = cur === val ? "" : val;
+    renderPanel(markerDataMap[panelDataId]);
+    const marker = markers.find(m => m._dataId === panelDataId);
+    if (marker) updateMarkerContent(marker, markerDataMap[panelDataId]);
+    saveAll();
+  });
+});
+
+// ---- 年代 ----
+document.querySelectorAll("#eraGroup .radio-btn").forEach(btn => {
+  btn.addEventListener("click", function() {
+    if (!panelDataId || !markerDataMap[panelDataId]) return;
+    const val = this.dataset.val;
+    const cur = markerDataMap[panelDataId].era;
+    markerDataMap[panelDataId].era = cur === val ? "" : val;
+    renderPanel(markerDataMap[panelDataId]);
+    saveAll();
+    applyFilters();
+  });
+});
+
+// ---- 楼型 ----
+document.querySelectorAll("#buildingGroup .check-btn").forEach(btn => {
+  btn.addEventListener("click", function() {
+    if (!panelDataId || !markerDataMap[panelDataId]) return;
+    const val = this.dataset.val;
+    let types = markerDataMap[panelDataId].buildingTypes || [];
+    types = types.includes(val) ? types.filter(t => t !== val) : [...types, val];
+    markerDataMap[panelDataId].buildingTypes = types;
+    renderPanel(markerDataMap[panelDataId]);
+    saveAll();
+    applyFilters();
+  });
+});
+
+// ---- 停车 ----
+document.querySelectorAll("#parkingGroup .radio-btn").forEach(btn => {
+  btn.addEventListener("click", function() {
+    if (!panelDataId || !markerDataMap[panelDataId]) return;
+    const val = this.dataset.val;
+    const cur = markerDataMap[panelDataId].parking;
+    markerDataMap[panelDataId].parking = cur === val ? "" : val;
+    renderPanel(markerDataMap[panelDataId]);
+    saveAll();
+    applyFilters();
+  });
+});
+
+// ---- 删除当前点 ----
+document.getElementById("deleteMarkerBtn").addEventListener("click", function() {
+  if (!panelDataId || !markerDataMap[panelDataId]) return;
+  if (!confirm("确定要删除「" + (markerDataMap[panelDataId].name || "未命名") + "」吗？")) return;
+  var id = panelDataId;
+  var marker = markers.find(function(m) { return m._dataId === id; });
+  if (marker) { marker.setMap(null); markers = markers.filter(function(m) { return m._dataId !== id; }); }
+  delete markerDataMap[id];
+  selectedMarkerId = null;
+  panelDataId = null;
+  currentRating = 0;
+  document.getElementById("panelEmpty").style.display = "flex";
+  document.getElementById("panelContent").classList.remove("show");
+  saveAll();
+  applyFilters();
+});
+
+// ---- 添加模式 ----
+const addBtn = document.getElementById("addBtn");
+const circleBtn = document.getElementById("circleBtn");
+const addHint = document.getElementById("addHint");
+
+function toggleAddMode() {
+  if (circleMode) toggleCircleMode(); // 互斥
+  addMode = !addMode;
+  addBtn.classList.toggle("active", addMode);
+  addHint.classList.toggle("show", addMode);
+  addHint.textContent = "点击地图添加标记点";
+  addBtn.innerHTML = addMode ? "⏹ 停止添加" : "➕ 添加点";
+  if (addMode) {
+    deselectMarker();
+  }
+  updateCrosshair();
+}
+
+function toggleCircleMode() {
+  if (addMode) toggleAddMode(); // 互斥
+  circleMode = !circleMode;
+  circleBtn.classList.toggle("active", circleMode);
+  addHint.classList.toggle("show", circleMode);
+  addHint.textContent = "点击地图定圆心 → 移动鼠标 → 再点击定型";
+  circleBtn.innerHTML = circleMode ? "⏹ 停止画圆" : "⭕ 添加面";
+  if (circleMode) {
+    deselectMarker();
+    circleCenter = null;
+    clearDrawingCircle();
+    clearCenterMarker();
+  } else {
+    clearDrawingCircle();
+    clearCenterMarker();
+    circleCenter = null;
+  }
+  updateCrosshair();
+}
+
+function updateCrosshair() {
+  document.getElementById("mapContainer").classList.toggle("crosshair", addMode || circleMode);
+}
+
+// ---- 筛选 ----
+function applyFilters() {
+  Object.values(markerDataMap).forEach(function(data) {
+    var marker = markers.find(function(m) { return m._dataId === data.id; });
+    if (!marker) return;
+    var visible = matchesFilter(data);
+    if (visible) marker.show(); else marker.hide();
+  });
+  updateFilterButton();
+}
+
+function matchesFilter(data) {
+  // 评分（字符串比较：未评=0, 1, 2, 3）
+  if (filterState.rating.length > 0) {
+    var r = data.rating || 0;
+    if (filterState.rating.indexOf(String(r)) < 0) return false;
+  }
+  // 排除
+  if (filterState.exclude.length > 0) {
+    if (filterState.exclude.indexOf(data.exclude) < 0) return false;
+  }
+  // 年代
+  if (filterState.era.length > 0) {
+    if (filterState.era.indexOf(data.era) < 0) return false;
+  }
+  // 楼型（多选任意匹配）
+  if (filterState.buildingTypes.length > 0) {
+    var types = data.buildingTypes || [];
+    var hit = filterState.buildingTypes.some(function(t) { return types.indexOf(t) >= 0; });
+    if (!hit) return false;
+  }
+  // 停车
+  if (filterState.parking.length > 0) {
+    if (filterState.parking.indexOf(data.parking) < 0) return false;
+  }
+  return true;
+}
+
+function updateFilterButton() {
+  var count = filterState.rating.length + filterState.exclude.length +
+              filterState.era.length + filterState.buildingTypes.length + filterState.parking.length;
+  var btn = document.getElementById("filterBtn");
+  btn.innerHTML = count > 0 ? "🔍 筛选 (" + count + ")" : "🔍 筛选";
+  btn.classList.toggle("active", count > 0);
+}
+
+function setupFilterPanel() {
+  var btn = document.getElementById("filterBtn");
+  var panel = document.getElementById("filterPanel");
+
+  btn.addEventListener("click", function(e) {
+    e.stopPropagation();
+    panel.classList.toggle("show");
+    btn.classList.toggle("active", panel.classList.contains("show"));
+  });
+
+  // 选项点击
+  var dimensions = [
+    { id: "filterRating", key: "rating" },
+    { id: "filterExclude", key: "exclude" },
+    { id: "filterEra", key: "era" },
+    { id: "filterBuilding", key: "buildingTypes" },
+    { id: "filterParking", key: "parking" },
+  ];
+  dimensions.forEach(function(dim) {
+    document.querySelectorAll("#" + dim.id + " .filter-chip").forEach(function(chip) {
+      chip.addEventListener("click", function() {
+        var val = this.dataset.val;
+        var arr = filterState[dim.key];
+        var i = arr.indexOf(val);
+        if (i >= 0) arr.splice(i, 1); else arr.push(val);
+        this.classList.toggle("active");
+        applyFilters();
+      });
+    });
+  });
+
+  // 清空
+  document.getElementById("filterClear").addEventListener("click", function() {
+    filterState = { rating: [], exclude: [], era: [], buildingTypes: [], parking: [] };
+    document.querySelectorAll(".filter-chip").forEach(function(c) { c.classList.remove("active"); });
+    applyFilters();
+  });
+
+  // 应用（关闭面板）
+  document.getElementById("filterApply").addEventListener("click", function() {
+    panel.classList.remove("show");
+    btn.classList.remove("active");
+  });
+
+  // 点击外部关闭
+  document.addEventListener("click", function(e) {
+    if (!panel.contains(e.target) && e.target !== btn) {
+      panel.classList.remove("show");
+    }
+  });
+}
+
+function setupMarkerSearch() {
+  const searchBox = document.getElementById("searchBox");
+  const dropdown = document.getElementById("searchDropdown");
+  searchBox.placeholder = "搜索已添加的小区...";
+
+  searchBox.addEventListener("input", function() {
+    const query = this.value.trim().toLowerCase();
+    dropdown.innerHTML = "";
+    if (!query) { dropdown.classList.remove("show"); return; }
+
+    const matches = Object.values(markerDataMap).filter(function(d) {
+      return d.name && d.name.toLowerCase().indexOf(query) >= 0;
+    });
+
+    if (matches.length === 0) {
+      dropdown.classList.remove("show");
+      return;
+    }
+
+    matches.forEach(function(d) {
+      const div = document.createElement("div");
+      div.className = "search-item";
+      const dot = document.createElement("span");
+      dot.className = "dot";
+      dot.style.background = getMarkerColor(d);
+      div.appendChild(dot);
+      div.appendChild(document.createTextNode(d.name));
+      div.addEventListener("mousedown", function(e) {
+        e.preventDefault();
+        map.setZoomAndCenter(17, d.position);
+        selectMarker(d.id);
+        dropdown.classList.remove("show");
+        searchBox.value = d.name;
+      });
+      dropdown.appendChild(div);
+    });
+    dropdown.classList.add("show");
+  });
+
+  searchBox.addEventListener("blur", function() {
+    setTimeout(function() { dropdown.classList.remove("show"); }, 200);
+  });
+  searchBox.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") { dropdown.classList.remove("show"); this.blur(); }
+  });
+}
+
+function clearDrawingCircle() {
+  if (drawingCircle) { drawingCircle.setMap(null); drawingCircle = null; }
+}
+
+function clearCenterMarker() {
+  if (centerMarker) { centerMarker.setMap(null); centerMarker = null; }
+}
+
+function finalizeCircle(center, edge) {
+  const radius = Math.round(AMap.GeometryUtil.distance(center, edge));
+  if (radius < 10) return;
+  const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  const circleData = { id, type: "circle", center, radius };
+  circleDataMap[id] = circleData;
+
+  const circle = new AMap.Circle({
+    center, radius,
+    fillColor: "#E67E22", fillOpacity: 0,
+    strokeColor: "#E67E22", strokeWeight: 2,
+    strokeOpacity: 0.7, zIndex: 85,
+  });
+  circle._dataId = id;
+  circle.on("click", function(e) {
+    if (!isOnCircleEdge(e.lnglat, center, radius)) return;
+    toggleSelectCircle(id);
+  });
+  map.add(circle);
+  circles.push(circle);
+  saveAll();
+}
+
+function deleteCircles(ids) {
+  if (!confirm("确定要删除这 " + ids.length + " 个圆吗？")) return;
+  ids.forEach(function(id) {
+    var c = circles.find(function(x) { return x._dataId === id; });
+    if (c) { c.setMap(null); circles = circles.filter(function(x) { return x._dataId !== id; }); }
+    delete circleDataMap[id];
+    selectedCircles.delete(id);
+  });
+  saveAll();
+  hideCircleMenu();
+}
+
+// ---- 圆选中 ----
+function setCircleStroke(shape, selected) {
+  if (shape._isMerged) {
+    shape.setOptions({
+      strokeColor: selected ? "#C0392B" : "#27AE60",
+      strokeWeight: selected ? 3 : 2,
+    });
+  } else {
+    shape.setOptions({
+      strokeColor: selected ? "#C0392B" : "#E67E22",
+      strokeWeight: selected ? 3 : 2,
+    });
+  }
+}
+
+function toggleSelectCircle(id) {
+  if (selectedCircles.has(id)) {
+    selectedCircles.delete(id);
+  } else {
+    selectedCircles.add(id);
+  }
+  var shape = circles.find(function(c) { return c._dataId === id; });
+  if (shape) setCircleStroke(shape, selectedCircles.has(id));
+  updateCircleMenu();
+}
+
+function clearCircleSelection() {
+  selectedCircles.forEach(function(id) {
+    var shape = circles.find(function(c) { return c._dataId === id; });
+    if (shape) setCircleStroke(shape, false);
+  });
+  selectedCircles.clear();
+  hideCircleMenu();
+}
+
+// ---- 圆选中菜单 ----
+function showCircleMenu() {
+  var menu = document.getElementById("circleMenu");
+  menu.classList.add("show");
+  updateCircleMenu();
+}
+function hideCircleMenu() {
+  var menu = document.getElementById("circleMenu");
+  if (menu) menu.classList.remove("show");
+}
+function updateCircleMenu() {
+  var menu = document.getElementById("circleMenu");
+  var n = selectedCircles.size;
+  if (n === 0) { hideCircleMenu(); return; }
+  menu.classList.add("show");
+  menu.querySelector(".menu-title").textContent = "已选 " + n + " 个圆";
+  menu.querySelector(".delete").style.display = "";
+  menu.querySelector(".merge").style.display = n >= 2 ? "" : "none";
+
+  // 仅当选中的就是并集图形（mergedFrom 存在）时显示取消合并
+  var allMerged = true;
+  selectedCircles.forEach(function(id) {
+    var d = circleDataMap[id];
+    if (!d || !d.mergedFrom) allMerged = false;
+  });
+  menu.querySelector(".unmerge").style.display = (n === 1 && allMerged) ? "" : "none";
+}
+
+function setupCircleMenu() {
+  var menu = document.getElementById("circleMenu");
+  menu.querySelector(".delete").addEventListener("click", function() {
+    deleteCircles(Array.from(selectedCircles));
+  });
+  menu.querySelector(".merge").addEventListener("click", function() {
+    mergeSelectedCircles();
+  });
+  menu.querySelector(".unmerge").addEventListener("click", function() {
+    var id = Array.from(selectedCircles)[0];
+    if (id) unmergeCircle(id);
+  });
+  menu.querySelector(".close").addEventListener("click", function() {
+    clearCircleSelection();
+  });
+}
+
+function isOnCircleEdge(lnglat, center, radius) {
+  var d = AMap.GeometryUtil.distance(lnglat, center);
+  return Math.abs(d - radius) <= 15;
+}
+
+function distanceToPolygonEdge(lnglat, path) {
+  function toM(lng, lat, refLat) {
+    var c = Math.cos(refLat * Math.PI / 180);
+    return { x: lng * 111320 * c, y: lat * 111320 };
+  }
+  function distM(p, a, b) {
+    var dx = b.x - a.x, dy = b.y - a.y;
+    var len2 = dx * dx + dy * dy;
+    if (len2 === 0) return Math.hypot(p.x - a.x, p.y - a.y);
+    var t = Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.y - a.y) * dy) / len2));
+    var px = a.x + t * dx, py = a.y + t * dy;
+    return Math.hypot(p.x - px, p.y - py);
+  }
+  var refLat = lnglat.lat;
+  var p = toM(lnglat.lng, lnglat.lat, refLat);
+  var min = Infinity;
+  for (var i = 0; i < path.length; i++) {
+    var j = (i + 1) % path.length;
+    var a = toM(path[i][0], path[i][1], refLat);
+    var b = toM(path[j][0], path[j][1], refLat);
+    var d = distM(p, a, b);
+    if (d < min) min = d;
+  }
+  return min;
+}
+
+function computeGroupBoundary(groupData) {
+  if (groupData.length < 2) return null;
+  var N = 360;
+  var refLat = groupData.reduce(function(s, d) { return s + d.center[1]; }, 0) / groupData.length;
+  var cosLat = Math.cos(refLat * Math.PI / 180);
+  function toLngLat(cx, cy, r, angle) {
+    var dlng = (r * Math.cos(angle)) / (111320 * cosLat);
+    var dlat = (r * Math.sin(angle)) / 111320;
+    return [cx + dlng, cy + dlat];
+  }
+  var boundary = [];
+  groupData.forEach(function(data) {
+    for (var i = 0; i < N; i++) {
+      var angle = (2 * Math.PI * i) / N;
+      var pt = toLngLat(data.center[0], data.center[1], data.radius, angle);
+      var inside = false;
+      for (var j = 0; j < groupData.length; j++) {
+        if (groupData[j].id === data.id) continue;
+        if (AMap.GeometryUtil.distance(pt, groupData[j].center) < groupData[j].radius - 0.3) { inside = true; break; }
+      }
+      if (!inside) boundary.push(pt);
+    }
+  });
+  if (boundary.length < 3) return null;
+  var cx = groupData.reduce(function(s, d) { return s + d.center[0]; }, 0) / groupData.length;
+  var cy = groupData.reduce(function(s, d) { return s + d.center[1]; }, 0) / groupData.length;
+  boundary.sort(function(a, b) {
+    return Math.atan2(a[1] - cy, a[0] - cx) - Math.atan2(b[1] - cy, b[0] - cx);
+  });
+  return boundary;
+}
+
+function mergeSelectedCircles() {
+  var ids = Array.from(selectedCircles);
+  var data = ids.map(function(id) { return circleDataMap[id]; }).filter(Boolean);
+  if (data.length < 2) { alert("至少选择 2 个圆才能合并"); return; }
+  var path = computeGroupBoundary(data);
+  if (!path) { alert("无法生成并集"); return; }
+
+  var originalIds = ids.slice();
+  ids.forEach(function(id) {
+    var c = circles.find(function(x) { return x._dataId === id; });
+    if (c) { c.setMap(null); circles = circles.filter(function(x) { return x._dataId !== id; }); }
+    delete circleDataMap[id];
+  });
+  selectedCircles.clear();
+
+  var newId = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  circleDataMap[newId] = {
+    id: newId, type: "circle", center: [0, 0], radius: 0,
+    path: path, mergedFrom: originalIds,
+    _originals: {},
+  };
+  data.forEach(function(d) {
+    circleDataMap[newId]._originals[d.id] = Object.assign({}, d);
+  });
+
+  var poly = new AMap.Polygon({
+    path: path,
+    fillColor: "#27AE60", fillOpacity: 0,
+    strokeColor: "#27AE60", strokeWeight: 2,
+    strokeOpacity: 0.8, zIndex: 85,
+  });
+  poly._dataId = newId;
+  poly._isMerged = true;
+  poly.on("click", function(e) {
+    if (distanceToPolygonEdge(e.lnglat, path) > 15) return;
+    toggleSelectCircle(newId);
+  });
+  map.add(poly);
+  circles.push(poly);
+  saveAll();
+  hideCircleMenu();
+}
+
+function unmergeCircle(id) {
+  var data = circleDataMap[id];
+  if (!data || !data.mergedFrom) return;
+  var shape = circles.find(function(c) { return c._dataId === id; });
+  if (shape) { shape.setMap(null); circles = circles.filter(function(c) { return c._dataId !== id; }); }
+  delete circleDataMap[id];
+  selectedCircles.delete(id);
+
+  data.mergedFrom.forEach(function(origId) {
+    var origData = data._originals ? data._originals[origId] : null;
+    if (!origData) return;
+    var newId = origId + "_u" + Date.now().toString(36).slice(-4);
+    var newData = Object.assign({}, origData, { id: newId });
+    delete newData.mergedFrom;
+    delete newData.path;
+    delete newData._originals;
+    circleDataMap[newId] = newData;
+    var circle = new AMap.Circle({
+      center: newData.center, radius: newData.radius,
+      fillColor: "#E67E22", fillOpacity: 0,
+      strokeColor: "#E67E22", strokeWeight: 2,
+      strokeOpacity: 0.7, zIndex: 85,
+    });
+    circle._dataId = newId;
+    circle.on("click", function(e) {
+      if (!isOnCircleEdge(e.lnglat, newData.center, newData.radius)) return;
+      toggleSelectCircle(newId);
+    });
+    map.add(circle);
+    circles.push(circle);
+  });
+  saveAll();
+  hideCircleMenu();
+}
+
+function restoreCircles() {
+  Object.values(circleDataMap).forEach(function(data) {
+    var shape, isMerged = !!data.mergedFrom;
+    if (isMerged) {
+      shape = new AMap.Polygon({
+        path: data.path,
+        fillColor: "#27AE60", fillOpacity: 0,
+        strokeColor: "#27AE60", strokeWeight: 2,
+        strokeOpacity: 0.8, zIndex: 85,
+      });
+      shape._isMerged = true;
+      shape.on("click", (function(p, id) {
+        return function(e) {
+          if (distanceToPolygonEdge(e.lnglat, p) > 15) return;
+          toggleSelectCircle(id);
+        };
+      })(data.path, data.id));
+    } else {
+      shape = new AMap.Circle({
+        center: data.center, radius: data.radius,
+        fillColor: "#E67E22", fillOpacity: 0,
+        strokeColor: "#E67E22", strokeWeight: 2,
+        strokeOpacity: 0.7, zIndex: 85,
+      });
+      shape.on("click", (function(c, r, id) {
+        return function(e) {
+          if (!isOnCircleEdge(e.lnglat, c, r)) return;
+          toggleSelectCircle(id);
+        };
+      })(data.center, data.radius, data.id));
+    }
+    shape._dataId = data.id;
+    map.add(shape);
+    circles.push(shape);
+  });
+}
+
+addBtn.addEventListener("click", toggleAddMode);
+circleBtn.addEventListener("click", toggleCircleMode);
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    if (circleMode) toggleCircleMode();
+    else if (addMode) toggleAddMode();
+  }
+});
+
+// ---- 弹窗 ----
+const modalOverlay = document.getElementById("modalOverlay");
+const modalNameInput = document.getElementById("modalNameInput");
+let modalResolve = null;
+
+function showNameModal() {
+  return new Promise(resolve => {
+    modalResolve = resolve;
+    modalNameInput.value = "";
+    modalOverlay.classList.add("show");
+    setTimeout(() => modalNameInput.focus(), 100);
+  });
+}
+function hideNameModal(name) {
+  modalOverlay.classList.remove("show");
+  if (modalResolve) { modalResolve(name || null); modalResolve = null; }
+}
+
+document.getElementById("modalCancel").addEventListener("click", () => hideNameModal(null));
+document.getElementById("modalConfirm").addEventListener("click", () => {
+  const name = modalNameInput.value.trim();
+  if (name) hideNameModal(name);
+});
+modalNameInput.addEventListener("keydown", e => {
+  if (e.key === "Enter") { const n = modalNameInput.value.trim(); if (n) hideNameModal(n); }
+  if (e.key === "Escape") hideNameModal(null);
+});
+modalOverlay.addEventListener("click", e => {
+  if (e.target === modalOverlay) hideNameModal(null);
+});
+
+// ---- 加载高德地图 ----
+function loadAMap() {
+  return new Promise((resolve, reject) => {
+    if (window.AMap) { resolve(window.AMap); return; }
+    const s = document.createElement("script");
+    s.src = `https://webapi.amap.com/maps?v=2.0&key=${AMAP_KEY}`;
+    s.onload = () => resolve(window.AMap);
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
+// ---- 主初始化 ----
+(async function() {
+  const AM = await loadAMap();
+
+  map = new AM.Map("mapContainer", {
+    zoom: 16,
+    center: [121.483, 31.29], // 上海市虹口区大柏树地铁站
+    mapStyle: "amap://styles/light",
+    resizeEnable: true,
+  });
+
+  await initMarkers();
+
+  // 搜索已添加的标记
+  setupMarkerSearch();
+  setupFilterPanel();
+  setupCircleMenu();
+
+  // 地图点击 — 用 DOM 事件避免地图文字标签拦截
+  document.getElementById("mapContainer").addEventListener("click", async function(e) {
+    if (!addMode && !circleMode) return;
+    var rect = this.getBoundingClientRect();
+    var lnglat = map.containerToLngLat(new AMap.Pixel(e.clientX - rect.left, e.clientY - rect.top));
+    if (!lnglat) return;
+    var pos = [lnglat.getLng(), lnglat.getLat()];
+
+    if (addMode) {
+      const name = await showNameModal();
+      if (!name) return;
+      const data = {
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+        name, position: pos,
+        rating: 0, exclude: "", era: "",
+        buildingTypes: [], parking: "",
+      };
+      markerDataMap[data.id] = data;
+      markers.push(createMarker(data));
+      saveAll();
+      selectMarker(data.id);
+    } else if (circleMode) {
+      if (!circleCenter) {
+        circleCenter = pos;
+        clearCenterMarker();
+        centerMarker = new AMap.Marker({
+          position: circleCenter,
+          icon: new AMap.Icon({
+            size: new AMap.Size(12, 12),
+            image: "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><circle cx="6" cy="6" r="4" fill="#E67E22" stroke="#fff" stroke-width="2"/></svg>'),
+            imageSize: new AMap.Size(12, 12),
+          }),
+          zIndex: 120,
+        });
+        map.add(centerMarker);
+        addHint.textContent = "移动鼠标调整半径 → 点击定型";
+      } else {
+        finalizeCircle(circleCenter, pos);
+        toggleCircleMode();
+      }
+    }
+  });
+
+  // 非添加模式下的地图点击 → 取消选中
+  map.on("click", function() {
+    if (!addMode && !circleMode) { deselectMarker(); clearCircleSelection(); }
+  });
+
+  // 鼠标移动 → 实时预览圆（用 document 事件避免圆遮挡 map 事件）
+  document.addEventListener("mousemove", function(e) {
+    if (!circleMode || !circleCenter) return;
+    var rect = document.getElementById("mapContainer").getBoundingClientRect();
+    var px = new AMap.Pixel(e.clientX - rect.left, e.clientY - rect.top);
+    var lnglat = map.containerToLngLat(px);
+    if (!lnglat) return;
+    var radius = Math.round(AMap.GeometryUtil.distance(circleCenter, [lnglat.getLng(), lnglat.getLat()]));
+    if (radius < 5) { clearDrawingCircle(); addHint.textContent = "移动鼠标调整半径 → 点击定型"; return; }
+    var distText = radius >= 1000 ? (radius / 1000).toFixed(2) + " 公里" : radius + " 米";
+    addHint.textContent = "半径 " + distText + " → 点击定型";
+    if (drawingCircle) { drawingCircle.setMap(null); drawingCircle = null; }
+    drawingCircle = new AMap.Circle({
+      center: circleCenter, radius: radius,
+      fillColor: "#E67E22", fillOpacity: 0,
+      strokeColor: "#E67E22", strokeWeight: 2,
+      strokeOpacity: 0.7, strokeStyle: "dashed", zIndex: 90,
+    });
+    drawingCircle._isPreview = true;
+    map.add(drawingCircle);
+  });
+
+  // 右键 → 退出模式
+  map.on("rightclick", () => {
+    if (circleMode) toggleCircleMode();
+    else if (addMode) toggleAddMode();
+  });
+
+  console.log("✅ 看房地图就绪，已加载 " + markers.length + " 个标记 + " + circles.length + " 个圆");
+})();
+</script>
+</body>
+</html>
