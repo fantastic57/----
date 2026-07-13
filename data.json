@@ -6,7 +6,7 @@
       121.486219,
       31.294006
     ],
-    "rating": 3,
+    "rating": 2,
     "exclude": "",
     "era": "80后",
     "buildingTypes": [
@@ -45,7 +45,8 @@
     "buildingTypes": [
       "板楼"
     ],
-    "parking": "稍微找"
+    "parking": "稍微找",
+    "note": "顶楼浴缸开门卫生间\n"
   },
   {
     "id": "mralgq6vdwwf",
@@ -55,7 +56,7 @@
       31.29789
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -81,10 +82,11 @@
       31.295422
     ],
     "rating": 0,
-    "exclude": "",
-    "era": "",
+    "exclude": "无房",
+    "era": "95后",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "无房"
   },
   {
     "id": "mramr3epyj8o",
@@ -93,11 +95,14 @@
       121.480065,
       31.29775
     ],
-    "rating": 0,
+    "rating": 1,
     "exclude": "",
-    "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "era": "95后",
+    "buildingTypes": [
+      "板楼"
+    ],
+    "parking": "",
+    "note": "【看房】面积都比较小，60几平"
   },
   {
     "id": "mramzywcqywj",
@@ -106,11 +111,15 @@
       121.48086,
       31.291852
     ],
-    "rating": 0,
+    "rating": 3,
     "exclude": "",
-    "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "era": "80后",
+    "buildingTypes": [
+      "电梯板楼",
+      "板楼"
+    ],
+    "parking": "",
+    "note": "【看房】有3套都不错可以看看，有一套加装了电梯"
   },
   {
     "id": "mran1yz045ws",
@@ -120,10 +129,13 @@
       31.290611
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "buildingTypes": [
+      "电梯板楼"
+    ],
+    "parking": "",
+    "note": "电梯房"
   },
   {
     "id": "mran55i2fvb2",
@@ -132,11 +144,12 @@
       121.474978,
       31.292586
     ],
-    "rating": 0,
+    "rating": 3,
     "exclude": "",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "板塔结合，几套房型都不错，但是都是顶楼，有一套无图"
   },
   {
     "id": "mranajtbodk9",
@@ -145,11 +158,12 @@
       121.476752,
       31.296498
     ],
-    "rating": 0,
+    "rating": 3,
     "exclude": "",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "【看房】几套都不错，但是都是底层、顶楼或5楼"
   },
   {
     "id": "mraneyh620jd",
@@ -159,10 +173,11 @@
       31.287302
     ],
     "rating": 0,
-    "exclude": "",
-    "era": "",
+    "exclude": "太贵",
+    "era": "00后",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "价太高"
   },
   {
     "id": "mranf8rt88nz",
@@ -172,10 +187,11 @@
       31.286809
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "太贵",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "价格太高"
   },
   {
     "id": "mranngrey4l8",
@@ -184,8 +200,8 @@
       121.485342,
       31.291946
     ],
-    "rating": 0,
-    "exclude": "",
+    "rating": 1,
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -197,11 +213,14 @@
       121.487524,
       31.29272
     ],
-    "rating": 0,
+    "rating": 3,
     "exclude": "",
-    "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "era": "95后",
+    "buildingTypes": [
+      "板楼"
+    ],
+    "parking": "",
+    "note": "一套双南房型不错，60平315万，需要全部重新装修"
   },
   {
     "id": "mranu3prf4sh",
@@ -210,11 +229,12 @@
       121.480375,
       31.297392
     ],
-    "rating": 0,
+    "rating": 1,
     "exclude": "",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "价格都挺合适，但是房型都奇奇怪怪"
   },
   {
     "id": "mrao0rwbte83",
@@ -223,11 +243,14 @@
       121.473219,
       31.289448
     ],
-    "rating": 0,
+    "rating": 3,
     "exclude": "",
-    "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "era": "80后",
+    "buildingTypes": [
+      "电梯板楼"
+    ],
+    "parking": "",
+    "note": "【看房】3室一厅 337W 电梯板房 双南"
   },
   {
     "id": "mrao1itb4qec",
@@ -237,7 +260,7 @@
       31.287566
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -249,11 +272,14 @@
       121.476071,
       31.288536
     ],
-    "rating": 0,
+    "rating": 3,
     "exclude": "",
-    "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "era": "80后",
+    "buildingTypes": [
+      "板楼"
+    ],
+    "parking": "",
+    "note": "在售房很多，但是二室一厅普遍面积很小，房型不太好，只有一套三室一厅是顶楼。"
   },
   {
     "id": "mrao2ca752z2",
@@ -263,7 +289,7 @@
       31.289698
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -276,10 +302,11 @@
       31.289228
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "房型都很奇怪，价格偏高"
   },
   {
     "id": "mrao37vb6jy9",
@@ -288,11 +315,12 @@
       121.476363,
       31.287481
     ],
-    "rating": 0,
+    "rating": 3,
     "exclude": "",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "【看房】有一套双南带阳台的可以看"
   },
   {
     "id": "mrao3vc48j3u",
@@ -302,7 +330,7 @@
       31.285759
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -315,10 +343,11 @@
       31.286516
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "只有一套复式"
   },
   {
     "id": "mrao652i6gyb",
@@ -328,7 +357,7 @@
       31.287459
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -341,7 +370,7 @@
       31.286817
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -354,10 +383,13 @@
       31.289866
     ],
     "rating": 0,
-    "exclude": "",
-    "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "exclude": "无房",
+    "era": "95后",
+    "buildingTypes": [
+      "板楼"
+    ],
+    "parking": "",
+    "note": "只有一套3室一厅房还没有拍摄户型图"
   },
   {
     "id": "mrao88rue15r",
@@ -366,11 +398,12 @@
       121.492421,
       31.288117
     ],
-    "rating": 0,
+    "rating": 1,
     "exclude": "",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "房型不错，但是出的两套都不太行"
   },
   {
     "id": "mrao8omhhhsi",
@@ -380,9 +413,11 @@
       31.291903
     ],
     "rating": 0,
-    "exclude": "",
-    "era": "",
-    "buildingTypes": [],
+    "exclude": "无房",
+    "era": "90后",
+    "buildingTypes": [
+      "塔楼"
+    ],
     "parking": ""
   },
   {
@@ -393,7 +428,7 @@
       31.287431
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "太贵",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -406,7 +441,7 @@
       31.282787
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -431,11 +466,12 @@
       121.483816,
       31.283544
     ],
-    "rating": 0,
-    "exclude": "",
+    "rating": 1,
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "较贵"
   },
   {
     "id": "mraobm4qwc5l",
@@ -444,11 +480,12 @@
       121.486176,
       31.283024
     ],
-    "rating": 0,
+    "rating": 1,
     "exclude": "",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "出售的很多，房型都不好"
   },
   {
     "id": "mraoc11maait",
@@ -457,11 +494,12 @@
       121.488665,
       31.283319
     ],
-    "rating": 0,
+    "rating": 1,
     "exclude": "",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "太贵"
   },
   {
     "id": "mraoc5r0u11u",
@@ -470,10 +508,12 @@
       121.489937,
       31.282926
     ],
-    "rating": 0,
+    "rating": 1,
     "exclude": "",
     "era": "",
-    "buildingTypes": [],
+    "buildingTypes": [
+      "塔楼"
+    ],
     "parking": ""
   },
   {
@@ -483,11 +523,14 @@
       121.491784,
       31.282828
     ],
-    "rating": 0,
+    "rating": 1,
     "exclude": "",
     "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "buildingTypes": [
+      "塔楼"
+    ],
+    "parking": "",
+    "note": "35套在售 "
   },
   {
     "id": "mraod1wqmzxg",
@@ -496,11 +539,14 @@
       121.489911,
       31.283914
     ],
-    "rating": 0,
+    "rating": 1,
     "exclude": "",
     "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "buildingTypes": [
+      "塔楼"
+    ],
+    "parking": "",
+    "note": "【看房】"
   },
   {
     "id": "mraodua1qy16",
@@ -509,11 +555,12 @@
       121.487271,
       31.285047
     ],
-    "rating": 0,
-    "exclude": "",
+    "rating": 1,
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "16套出售 房型都很奇怪"
   },
   {
     "id": "mraofqf1ne24",
@@ -523,7 +570,7 @@
       31.281616
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -536,7 +583,7 @@
       31.282358
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -549,7 +596,7 @@
       31.278756
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -561,11 +608,14 @@
       121.478092,
       31.280635
     ],
-    "rating": 0,
-    "exclude": "",
-    "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "rating": 1,
+    "exclude": "无房",
+    "era": "80后",
+    "buildingTypes": [
+      "板楼"
+    ],
+    "parking": "",
+    "note": "【看房】5楼三室一厅精装修双南69平399W"
   },
   {
     "id": "mraol8b1bc5d",
@@ -575,7 +625,7 @@
       31.279865
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -588,7 +638,7 @@
       31.278173
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -600,11 +650,14 @@
       121.477578,
       31.276552
     ],
-    "rating": 0,
-    "exclude": "",
-    "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "rating": 2,
+    "exclude": "无房",
+    "era": "80后",
+    "buildingTypes": [
+      "塔楼"
+    ],
+    "parking": "",
+    "note": "只有一套低楼层朝南的房，一般般"
   },
   {
     "id": "mrapl6zqa86b",
@@ -614,7 +667,7 @@
       31.276136
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -626,11 +679,14 @@
       121.488532,
       31.280724
     ],
-    "rating": 0,
+    "rating": 1,
     "exclude": "",
-    "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "era": "80后",
+    "buildingTypes": [
+      "板楼"
+    ],
+    "parking": "",
+    "note": "一楼精装修全明三室一厅"
   },
   {
     "id": "mraplta2cxv8",
@@ -640,10 +696,11 @@
       31.278884
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "都太小了"
   },
   {
     "id": "mrapm0ejvo9u",
@@ -652,11 +709,14 @@
       121.491694,
       31.281437
     ],
-    "rating": 0,
-    "exclude": "",
-    "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "rating": 2,
+    "exclude": "无房",
+    "era": "80后",
+    "buildingTypes": [
+      "板楼"
+    ],
+    "parking": "",
+    "note": "在出的两套都是顶楼"
   },
   {
     "id": "mrapm6ptv8r6",
@@ -665,11 +725,14 @@
       121.491619,
       31.278242
     ],
-    "rating": 0,
+    "rating": 3,
     "exclude": "",
-    "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "era": "80后",
+    "buildingTypes": [
+      "板楼"
+    ],
+    "parking": "",
+    "note": "【看房】50平两室一厅330W精装修"
   },
   {
     "id": "mrapmfixf009",
@@ -679,7 +742,7 @@
       31.277907
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "太贵",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -692,7 +755,7 @@
       31.277037
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -704,11 +767,12 @@
       121.484602,
       31.275996
     ],
-    "rating": 0,
+    "rating": 2,
     "exclude": "",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "【看房】"
   },
   {
     "id": "mrapomq90eg5",
@@ -718,23 +782,24 @@
       31.275384
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
   },
   {
     "id": "mrapovrahq7g",
-    "name": "芦讯大厦",
+    "name": "庐迅大厦",
     "position": [
       121.486185,
       31.273739
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "没有朝南的房子"
   },
   {
     "id": "mrapp6sll2cv",
@@ -743,11 +808,12 @@
       121.488058,
       31.273678
     ],
-    "rating": 0,
-    "exclude": "",
+    "rating": 2,
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "【看房】5楼"
   },
   {
     "id": "mrappcuiolax",
@@ -757,7 +823,7 @@
       31.275217
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -770,7 +836,7 @@
       31.270326
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -782,8 +848,8 @@
       121.488476,
       31.270019
     ],
-    "rating": 0,
-    "exclude": "",
+    "rating": 2,
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -795,11 +861,14 @@
       121.488105,
       31.272018
     ],
-    "rating": 0,
-    "exclude": "",
-    "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "rating": 2,
+    "exclude": "无房",
+    "era": "90后",
+    "buildingTypes": [
+      "板楼"
+    ],
+    "parking": "",
+    "note": "全是一条线户型，价格倒是都可以"
   },
   {
     "id": "mrapu2uypg4m",
@@ -809,7 +878,7 @@
       31.270869
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "太贵",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -821,10 +890,12 @@
       121.480336,
       31.273883
     ],
-    "rating": 0,
-    "exclude": "",
-    "era": "",
-    "buildingTypes": [],
+    "rating": 2,
+    "exclude": "无房",
+    "era": "90后",
+    "buildingTypes": [
+      "塔楼"
+    ],
     "parking": ""
   },
   {
@@ -847,11 +918,12 @@
       121.472871,
       31.278322
     ],
-    "rating": 0,
-    "exclude": "",
+    "rating": 1,
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "5楼三室一厅 无双南 66平349W"
   },
   {
     "id": "mrapvoiuqxco",
@@ -860,11 +932,14 @@
       121.474573,
       31.277082
     ],
-    "rating": 0,
+    "rating": 1,
     "exclude": "",
-    "era": "",
-    "buildingTypes": [],
-    "parking": ""
+    "era": "80后",
+    "buildingTypes": [
+      "板楼"
+    ],
+    "parking": "难停",
+    "note": "临街 小区很小 吵"
   },
   {
     "id": "mrapvu9q0c50",
@@ -874,7 +949,7 @@
       31.275969
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "太贵",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -887,7 +962,7 @@
       31.275605
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -899,11 +974,11 @@
       121.476508,
       31.273466
     ],
-    "rating": 0,
-    "exclude": "",
+    "rating": 1,
+    "exclude": "太老",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "难停"
   },
   {
     "id": "mrapzwkdplgb",
@@ -913,7 +988,7 @@
       31.270301
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -925,11 +1000,12 @@
       121.477903,
       31.269641
     ],
-    "rating": 0,
-    "exclude": "",
+    "rating": 2,
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "板塔结合，没有实拍图，有一套看着户型还行"
   },
   {
     "id": "mraq09lzpy1g",
@@ -939,7 +1015,7 @@
       31.268999
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "太贵",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -951,11 +1027,12 @@
       121.476462,
       31.269359
     ],
-    "rating": 0,
+    "rating": 1,
     "exclude": "",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "只有一套顶楼"
   },
   {
     "id": "mraq1p3ct7vq",
@@ -965,7 +1042,7 @@
       31.26688
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -977,11 +1054,12 @@
       121.476301,
       31.268727
     ],
-    "rating": 0,
-    "exclude": "",
+    "rating": 2,
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
-    "parking": ""
+    "parking": "",
+    "note": "【看房】54平309W"
   },
   {
     "id": "mraq2jb4p331",
@@ -991,7 +1069,7 @@
       31.266426
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -1003,8 +1081,8 @@
       121.473282,
       31.265014
     ],
-    "rating": 0,
-    "exclude": "",
+    "rating": 2,
+    "exclude": "无房",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -1017,7 +1095,7 @@
       31.265171
     ],
     "rating": 0,
-    "exclude": "",
+    "exclude": "太贵",
     "era": "",
     "buildingTypes": [],
     "parking": ""
@@ -1029,7 +1107,33 @@
       121.476887,
       31.263303
     ],
-    "rating": 0,
+    "rating": 2,
+    "exclude": "无房",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrj67pw0deql",
+    "name": "秀苑小区",
+    "position": [
+      121.468473,
+      31.289138
+    ],
+    "rating": 3,
+    "exclude": "",
+    "era": "",
+    "buildingTypes": [],
+    "parking": ""
+  },
+  {
+    "id": "mrj67vys76vj",
+    "name": "锦苑小区",
+    "position": [
+      121.469095,
+      31.294217
+    ],
+    "rating": 3,
     "exclude": "",
     "era": "",
     "buildingTypes": [],
@@ -3507,5 +3611,850 @@
         "radius": 1001
       }
     }
+  },
+  {
+    "id": "mrc2ty9bnwtr",
+    "type": "circle",
+    "center": [
+      121.48977,
+      31.266258
+    ],
+    "radius": 1952
+  },
+  {
+    "id": "mrc2uf2jv69u",
+    "type": "circle",
+    "center": [
+      121.489873,
+      31.266289
+    ],
+    "radius": 3199
+  },
+  {
+    "id": "mrc2urac8j3h",
+    "type": "circle",
+    "center": [
+      121.489882,
+      31.266279
+    ],
+    "radius": 3927
+  },
+  {
+    "id": "mrc82cb18qy1",
+    "type": "polyline",
+    "path": [
+      {
+        "lng": 121.439915,
+        "lat": 31.40795,
+        "name": "江杨北路"
+      },
+      {
+        "lng": 121.461243,
+        "lat": 31.408277,
+        "name": "铁力路"
+      },
+      {
+        "lng": 121.476061,
+        "lat": 31.404405,
+        "name": "友谊路"
+      },
+      {
+        "lng": 121.47969,
+        "lat": 31.395242,
+        "name": "宝杨路"
+      },
+      {
+        "lng": 121.488687,
+        "lat": 31.380914,
+        "name": "水产路"
+      },
+      {
+        "lng": 121.493147,
+        "lat": 31.370716,
+        "name": "淞浜路"
+      },
+      {
+        "lng": 121.499129,
+        "lat": 31.35779,
+        "name": "张华浜"
+      },
+      {
+        "lng": 121.500414,
+        "lat": 31.345587,
+        "name": "淞发路"
+      },
+      {
+        "lng": 121.491871,
+        "lat": 31.332135,
+        "name": "长江南路"
+      },
+      {
+        "lng": 121.484613,
+        "lat": 31.320381,
+        "name": "殷高西路"
+      },
+      {
+        "lng": 121.485142,
+        "lat": 31.30559,
+        "name": "江湾镇"
+      },
+      {
+        "lng": 121.483161,
+        "lat": 31.289385,
+        "name": "大柏树"
+      },
+      {
+        "lng": 121.482436,
+        "lat": 31.280987,
+        "name": "赤峰路"
+      },
+      {
+        "lng": 121.479361,
+        "lat": 31.271365,
+        "name": "虹口足球场"
+      },
+      {
+        "lng": 121.480247,
+        "lat": 31.259893,
+        "name": "东宝兴路"
+      },
+      {
+        "lng": 121.476219,
+        "lat": 31.251426,
+        "name": "宝山路"
+      },
+      {
+        "lng": 121.458108,
+        "lat": 31.249644,
+        "name": "上海火车站"
+      },
+      {
+        "lng": 121.440998,
+        "lat": 31.25452,
+        "name": "中潭路"
+      },
+      {
+        "lng": 121.42965,
+        "lat": 31.246301,
+        "name": "镇坪路"
+      },
+      {
+        "lng": 121.417832,
+        "lat": 31.239314,
+        "name": "曹杨路"
+      },
+      {
+        "lng": 121.413332,
+        "lat": 31.232173,
+        "name": "金沙江路"
+      },
+      {
+        "lng": 121.415743,
+        "lat": 31.217994,
+        "name": "中山公园"
+      },
+      {
+        "lng": 121.417212,
+        "lat": 31.209471,
+        "name": "延安西路"
+      },
+      {
+        "lng": 121.420703,
+        "lat": 31.197691,
+        "name": "虹桥路"
+      },
+      {
+        "lng": 121.427309,
+        "lat": 31.186819,
+        "name": "宜山路"
+      },
+      {
+        "lng": 121.438548,
+        "lat": 31.176665,
+        "name": "漕溪路"
+      },
+      {
+        "lng": 121.444575,
+        "lat": 31.169316,
+        "name": "龙潭路"
+      },
+      {
+        "lng": 121.443236,
+        "lat": 31.157993,
+        "name": "石龙路"
+      },
+      {
+        "lng": 121.430199,
+        "lat": 31.154587,
+        "name": "上海南站"
+      }
+    ],
+    "color": "#F5B041"
+  },
+  {
+    "id": "mrc8lwi5n83v",
+    "type": "polyline",
+    "path": [
+      {
+        "lng": 121.447,
+        "lat": 31.402861,
+        "name": "宝山站"
+      },
+      {
+        "lng": 121.45242,
+        "lat": 31.391997,
+        "name": "铁通路"
+      },
+      {
+        "lng": 121.455219,
+        "lat": 31.386195,
+        "name": "铁山路"
+      },
+      {
+        "lng": 121.461041,
+        "lat": 31.377669,
+        "name": "兰港路"
+      },
+      {
+        "lng": 121.467741,
+        "lat": 31.362998,
+        "name": "泰和路"
+      },
+      {
+        "lng": 121.465425,
+        "lat": 31.349934,
+        "name": "江杨南路"
+      },
+      {
+        "lng": 121.464448,
+        "lat": 31.343445,
+        "name": "呼玛路"
+      },
+      {
+        "lng": 121.467343,
+        "lat": 31.328852,
+        "name": "一二八纪念路"
+      },
+      {
+        "lng": 121.467903,
+        "lat": 31.312166,
+        "name": "虹湾路"
+      },
+      {
+        "lng": 121.467198,
+        "lat": 31.297142,
+        "name": "车站北路"
+      },
+      {
+        "lng": 121.46595,
+        "lat": 31.285904,
+        "name": "广灵四路"
+      },
+      {
+        "lng": 121.469133,
+        "lat": 31.279906,
+        "name": "凉城路"
+      },
+      {
+        "lng": 121.481109,
+        "lat": 31.274788,
+        "name": "上海外国语大学"
+      },
+      {
+        "lng": 121.483506,
+        "lat": 31.264467,
+        "name": "甜爱路"
+      },
+      {
+        "lng": 121.488761,
+        "lat": 31.259298,
+        "name": "海伦路"
+      },
+      {
+        "lng": 121.50128,
+        "lat": 31.258507,
+        "name": "周家嘴路"
+      },
+      {
+        "lng": 121.505646,
+        "lat": 31.253154,
+        "name": "提篮桥"
+      },
+      {
+        "lng": 121.51064,
+        "lat": 31.237836,
+        "name": "浦东南路"
+      },
+      {
+        "lng": 121.515145,
+        "lat": 31.229765,
+        "name": "商城路"
+      },
+      {
+        "lng": 121.51811,
+        "lat": 31.223163,
+        "name": "潍坊路"
+      },
+      {
+        "lng": 121.51753,
+        "lat": 31.21051,
+        "name": "塘桥"
+      },
+      {
+        "lng": 121.509229,
+        "lat": 31.196234,
+        "name": "南码头路"
+      },
+      {
+        "lng": 121.506707,
+        "lat": 31.192378,
+        "name": "华丰路"
+      },
+      {
+        "lng": 121.493877,
+        "lat": 31.182394,
+        "name": "世博"
+      },
+      {
+        "lng": 121.484884,
+        "lat": 31.180752,
+        "name": "世博大道"
+      },
+      {
+        "lng": 121.475106,
+        "lat": 31.171797,
+        "name": "后滩"
+      },
+      {
+        "lng": 121.477683,
+        "lat": 31.16523,
+        "name": "德州路"
+      },
+      {
+        "lng": 121.481092,
+        "lat": 31.157052,
+        "name": "东方体育中心"
+      },
+      {
+        "lng": 121.487182,
+        "lat": 31.14065,
+        "name": "凌兆新村"
+      },
+      {
+        "lng": 121.485673,
+        "lat": 31.12608,
+        "name": "三林南"
+      },
+      {
+        "lng": 121.456832,
+        "lat": 31.119971,
+        "name": "华泾路"
+      },
+      {
+        "lng": 121.440256,
+        "lat": 31.113482,
+        "name": "景洪路"
+      },
+      {
+        "lng": 121.443734,
+        "lat": 31.096403,
+        "name": "联曹路"
+      },
+      {
+        "lng": 121.445003,
+        "lat": 31.086808,
+        "name": "虹建路"
+      }
+    ],
+    "color": "#F1948A"
+  },
+  {
+    "id": "mrc8hao2026",
+    "type": "polyline",
+    "path": [
+      {
+        "lng": 121.53199,
+        "lat": 31.322555,
+        "name": "市光路"
+      },
+      {
+        "lng": 121.532026,
+        "lat": 31.314934,
+        "name": "嫩江路"
+      },
+      {
+        "lng": 121.532026,
+        "lat": 31.304994,
+        "name": "翔殷路"
+      },
+      {
+        "lng": 121.533622,
+        "lat": 31.295264,
+        "name": "黄兴公园"
+      },
+      {
+        "lng": 121.535073,
+        "lat": 31.288348,
+        "name": "延吉中路"
+      },
+      {
+        "lng": 121.528364,
+        "lat": 31.278833,
+        "name": "黄兴路"
+      },
+      {
+        "lng": 121.518265,
+        "lat": 31.274751,
+        "name": "江浦路"
+      },
+      {
+        "lng": 121.509634,
+        "lat": 31.273015,
+        "name": "鞍山新村"
+      },
+      {
+        "lng": 121.501474,
+        "lat": 31.274999,
+        "name": "四平路"
+      },
+      {
+        "lng": 121.491247,
+        "lat": 31.27658,
+        "name": "曲阳路"
+      },
+      {
+        "lng": 121.479553,
+        "lat": 31.269887,
+        "name": "虹口足球场"
+      },
+      {
+        "lng": 121.468849,
+        "lat": 31.263397,
+        "name": "西藏北路"
+      },
+      {
+        "lng": 121.469068,
+        "lat": 31.253139,
+        "name": "中兴路"
+      },
+      {
+        "lng": 121.471539,
+        "lat": 31.242384,
+        "name": "曲阜路"
+      },
+      {
+        "lng": 121.475058,
+        "lat": 31.232738,
+        "name": "人民广场"
+      },
+      {
+        "lng": 121.479252,
+        "lat": 31.22727,
+        "name": "大世界"
+      },
+      {
+        "lng": 121.483803,
+        "lat": 31.219047,
+        "name": "老西门"
+      },
+      {
+        "lng": 121.486102,
+        "lat": 31.21193,
+        "name": "陆家浜路"
+      },
+      {
+        "lng": 121.489587,
+        "lat": 31.202121,
+        "name": "西藏南路"
+      },
+      {
+        "lng": 121.493673,
+        "lat": 31.185191,
+        "name": "中华艺术宫"
+      },
+      {
+        "lng": 121.49478,
+        "lat": 31.17848,
+        "name": "耀华路"
+      },
+      {
+        "lng": 121.496298,
+        "lat": 31.170529,
+        "name": "成山路"
+      },
+      {
+        "lng": 121.493476,
+        "lat": 31.161034,
+        "name": "杨思"
+      },
+      {
+        "lng": 121.480454,
+        "lat": 31.153458,
+        "name": "东方体育中心"
+      },
+      {
+        "lng": 121.489491,
+        "lat": 31.14133,
+        "name": "凌兆新村"
+      },
+      {
+        "lng": 121.498,
+        "lat": 31.119,
+        "name": "芦恒路"
+      },
+      {
+        "lng": 121.506206,
+        "lat": 31.096523,
+        "name": "浦江镇"
+      },
+      {
+        "lng": 121.508566,
+        "lat": 31.084351,
+        "name": "江月路"
+      },
+      {
+        "lng": 121.510614,
+        "lat": 31.073384,
+        "name": "联航路"
+      },
+      {
+        "lng": 121.512413,
+        "lat": 31.061396,
+        "name": "沈杜公路"
+      }
+    ],
+    "color": "#0077C8"
+  },
+  {
+    "id": "mrc20hao2026",
+    "type": "polyline",
+    "path": [
+      {
+        "lng": 121.383888,
+        "lat": 31.267395,
+        "name": "交通路"
+      },
+      {
+        "lng": 121.400539,
+        "lat": 31.263176,
+        "name": "上海西站"
+      },
+      {
+        "lng": 121.412817,
+        "lat": 31.261375,
+        "name": "真华路"
+      },
+      {
+        "lng": 121.423814,
+        "lat": 31.264562,
+        "name": "新村路"
+      },
+      {
+        "lng": 121.430799,
+        "lat": 31.26934,
+        "name": "平利路"
+      },
+      {
+        "lng": 121.437857,
+        "lat": 31.275758,
+        "name": "大宁公园"
+      },
+      {
+        "lng": 121.452156,
+        "lat": 31.279352,
+        "name": "上海马戏城"
+      },
+      {
+        "lng": 121.469116,
+        "lat": 31.279895,
+        "name": "凉城路"
+      },
+      {
+        "lng": 121.479148,
+        "lat": 31.281907,
+        "name": "广灵二路"
+      },
+      {
+        "lng": 121.476835,
+        "lat": 31.292917,
+        "name": "车站南路"
+      },
+      {
+        "lng": 121.476394,
+        "lat": 31.301097,
+        "name": "万安路"
+      },
+      {
+        "lng": 121.485167,
+        "lat": 31.305597,
+        "name": "江湾镇"
+      },
+      {
+        "lng": 121.496487,
+        "lat": 31.307823,
+        "name": "上海财经大学"
+      },
+      {
+        "lng": 121.510596,
+        "lat": 31.31332,
+        "name": "三门路"
+      },
+      {
+        "lng": 121.523251,
+        "lat": 31.314664,
+        "name": "上海体育大学"
+      },
+      {
+        "lng": 121.532021,
+        "lat": 31.314908,
+        "name": "嫩江路"
+      },
+      {
+        "lng": 121.546333,
+        "lat": 31.31465,
+        "name": "共青森林公园"
+      },
+      {
+        "lng": 121.578363,
+        "lat": 31.316369,
+        "name": "浦东北路"
+      },
+      {
+        "lng": 121.589457,
+        "lat": 31.316331,
+        "name": "张杨北路"
+      },
+      {
+        "lng": 121.607485,
+        "lat": 31.316484,
+        "name": "台南西路"
+      },
+      {
+        "lng": 121.62936,
+        "lat": 31.319885,
+        "name": "北新园路"
+      }
+    ],
+    "color": "#BA4A00"
+  },
+  {
+    "id": "mrcbmnvdexoo",
+    "type": "poi",
+    "name": "CBD",
+    "position": [
+      121.478291,
+      31.293056
+    ],
+    "category": "商场"
+  },
+  {
+    "id": "mrcbno5o24ub",
+    "type": "poi",
+    "name": "凉城购物中心",
+    "position": [
+      121.474668,
+      31.295143
+    ],
+    "category": "商场"
+  },
+  {
+    "id": "mrcbxekh1mlp",
+    "type": "poi",
+    "name": "复旦复兴",
+    "position": [
+      121.482888,
+      31.293727
+    ],
+    "category": "学校"
+  },
+  {
+    "id": "mrcby0qmwj73",
+    "type": "poi",
+    "name": "曲阳公园",
+    "position": [
+      121.486534,
+      31.287192
+    ],
+    "category": "其他"
+  },
+  {
+    "id": "mrcbz8lfkdse",
+    "type": "poi",
+    "name": "红旗小学",
+    "position": [
+      121.481927,
+      31.299111
+    ],
+    "category": "学校"
+  },
+  {
+    "id": "mrcc0kiplxtq",
+    "type": "poi",
+    "name": "曲阳百联",
+    "position": [
+      121.492056,
+      31.286474
+    ],
+    "category": "商场"
+  },
+  {
+    "id": "mrcc1oj6hhgl",
+    "type": "poi",
+    "name": "虹口区图书馆",
+    "position": [
+      121.4917,
+      31.280457
+    ],
+    "category": "其他"
+  },
+  {
+    "id": "mrcc21d2pen9",
+    "type": "poi",
+    "name": "曲阳生活购物中心",
+    "position": [
+      121.491412,
+      31.279595
+    ],
+    "category": "商场"
+  },
+  {
+    "id": "mrcc2juxm528",
+    "type": "poi",
+    "name": "凯德",
+    "position": [
+      121.478346,
+      31.270837
+    ],
+    "category": "商场"
+  },
+  {
+    "id": "mrcc2qxis6bs",
+    "type": "poi",
+    "name": "鲁迅公园",
+    "position": [
+      121.483692,
+      31.271596
+    ],
+    "category": "其他"
+  },
+  {
+    "id": "mrcc2z3w0sa5",
+    "type": "poi",
+    "name": "虹口足球场",
+    "position": [
+      121.480848,
+      31.271379
+    ],
+    "category": "其他"
+  },
+  {
+    "id": "mrdnv06wp2yl",
+    "type": "poi",
+    "name": "岳阳医院",
+    "position": [
+      121.488945,
+      31.28908
+    ],
+    "category": "医院"
+  },
+  {
+    "id": "mrdnvknlx8n5",
+    "type": "poi",
+    "name": "建工医院",
+    "position": [
+      121.484326,
+      31.284745
+    ],
+    "category": "医院"
+  },
+  {
+    "id": "mrdo87h2cnaq",
+    "type": "poi",
+    "name": "三中心",
+    "position": [
+      121.489995,
+      31.266281
+    ],
+    "category": "学校"
+  },
+  {
+    "id": "mrdhosp2026001",
+    "type": "poi",
+    "name": "上海市第一人民医院",
+    "position": [
+      121.488,
+      31.265
+    ],
+    "category": "医院"
+  },
+  {
+    "id": "mrdhosp2026002",
+    "type": "poi",
+    "name": "解放军411医院",
+    "position": [
+      121.483,
+      31.276
+    ],
+    "category": "医院"
+  },
+  {
+    "id": "mrdhosp2026003",
+    "type": "poi",
+    "name": "上海市中西医结合医院",
+    "position": [
+      121.493,
+      31.258
+    ],
+    "category": "医院"
+  },
+  {
+    "id": "mrdhosp2026004",
+    "type": "poi",
+    "name": "上海市第四人民医院",
+    "position": [
+      121.508,
+      31.305
+    ],
+    "category": "医院"
+  },
+  {
+    "id": "mrdhosp2026005",
+    "type": "poi",
+    "name": "江湾医院",
+    "position": [
+      121.498,
+      31.302
+    ],
+    "category": "医院"
+  },
+  {
+    "id": "mrdhosp2026006",
+    "type": "poi",
+    "name": "上海海员医院",
+    "position": [
+      121.485,
+      31.252
+    ],
+    "category": "医院"
+  },
+  {
+    "id": "mrdhosp2026007",
+    "type": "poi",
+    "name": "虹口区精神卫生中心",
+    "position": [
+      121.48,
+      31.27
+    ],
+    "category": "医院"
+  },
+  {
+    "id": "mrdhosp2026008",
+    "type": "poi",
+    "name": "上海长海医院（虹口院区）",
+    "position": [
+      121.484,
+      31.278
+    ],
+    "category": "医院"
   }
 ]

@@ -24,8 +24,13 @@ def read_data():
 
 def write_data(data):
     """写入 data.json"""
-    with open(DATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    try:
+        with open(DATA_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        return True
+    except Exception as e:
+        print(f"写入失败: {e}")
+        return False
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -61,12 +66,19 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             try:
                 data = json.loads(body.decode("utf-8"))
                 if isinstance(data, list):
-                    write_data(data)
-                    self.send_response(200)
-                    self.send_header("Content-Type", "application/json; charset=utf-8")
-                    self.send_header("Access-Control-Allow-Origin", "*")
-                    self.end_headers()
-                    self.wfile.write(json.dumps({"ok": True}, ensure_ascii=False).encode("utf-8"))
+                    ok = write_data(data)
+                    if not ok:
+                        self.send_response(500)
+                        self.send_header("Content-Type", "application/json; charset=utf-8")
+                        self.send_header("Access-Control-Allow-Origin", "*")
+                        self.end_headers()
+                        self.wfile.write(json.dumps({"ok": False, "error": "写入失败"}, ensure_ascii=False).encode("utf-8"))
+                    else:
+                        self.send_response(200)
+                        self.send_header("Content-Type", "application/json; charset=utf-8")
+                        self.send_header("Access-Control-Allow-Origin", "*")
+                        self.end_headers()
+                        self.wfile.write(json.dumps({"ok": True}, ensure_ascii=False).encode("utf-8"))
                 else:
                     raise ValueError("Data must be a list")
             except (json.JSONDecodeError, ValueError) as e:

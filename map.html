@@ -78,6 +78,10 @@
   #actionGroup {
     display: flex; flex-direction: column; gap: 8px;
   }
+  /* 垂直排列：首尾圆角，中间扁平 */
+  #actionGroup > button { border-radius: 0; }
+  #actionGroup > button:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+  #actionGroup > button:last-child { border-radius: 0 0 var(--radius) var(--radius); }
 
   /* 筛选下拉面板 */
   #filterPanel {
@@ -132,6 +136,18 @@
   }
   #circleBtn:hover { opacity: 0.9; transform: translateY(-1px); }
   #circleBtn.active { background: #E74C3C; animation: pulseCircle 1.5s infinite; }
+  #lineBtn {
+    height: 40px; padding: 0 20px; border: none; border-radius: var(--radius);
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    background: #9B59B6; color: #fff; box-shadow: var(--shadow);
+    transition: all 0.2s; display: flex; align-items: center; gap: 6px; white-space: nowrap;
+  }
+  #lineBtn:hover { opacity: 0.9; transform: translateY(-1px); }
+  #lineBtn.active { background: #6C3483; animation: pulseLine 1.5s infinite; }
+  @keyframes pulseLine {
+    0%,100% { box-shadow: 0 0 0 0 rgba(155,89,182,0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(155,89,182,0); }
+  }
   @keyframes pulse {
     0%,100% { box-shadow: 0 0 0 0 rgba(231,76,60,0.4); }
     50% { box-shadow: 0 0 0 8px rgba(231,76,60,0); }
@@ -150,6 +166,51 @@
   }
   #addHint.show { display: block; }
 
+
+  /* 添加标志按钮 */
+  #poiBtn {
+    height: 40px; padding: 0 20px; border: none; border-radius: 0;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    background: #3498DB; color: #fff; box-shadow: var(--shadow);
+    transition: all 0.2s; display: flex; align-items: center; gap: 6px; white-space: nowrap;
+  }
+  #poiBtn:hover { opacity: 0.9; transform: translateY(-1px); }
+  #poiBtn.active { background: #2980B9; animation: pulsePoi 1.5s infinite; }
+  @keyframes pulsePoi {
+    0%,100% { box-shadow: 0 0 0 0 rgba(52,152,219,0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(52,152,219,0); }
+  }
+
+  /* 类别选择弹窗 */
+  #poiCatOverlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+    z-index: 200; align-items: center; justify-content: center;
+  }
+  #poiCatOverlay.show { display: flex; }
+  #poiCatBox {
+    background: #fff; border-radius: 12px; padding: 28px 32px; width: 360px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2); display: flex; flex-direction: column; gap: 16px;
+  }
+  #poiCatBox h3 { font-size: 16px; color: var(--color-text); margin: 0; }
+  #poiCatBtns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .poi-cat-btn {
+    padding: 14px; border: none; border-radius: var(--radius);
+    font-size: 15px; font-weight: 600; cursor: pointer; color: #fff;
+    transition: all 0.15s;
+  }
+  .poi-cat-btn:hover { transform: scale(1.03); }
+  .poi-cat-btn.cat-mall { background: #E74C3C; }
+  .poi-cat-btn.cat-hospital { background: #E67E22; }
+  .poi-cat-btn.cat-school { background: #3498DB; }
+  .poi-cat-btn.cat-other { background: #7F8C8D; }
+
+  /* POI 面板类别按钮激活态 */
+  #poiCatGroup .poi-cat-btn-panel.active[data-cat="商场"] { background: #E74C3C; color: #fff; border-color: #E74C3C; }
+  #poiCatGroup .poi-cat-btn-panel.active[data-cat="医院"] { background: #E67E22; color: #fff; border-color: #E67E22; }
+  #poiCatGroup .poi-cat-btn-panel.active[data-cat="学校"] { background: #3498DB; color: #fff; border-color: #3498DB; }
+  #poiCatGroup .poi-cat-btn-panel.active[data-cat="其他"] { background: #7F8C8D; color: #fff; border-color: #7F8C8D; }
+
+  /* ===== 地图容器 ===== */
   /* 圆选中操作菜单 */
   #circleMenu {
     display: none;
@@ -173,11 +234,32 @@
   #circleMenu .menu-btn.merge:hover { background: #D35400; }
   #circleMenu .menu-btn.unmerge { background: var(--color-blue); color: #fff; }
   #circleMenu .menu-btn.unmerge:hover { background: #357ABD; }
+  #circleMenu .menu-btn.delete-line { background: var(--color-red); color: #fff; }
+  #circleMenu .menu-btn.delete-line:hover { background: #C0392B; }
+  #circleMenu .menu-btn.delete-node { background: #E67E22; color: #fff; }
+  #circleMenu .menu-btn.delete-node:hover { background: #D35400; }
+  #circleMenu .menu-btn.rename-node { background: var(--color-blue); color: #fff; }
+  #circleMenu .menu-btn.rename-node:hover { background: #357ABD; }
   #circleMenu .menu-btn.close {
     background: transparent; color: var(--color-text-light);
     font-size: 18px; padding: 6px 8px; line-height: 1; font-weight: 400;
   }
   #circleMenu .menu-btn.close:hover { color: var(--color-text); }
+
+  /* 颜色面板 */
+  .color-grid {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px;
+    padding: 4px 0;
+  }
+  .color-grid .color-swatch {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid #fff; box-shadow: 0 0 0 1px #ddd;
+    cursor: pointer; transition: transform 0.1s;
+  }
+  .color-grid .color-swatch:hover { transform: scale(1.15); }
+  .color-grid .color-swatch.current {
+    box-shadow: 0 0 0 2px #333;
+  }
 
   /* ===== 地图容器 ===== */
   #mapContainer {
@@ -312,6 +394,8 @@
   </div>
   <div id="actionGroup">
     <button id="addBtn">➕ 添加点</button>
+    <button id="poiBtn">📍 添加标志</button>
+    <button id="lineBtn">➖ 添加线</button>
     <button id="circleBtn">⭕ 添加面</button>
   </div>
 </div>
@@ -372,8 +456,15 @@
 <div id="circleMenu">
   <span class="menu-title"></span>
   <button class="menu-btn delete">🗑 删除</button>
+  <button class="menu-btn delete-line">🗑 删除整条线</button>
+  <button class="menu-btn delete-node">🗑 删除该节点</button>
+  <button class="menu-btn rename-node">✏ 改名</button>
   <button class="menu-btn merge">⭕ 并集</button>
   <button class="menu-btn unmerge">↩ 取消合并</button>
+  <div class="menu-color-picker" style="display:none;">
+    <span style="font-size:12px;color:#999;margin-right:4px;">🎨</span>
+    <div class="color-grid"></div>
+  </div>
   <button class="menu-btn close">×</button>
 </div>
 
@@ -440,6 +531,37 @@
     </div>
 
     <button id="deleteMarkerBtn" class="danger-btn">🗑 删除该点</button>
+
+    <!-- POI 面板（与标记面板互斥） -->
+    <div id="poiPanel" style="display:none; flex-direction:column; gap:20px;">
+      <input id="poiNameInput" type="text" placeholder="标志名称" maxlength="20">
+      <div class="field-group">
+        <span class="field-label">类型</span>
+        <div class="field-options" id="poiCatGroup">
+          <button class="radio-btn poi-cat-btn-panel" data-cat="商场" style="border-color:#E74C3C;color:#E74C3C;">商场</button>
+          <button class="radio-btn poi-cat-btn-panel" data-cat="医院" style="border-color:#E67E22;color:#E67E22;">医院</button>
+          <button class="radio-btn poi-cat-btn-panel" data-cat="学校" style="border-color:#3498DB;color:#3498DB;">学校</button>
+          <button class="radio-btn poi-cat-btn-panel" data-cat="其他" style="border-color:#7F8C8D;color:#7F8C8D;">其他</button>
+        </div>
+      </div>
+      <button id="deletePoiBtn" class="danger-btn">🗑 删除此标志</button>
+    </div>
+  </div>
+</div>
+
+<!-- 类别选择弹窗 -->
+<div id="poiCatOverlay">
+  <div id="poiCatBox">
+    <h3>选择标志类型</h3>
+    <div id="poiCatBtns">
+      <button class="poi-cat-btn cat-mall" data-cat="商场">商场</button>
+      <button class="poi-cat-btn cat-hospital" data-cat="医院">医院</button>
+      <button class="poi-cat-btn cat-school" data-cat="学校">学校</button>
+      <button class="poi-cat-btn cat-other" data-cat="其他">其他</button>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn cancel" id="poiCatCancel">取消</button>
+    </div>
   </div>
 </div>
 
@@ -474,6 +596,18 @@ let selectedMarkerId = null;
 let panelDataId = null;
 let currentRating = 0;      // 当前面板显示的评分
 let selectedCircles = new Set(); // 选中的圆/并集
+let lineMode = false;
+let lineDataMap = {};        // id → polyline data
+let polylines = [];          // AMap.Polyline 实例
+let drawingNodes = [];       // 画线过程中的临时节点
+let drawingPolyline = null;  // 画线过程中的临时折线
+let selectedLineId = null;
+let selectedNode = null;
+let poiMode = false;
+let poiCategory = "";
+let poiDataMap = {};
+let poiMarkers = [];
+let selectedPoiId = null;     // {lineId, index}
 let filterState = {
   rating: [],
   exclude: [],
@@ -560,31 +694,53 @@ async function loadAll() {
 }
 async function saveAll() {
   try {
-    const allData = [...Object.values(markerDataMap), ...Object.values(circleDataMap)];
-    await fetch("/api/markers", {
+    const allData = [
+      ...Object.values(markerDataMap),
+      ...Object.values(circleDataMap),
+      ...Object.values(lineDataMap),
+      ...Object.values(poiDataMap),
+    ];
+    const res = await fetch("/api/markers", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(allData),
     });
-  } catch (e) { console.error("保存失败:", e); }
+    if (!res.ok) {
+      const err = await res.json().catch(function() { return {}; });
+      console.error("保存失败:", err);
+      alert("保存失败：" + (err.error || res.status));
+    }
+  } catch (e) { console.error("保存失败:", e); alert("保存失败：" + e.message); }
 }
 
 // ---- 初始化标记 ----
 async function initMarkers() {
   const list = await loadAll();
-  list.forEach(data => {
-    if (data.type === "circle") {
-      circleDataMap[data.id] = data;
-    } else {
-      markerDataMap[data.id] = data;
-      markers.push(createMarker(data));
+  list.forEach(function(data) {
+    try {
+      if (data.type === "circle") {
+        circleDataMap[data.id] = data;
+      } else if (data.type === "polyline") {
+        lineDataMap[data.id] = data;
+      } else if (data.type === "poi") {
+        poiDataMap[data.id] = data;
+        poiMarkers.push(createPoiMarker(data));
+      } else {
+        markerDataMap[data.id] = data;
+        markers.push(createMarker(data));
+      }
+    } catch (err) {
+      console.error("初始化数据失败:", data && data.id, err);
     }
   });
-  restoreCircles();
+  try { restoreCircles(); } catch (e) { console.error("restoreCircles:", e); }
+  try { restorePolylines(); } catch (e) { console.error("restorePolylines:", e); }
 }
 
 // ---- 选中/取消选中 ----
 function selectMarker(id) {
+  // 切换到标记点，清除线/圆选中
+  clearAllSelection();
   // 取消旧选中
   if (selectedMarkerId && selectedMarkerId !== id) {
     const prev = markers.find(m => m._dataId === selectedMarkerId);
@@ -609,6 +765,8 @@ function deselectMarker() {
     if (prev && markerDataMap[selectedMarkerId]) {
       updateMarkerContent(prev, markerDataMap[selectedMarkerId]);
     }
+    clearPoiSelection();
+    clearPoiSelection();
     selectedMarkerId = null;
     panelDataId = null;
     currentRating = 0;
@@ -787,6 +945,7 @@ const addHint = document.getElementById("addHint");
 
 function toggleAddMode() {
   if (circleMode) toggleCircleMode(); // 互斥
+  if (lineMode) toggleLineMode();
   addMode = !addMode;
   addBtn.classList.toggle("active", addMode);
   addHint.classList.toggle("show", addMode);
@@ -794,12 +953,14 @@ function toggleAddMode() {
   addBtn.innerHTML = addMode ? "⏹ 停止添加" : "➕ 添加点";
   if (addMode) {
     deselectMarker();
+    clearAllSelection();
   }
   updateCrosshair();
 }
 
 function toggleCircleMode() {
   if (addMode) toggleAddMode(); // 互斥
+  if (lineMode) toggleLineMode();
   circleMode = !circleMode;
   circleBtn.classList.toggle("active", circleMode);
   addHint.classList.toggle("show", circleMode);
@@ -807,6 +968,7 @@ function toggleCircleMode() {
   circleBtn.innerHTML = circleMode ? "⏹ 停止画圆" : "⭕ 添加面";
   if (circleMode) {
     deselectMarker();
+    clearAllSelection();
     circleCenter = null;
     clearDrawingCircle();
     clearCenterMarker();
@@ -819,7 +981,7 @@ function toggleCircleMode() {
 }
 
 function updateCrosshair() {
-  document.getElementById("mapContainer").classList.toggle("crosshair", addMode || circleMode);
+  document.getElementById("mapContainer").classList.toggle("crosshair", addMode || circleMode || lineMode || poiMode);
 }
 
 // ---- 筛选 ----
@@ -920,6 +1082,454 @@ function setupFilterPanel() {
   });
 }
 
+// ---- 线 / 节点管理 ----
+function createPolyline(data, forceSelected) {
+  var selected = forceSelected !== undefined ? forceSelected : (data.id === selectedLineId);
+  var color = selected ? "#6C3483" : (data.color || "#9B59B6");
+  var weight = selected ? 7 : 5;
+  var path = data.path.map(function(p) { return [p.lng, p.lat]; });
+  var line = new AMap.Polyline({
+    path: path,
+    strokeColor: color, strokeWeight: weight, strokeOpacity: 0.9,
+    zIndex: 86,
+    bubble: true,
+    cursor: "pointer",
+  });
+  line._dataId = data.id;
+  line._nodeMarkers = [];
+  line._labelMarkers = [];
+  line.on("click", function(e) {
+    if (e && e.originalEvent && e.originalEvent.stopPropagation) e.originalEvent.stopPropagation();
+    window._suppressClear = true;
+    selectLine(data.id);
+    setTimeout(function() { window._suppressClear = false; }, 100);
+  });
+
+  // 节点圆点
+  data.path.forEach(function(node, idx) {
+    var dot = new AMap.CircleMarker({
+      center: [node.lng, node.lat],
+      radius: selected ? 7 : 5,
+      strokeColor: "#fff",
+      strokeWeight: 2,
+      fillColor: selected ? "#6C3483" : "#9B59B6",
+      fillOpacity: 1,
+      zIndex: 87,
+      bubble: true,
+      draggable: selected, // 选中线时直接可拖
+      cursor: selected ? "move" : "default",
+    });
+    dot._lineId = data.id;
+    dot._nodeIdx = idx;
+    dot._lineRef = line;
+    dot.on("click", function(e) {
+      if (data.id !== selectedLineId) return;
+      if (e && e.originalEvent && e.originalEvent.stopPropagation) e.originalEvent.stopPropagation();
+      window._suppressClear = true;
+      selectNode(data.id, idx);
+      setTimeout(function() { window._suppressClear = false; }, 100);
+    });
+    dot.on("dblclick", function(e) {
+      if (data.id !== selectedLineId) return;
+      if (e && e.originalEvent && e.originalEvent.stopPropagation) e.originalEvent.stopPropagation();
+      promptNodeName(data.id, idx);
+    });
+    dot.on("dragging", function(e) {
+      if (data.id !== selectedLineId) return;
+      var p = e.lnglat;
+      data.path[idx].lng = p.lng;
+      data.path[idx].lat = p.lat;
+      // 查找当前 polylines 数组里这条线的最新实例
+      var curLine = polylines.find(function(x) { return x._dataId === data.id; });
+      if (curLine) {
+        curLine.setPath(data.path.map(function(n) { return [n.lng, n.lat]; }));
+      }
+      // 更新 label 位置
+      if (dot._labelMarker) dot._labelMarker.setPosition([p.lng, p.lat]);
+    });
+    dot.on("dragend", function() { saveAll(); });
+    map.add(dot);
+    line._nodeMarkers.push(dot);
+
+    // 仅当 name 非空时显示文字标签
+    if (node.name) {
+      var label = new AMap.Text({
+        text: node.name,
+        position: [node.lng, node.lat],
+        offset: new AMap.Pixel(0, -22),
+        anchor: "bottom-center",
+        style: {
+          "background-color": "#fff",
+          "border": "1px solid #9B59B6",
+          "border-radius": "10px",
+          "padding": "2px 8px",
+          "font-size": "11px",
+          "color": "#333",
+          "box-shadow": "0 1px 4px rgba(0,0,0,0.15)",
+        },
+        zIndex: 88,
+      });
+      dot._labelMarker = label;
+      map.add(label);
+      line._labelMarkers.push(label);
+    }
+  });
+
+  map.add(line);
+  return line;
+}
+
+function destroyPolyline(line) {
+  if (!line) return;
+  if (line._nodeMarkers) line._nodeMarkers.forEach(function(d) { d.setMap(null); });
+  if (line._labelMarkers) line._labelMarkers.forEach(function(l) { l.setMap(null); });
+  line.setMap(null);
+}
+
+function restorePolylines() {
+  Object.values(lineDataMap).forEach(function(data) {
+    try {
+      if (!data.path || data.path.length < 2) return;
+      polylines.push(createPolyline(data));
+    } catch (err) {
+      console.error("恢复线失败:", data.id, err);
+    }
+  });
+}
+
+function selectLine(id) {
+  // 取消旧选中
+  if (selectedLineId && selectedLineId !== id) {
+    var prevId = selectedLineId;
+    var prev = polylines.find(function(p) { return p._dataId === prevId; });
+    if (prev && lineDataMap[prevId]) {
+      destroyPolyline(prev);
+      polylines = polylines.filter(function(p) { return p !== prev; });
+      polylines.push(createPolyline(lineDataMap[prevId], false));
+    }
+  }
+  selectedLineId = id;
+  selectedNode = null;
+  if (id && lineDataMap[id]) {
+    var cur = polylines.find(function(p) { return p._dataId === id; });
+    if (cur) {
+      destroyPolyline(cur);
+      polylines = polylines.filter(function(p) { return p !== cur; });
+    }
+    var newLine = createPolyline(lineDataMap[id], true);
+    polylines.push(newLine);
+  }
+  updateCircleMenu();
+}
+
+function selectNode(lineId, idx) {
+  selectedNode = { lineId: lineId, index: idx };
+  // 高亮节点（简化：菜单里显示提示）
+  updateCircleMenu();
+}
+
+function promptNodeName(lineId, idx) {
+  var data = lineDataMap[lineId];
+  if (!data) return;
+  var name = prompt("输入站名（留空删除站名）", data.path[idx].name || "");
+  if (name === null) return;
+  data.path[idx].name = name.trim();
+  var wasSelected = (lineId === selectedLineId);
+  var line = polylines.find(function(p) { return p._dataId === lineId; });
+  if (line) {
+    destroyPolyline(line);
+    polylines = polylines.filter(function(p) { return p !== line; });
+    polylines.push(createPolyline(data, wasSelected));
+  }
+  saveAll();
+}
+
+function deleteLine(id) {
+  if (!confirm("确定要删除这条线吗？")) return;
+  var line = polylines.find(function(p) { return p._dataId === id; });
+  destroyPolyline(line);
+  polylines = polylines.filter(function(p) { return p._dataId !== id; });
+  delete lineDataMap[id];
+  if (selectedLineId === id) { selectedLineId = null; selectedNode = null; }
+  saveAll();
+  hideCircleMenu();
+}
+
+function deleteNode(lineId, idx) {
+  var data = lineDataMap[lineId];
+  if (!data) return;
+  if (data.path.length <= 2) { alert("至少保留 2 个节点"); return; }
+  data.path.splice(idx, 1);
+  selectedNode = null;
+  var wasSelected = (lineId === selectedLineId);
+  var line = polylines.find(function(p) { return p._dataId === lineId; });
+  if (line) {
+    destroyPolyline(line);
+    polylines = polylines.filter(function(p) { return p !== line; });
+    polylines.push(createPolyline(data, wasSelected));
+  }
+  saveAll();
+  updateCircleMenu();
+}
+
+// 画线模式
+function startDrawingLine(lnglat) {
+  drawingNodes.push({ lng: lnglat[0], lat: lnglat[1], name: "" });
+  refreshDrawingLine();
+}
+
+function refreshDrawingLine() {
+  if (drawingPolyline) { drawingPolyline.setMap(null); drawingPolyline = null; }
+  // 删除旧临时点
+  if (window._drawingDots) {
+    window._drawingDots.forEach(function(d) { d.setMap(null); });
+  }
+  window._drawingDots = [];
+  if (drawingNodes.length === 0) return;
+  var path = drawingNodes.map(function(n) { return [n.lng, n.lat]; });
+  drawingPolyline = new AMap.Polyline({
+    path: path,
+    strokeColor: "#9B59B6",
+    strokeWeight: 3,
+    strokeStyle: "dashed",
+    strokeOpacity: 0.8,
+    zIndex: 78,
+  });
+  map.add(drawingPolyline);
+  drawingNodes.forEach(function(n) {
+    var dot = new AMap.CircleMarker({
+      center: [n.lng, n.lat],
+      radius: 5,
+      strokeColor: "#fff",
+      strokeWeight: 2,
+      fillColor: "#9B59B6",
+      zIndex: 79,
+      bubble: false,
+    });
+    map.add(dot);
+    window._drawingDots.push(dot);
+  });
+}
+
+function finalizeLine() {
+  if (drawingNodes.length < 2) {
+    clearDrawingLine();
+    return;
+  }
+  var id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  var data = {
+    id: id, type: "polyline",
+    path: drawingNodes.map(function(n) { return { lng: n.lng, lat: n.lat, name: "" }; }),
+    color: "#9B59B6",
+  };
+  lineDataMap[id] = data;
+  clearDrawingLine();
+  polylines.push(createPolyline(data));
+  saveAll();
+}
+
+function clearDrawingLine() {
+  drawingNodes = [];
+  if (drawingPolyline) { drawingPolyline.setMap(null); drawingPolyline = null; }
+  if (window._drawingDots) {
+    window._drawingDots.forEach(function(d) { d.setMap(null); });
+    window._drawingDots = [];
+  }
+  if (window._previewLine) { window._previewLine.setMap(null); window._previewLine = null; }
+}
+
+function toggleLineMode() {
+  if (addMode) toggleAddMode();
+  if (circleMode) toggleCircleMode();
+  lineMode = !lineMode;
+  var btn = document.getElementById("lineBtn");
+  btn.classList.toggle("active", lineMode);
+  document.getElementById("addHint").classList.toggle("show", lineMode);
+  document.getElementById("addHint").textContent = lineMode
+    ? "点击地图添加节点 → 再次点按钮完成绘制"
+    : "点击地图添加标记点";
+  btn.innerHTML = lineMode ? "⏹ 完成" : "➖ 添加线";
+  if (lineMode) {
+    deselectMarker();
+    clearCircleSelection();
+    if (selectedLineId) selectLine(null);
+    drawingNodes = [];
+  } else {
+    finalizeLine();
+  }
+  updateCrosshair();
+}
+
+
+// ---- POI 标志 ----
+function getPoiColor(cat) {
+  if (cat === "商场") return "#E74C3C";
+  if (cat === "医院") return "#E67E22";
+  if (cat === "学校") return "#3498DB";
+  return "#7F8C8D";
+}
+
+
+function poiFontSize(name) {
+  var len = (name || "?").length;
+  if (len <= 2) return 13;
+  if (len <= 3) return 12;
+  if (len <= 5) return 10;
+  return 9;
+}
+
+function createPoiMarker(data) {
+  var color = getPoiColor(data.category);
+  // 纯圆形标志（无下三角），与小区气泡区分
+  var size = 48;
+  var html = '<div style="width:' + size + 'px;height:' + size + 'px;background:' + color
+    + ';color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;'
+    + 'font-size:12px;font-weight:700;white-space:normal;word-break:break-all;text-align:center;line-height:1.15;cursor:pointer;'
+    + 'border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.25);">'
+    + escapeHTML(data.name || "?") + '</div>';
+  html = html.replace("font-size:12px", "font-size:" + poiFontSize(data.name) + "px");
+  var marker = new AMap.Marker({
+    position: data.position,
+    content: html,
+    offset: new AMap.Pixel(-size/2, -size/2),
+    zIndex: 90,
+  });
+  marker._poiId = data.id;
+  marker.on("click", function() { selectPoi(data.id); });
+  map.add(marker);
+  return marker;
+}
+
+function selectPoi(id) {
+  deselectMarker();
+  clearAllSelection();
+  selectedPoiId = id;
+  var data = poiDataMap[id];
+  if (!data) return;
+  document.getElementById("panelEmpty").style.display = "none";
+  document.getElementById("panelContent").classList.add("show");
+  document.getElementById("deleteMarkerBtn").style.display = "none";
+  document.getElementById("poiPanel").style.display = "flex";
+  // 名称
+  document.getElementById("poiNameInput").value = data.name || "";
+  // 类别
+  document.querySelectorAll("#poiCatGroup .poi-cat-btn-panel").forEach(function(btn) {
+    btn.classList.toggle("active", btn.dataset.cat === data.category);
+  });
+  // 隐藏小区相关字段（只选 direct children，避免误隐藏 poiPanel）
+  document.getElementById("nameInput").style.display = "none";
+  document.querySelectorAll("#panelContent > .field-group, #panelContent > .rating-exclude-row, #panelContent > .section-divider, #panelContent > #deleteMarkerBtn").forEach(function(el) {
+    el._poiHidden = true;
+    el.style.display = "none";
+  });
+}
+
+function clearPoiSelection() {
+  if (selectedPoiId) selectedPoiId = null;
+  document.getElementById("poiPanel").style.display = "none";
+  document.getElementById("deleteMarkerBtn").style.display = "";
+  // 恢复小区相关字段
+  document.getElementById("nameInput").style.display = "";
+  document.querySelectorAll("#panelContent > .field-group, #panelContent > .rating-exclude-row, #panelContent > .section-divider, #panelContent > #deleteMarkerBtn").forEach(function(el) {
+    if (el._poiHidden) { el.style.display = ""; el._poiHidden = false; }
+  });
+  document.getElementById("panelEmpty").style.display = "flex";
+  document.getElementById("panelContent").classList.remove("show");
+}
+
+function deletePoi(id) {
+  if (!confirm("确定要删除此标志吗？")) return;
+  var m = poiMarkers.find(function(x) { return x._poiId === id; });
+  if (m) { m.setMap(null); poiMarkers = poiMarkers.filter(function(x) { return x._poiId !== id; }); }
+  delete poiDataMap[id];
+  if (selectedPoiId === id) clearPoiSelection();
+  saveAll();
+}
+
+function showPoiCatModal() {
+  return new Promise(function(resolve) {
+    var overlay = document.getElementById("poiCatOverlay");
+    overlay.classList.add("show");
+    document.querySelectorAll("#poiCatBtns .poi-cat-btn").forEach(function(btn) {
+      btn.onclick = function() { overlay.classList.remove("show"); resolve(this.dataset.cat); };
+    });
+    document.getElementById("poiCatCancel").onclick = function() { overlay.classList.remove("show"); resolve(null); };
+  });
+}
+
+function togglePoiMode() {
+  if (addMode) toggleAddMode();
+  if (lineMode) toggleLineMode();
+  if (circleMode) toggleCircleMode();
+  poiMode = !poiMode;
+  var btn = document.getElementById("poiBtn");
+  btn.classList.toggle("active", poiMode);
+  document.getElementById("addHint").classList.toggle("show", poiMode);
+  document.getElementById("addHint").textContent = poiMode ? "点击地图添加标志" : "";
+  btn.innerHTML = poiMode ? "⏹ 停止" : "📍 添加标志";
+  if (poiMode) {
+    deselectMarker();
+    clearAllSelection();
+  }
+  updateCrosshair();
+}
+
+function setupPoi() {
+  document.getElementById("poiBtn").addEventListener("click", async function() {
+    if (!poiMode) {
+      var cat = await showPoiCatModal();
+      if (!cat) return;
+      poiCategory = cat;
+      togglePoiMode();
+    } else {
+      togglePoiMode();
+    }
+  });
+  // POI 名称编辑
+  document.getElementById("poiNameInput").addEventListener("input", function() {
+    if (!selectedPoiId || !poiDataMap[selectedPoiId]) return;
+    poiDataMap[selectedPoiId].name = this.value;
+    var m = poiMarkers.find(function(x) { return x._poiId === selectedPoiId; });
+    if (m) {
+      var d = poiDataMap[selectedPoiId];
+      var color = getPoiColor(d.category);
+      var size = 48;
+      var html = '<div style="width:' + size + 'px;height:' + size + 'px;background:' + color
+        + ';color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;'
+        + 'font-size:12px;font-weight:700;white-space:normal;word-break:break-all;text-align:center;line-height:1.15;cursor:pointer;'
+        + 'border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.25);">'
+        + escapeHTML(d.name || "?") + '</div>';
+      html = html.replace(/font-size:\d+px/, 'font-size:' + poiFontSize(d.name) + 'px');
+      m.setContent(html);
+    }
+    saveAll();
+  });
+  // POI 类别切换
+  document.querySelectorAll("#poiCatGroup .poi-cat-btn-panel").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      if (!selectedPoiId || !poiDataMap[selectedPoiId]) return;
+      var cat = this.dataset.cat;
+      poiDataMap[selectedPoiId].category = cat;
+      document.querySelectorAll("#poiCatGroup .poi-cat-btn-panel").forEach(function(b) {
+        b.classList.toggle("active", b.dataset.cat === cat);
+      });
+      // 重建 marker
+      var m = poiMarkers.find(function(x) { return x._poiId === selectedPoiId; });
+      if (m) {
+        m.setMap(null);
+        poiMarkers = poiMarkers.filter(function(x) { return x._poiId !== selectedPoiId; });
+        poiMarkers.push(createPoiMarker(poiDataMap[selectedPoiId]));
+      }
+      saveAll();
+    });
+  });
+  // POI 删除
+  document.getElementById("deletePoiBtn").addEventListener("click", function() {
+    if (selectedPoiId) deletePoi(selectedPoiId);
+  });
+}
+
+
 function setupMarkerSearch() {
   const searchBox = document.getElementById("searchBox");
   const dropdown = document.getElementById("searchDropdown");
@@ -979,19 +1589,22 @@ function finalizeCircle(center, edge) {
   const radius = Math.round(AMap.GeometryUtil.distance(center, edge));
   if (radius < 10) return;
   const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-  const circleData = { id, type: "circle", center, radius };
+  const circleData = { id, type: "circle", center, radius, color: "#E67E22" };
   circleDataMap[id] = circleData;
 
   const circle = new AMap.Circle({
     center, radius,
-    fillColor: "#E67E22", fillOpacity: 0,
-    strokeColor: "#E67E22", strokeWeight: 2,
-    strokeOpacity: 0.7, zIndex: 85,
+    fillColor: "#E67E22", fillOpacity: 0.05,
+    strokeColor: "#E67E22", strokeWeight: 3,
+    strokeOpacity: 0.9, zIndex: 89, bubble: true,
+    cursor: "pointer",
   });
   circle._dataId = id;
   circle.on("click", function(e) {
-    if (!isOnCircleEdge(e.lnglat, center, radius)) return;
+    if (e && e.originalEvent && e.originalEvent.stopPropagation) e.originalEvent.stopPropagation();
+    window._suppressClear = true;
     toggleSelectCircle(id);
+    setTimeout(function() { window._suppressClear = false; }, 100);
   });
   map.add(circle);
   circles.push(circle);
@@ -1012,20 +1625,18 @@ function deleteCircles(ids) {
 
 // ---- 圆选中 ----
 function setCircleStroke(shape, selected) {
-  if (shape._isMerged) {
-    shape.setOptions({
-      strokeColor: selected ? "#C0392B" : "#27AE60",
-      strokeWeight: selected ? 3 : 2,
-    });
-  } else {
-    shape.setOptions({
-      strokeColor: selected ? "#C0392B" : "#E67E22",
-      strokeWeight: selected ? 3 : 2,
-    });
-  }
+  var data = circleDataMap[shape._dataId];
+  var baseColor = (data && data.color) || (shape._isMerged ? "#27AE60" : "#E67E22");
+  shape.setOptions({
+    strokeColor: selected ? "#C0392B" : baseColor,
+    strokeWeight: selected ? 3 : 2,
+  });
 }
 
 function toggleSelectCircle(id) {
+  // 切换到圆选中，清除线/节点选中
+  if (selectedLineId) selectLine(null);
+  selectedNode = null;
   if (selectedCircles.has(id)) {
     selectedCircles.delete(id);
   } else {
@@ -1037,12 +1648,22 @@ function toggleSelectCircle(id) {
 }
 
 function clearCircleSelection() {
+  if (window._suppressClear) return;
   selectedCircles.forEach(function(id) {
     var shape = circles.find(function(c) { return c._dataId === id; });
     if (shape) setCircleStroke(shape, false);
   });
   selectedCircles.clear();
+  // 仅清节点选中，不取消线选中（方便连续选节点）
+  selectedNode = null;
   hideCircleMenu();
+}
+
+/** 彻底清空所有选中（关闭菜单时用） */
+function clearAllSelection() {
+  clearCircleSelection();
+  if (selectedLineId) selectLine(null);
+  clearPoiSelection();
 }
 
 // ---- 圆选中菜单 ----
@@ -1051,6 +1672,101 @@ function showCircleMenu() {
   menu.classList.add("show");
   updateCircleMenu();
 }
+
+// ---- 颜色色板 ----
+var POI_COLORS = [
+  "#F5B041", "#E67E22", "#BA4A00",
+  "#58D68D", "#27AE60", "#196F3D",
+  "#F1948A", "#E74C3C", "#A93226",
+  "#5DADE2", "#3498DB", "#1F618D",
+  "#BB8FCE", "#9B59B6", "#6C3483",
+  "#AAB2B8", "#7F8C8D", "#4D5656"
+];
+
+function buildColorPicker(targetShape) {
+  // targetShape: {data, type:"circle"|"line"}
+  var container = document.querySelector("#circleMenu .menu-color-picker .color-grid");
+  container.innerHTML = "";
+  var currentColor = targetShape.data.color || (targetShape.type === "line" ? "#9B59B6" : "#E67E22");
+  POI_COLORS.forEach(function(c) {
+    var sw = document.createElement("div");
+    sw.className = "color-swatch" + (c === currentColor ? " current" : "");
+    sw.style.background = c;
+    sw.title = c;
+    sw.addEventListener("click", function(e) {
+      e.stopPropagation();
+      applyShapeColor(targetShape, c);
+    });
+    container.appendChild(sw);
+  });
+}
+
+function applyShapeColor(target, color) {
+  target.data.color = color;
+  if (target.type === "circle") {
+    var circle = circles.find(function(c) { return c._dataId === target.data.id; });
+    if (circle) {
+      circle.setMap(null);
+      circles = circles.filter(function(c) { return c !== circle; });
+      var wasSelected = selectedCircles.has(target.data.id);
+      circles.push(restoreSingleCircle(target.data, wasSelected));
+    }
+  } else if (target.type === "line") {
+    var line = polylines.find(function(p) { return p._dataId === target.data.id; });
+    if (line) {
+      destroyPolyline(line);
+      polylines = polylines.filter(function(p) { return p !== line; });
+      var wasSel = (selectedLineId === target.data.id);
+      polylines.push(createPolyline(target.data, wasSel));
+    }
+  }
+  saveAll();
+  // 重新构建色板让 current 标记移到新颜色
+  if (target.type === "circle" && selectedCircles.size > 0) {
+    buildColorPicker({ type: "circle", data: target.data });
+  } else if (target.type === "line" && selectedLineId) {
+    buildColorPicker({ type: "line", data: target.data });
+  }
+}
+
+function restoreSingleCircle(data, selected) {
+  var isMerged = !!data.mergedFrom;
+  if (isMerged) {
+    var shape = new AMap.Polygon({
+      path: data.path,
+      fillColor: "#27AE60", fillOpacity: 0,
+      strokeColor: data.color || "#27AE60", strokeWeight: 2,
+      strokeOpacity: 0.8, zIndex: 89,
+    });
+    shape._isMerged = true;
+    shape.on("click", (function(p, id) {
+      return function(e) {
+        if (e && e.originalEvent && e.originalEvent.stopPropagation) e.originalEvent.stopPropagation();
+        window._suppressClear = true;
+        toggleSelectCircle(id);
+        setTimeout(function() { window._suppressClear = false; }, 100);
+      };
+    })(data.path, data.id));
+  } else {
+    var shape = new AMap.Circle({
+      center: data.center, radius: data.radius,
+      fillColor: "#E67E22", fillOpacity: 0,
+      strokeColor: data.color || "#E67E22", strokeWeight: 3,
+      strokeOpacity: 0.9, zIndex: 89, bubble: true,
+    });
+    shape.on("click", (function(c, r, id) {
+      return function(e) {
+        if (e && e.originalEvent && e.originalEvent.stopPropagation) e.originalEvent.stopPropagation();
+        window._suppressClear = true;
+        toggleSelectCircle(id);
+        setTimeout(function() { window._suppressClear = false; }, 100);
+      };
+    })(data.center, data.radius, data.id));
+  }
+  shape._dataId = data.id;
+  map.add(shape);
+  return shape;
+}
 function hideCircleMenu() {
   var menu = document.getElementById("circleMenu");
   if (menu) menu.classList.remove("show");
@@ -1058,25 +1774,67 @@ function hideCircleMenu() {
 function updateCircleMenu() {
   var menu = document.getElementById("circleMenu");
   var n = selectedCircles.size;
-  if (n === 0) { hideCircleMenu(); return; }
-  menu.classList.add("show");
-  menu.querySelector(".menu-title").textContent = "已选 " + n + " 个圆";
-  menu.querySelector(".delete").style.display = "";
-  menu.querySelector(".merge").style.display = n >= 2 ? "" : "none";
+  var lineSelected = !!selectedLineId;
+  var nodeSelected = !!selectedNode;
 
-  // 仅当选中的就是并集图形（mergedFrom 存在）时显示取消合并
-  var allMerged = true;
-  selectedCircles.forEach(function(id) {
-    var d = circleDataMap[id];
-    if (!d || !d.mergedFrom) allMerged = false;
+  if (n === 0 && !lineSelected && !nodeSelected) { hideCircleMenu(); return; }
+  menu.classList.add("show");
+
+  var titleEl = menu.querySelector(".menu-title");
+  var delBtn = menu.querySelector(".delete");
+  var delLineBtn = menu.querySelector(".delete-line");
+  var delNodeBtn = menu.querySelector(".delete-node");
+  var renameBtn = menu.querySelector(".rename-node");
+  var mergeBtn = menu.querySelector(".merge");
+  var unmergeBtn = menu.querySelector(".unmerge");
+  var colorPicker = menu.querySelector(".menu-color-picker");
+
+  [delBtn, delLineBtn, delNodeBtn, renameBtn, mergeBtn, unmergeBtn, colorPicker].forEach(function(b) {
+    if (b) b.style.display = "none";
   });
-  menu.querySelector(".unmerge").style.display = (n === 1 && allMerged) ? "" : "none";
+
+  if (nodeSelected) {
+    titleEl.textContent = "已选节点";
+    delNodeBtn.style.display = "";
+    renameBtn.style.display = "";
+  } else if (lineSelected) {
+    titleEl.textContent = "已选 1 条线";
+    delLineBtn.style.display = "";
+    colorPicker.style.display = "flex";
+    colorPicker.style.alignItems = "center";
+    buildColorPicker({ type: "line", data: lineDataMap[selectedLineId] });
+  } else if (n > 0) {
+    titleEl.textContent = "已选 " + n + " 个圆";
+    delBtn.style.display = "";
+    mergeBtn.style.display = n >= 2 ? "" : "none";
+    var allMerged = true;
+    selectedCircles.forEach(function(id) {
+      var d = circleDataMap[id];
+      if (!d || !d.mergedFrom) allMerged = false;
+    });
+    unmergeBtn.style.display = (n === 1 && allMerged) ? "" : "none";
+    if (n === 1) {
+      colorPicker.style.display = "flex";
+      colorPicker.style.alignItems = "center";
+      var firstId = Array.from(selectedCircles)[0];
+      buildColorPicker({ type: "circle", data: circleDataMap[firstId] });
+    }
+  }
 }
 
 function setupCircleMenu() {
   var menu = document.getElementById("circleMenu");
   menu.querySelector(".delete").addEventListener("click", function() {
     deleteCircles(Array.from(selectedCircles));
+  });
+  menu.querySelector(".delete-line").addEventListener("click", function() {
+    if (selectedLineId) deleteLine(selectedLineId);
+  });
+  menu.querySelector(".delete-node").addEventListener("click", function() {
+    if (selectedNode) deleteNode(selectedNode.lineId, selectedNode.index);
+  });
+  menu.querySelector(".rename-node").addEventListener("click", function() {
+    if (selectedNode) promptNodeName(selectedNode.lineId, selectedNode.index);
   });
   menu.querySelector(".merge").addEventListener("click", function() {
     mergeSelectedCircles();
@@ -1086,8 +1844,9 @@ function setupCircleMenu() {
     if (id) unmergeCircle(id);
   });
   menu.querySelector(".close").addEventListener("click", function() {
-    clearCircleSelection();
+    clearAllSelection();
   });
+  document.getElementById("lineBtn").addEventListener("click", toggleLineMode);
 }
 
 function isOnCircleEdge(lnglat, center, radius) {
@@ -1172,6 +1931,7 @@ function mergeSelectedCircles() {
   circleDataMap[newId] = {
     id: newId, type: "circle", center: [0, 0], radius: 0,
     path: path, mergedFrom: originalIds,
+    color: "#27AE60",
     _originals: {},
   };
   data.forEach(function(d) {
@@ -1181,14 +1941,16 @@ function mergeSelectedCircles() {
   var poly = new AMap.Polygon({
     path: path,
     fillColor: "#27AE60", fillOpacity: 0,
-    strokeColor: "#27AE60", strokeWeight: 2,
-    strokeOpacity: 0.8, zIndex: 85,
+    strokeColor: "#27AE60", strokeWeight: 3,
+    strokeOpacity: 0.9, zIndex: 89, bubble: true,
   });
   poly._dataId = newId;
   poly._isMerged = true;
   poly.on("click", function(e) {
-    if (distanceToPolygonEdge(e.lnglat, path) > 15) return;
+    if (e && e.originalEvent && e.originalEvent.stopPropagation) e.originalEvent.stopPropagation();
+    window._suppressClear = true;
     toggleSelectCircle(newId);
+    setTimeout(function() { window._suppressClear = false; }, 100);
   });
   map.add(poly);
   circles.push(poly);
@@ -1215,14 +1977,17 @@ function unmergeCircle(id) {
     circleDataMap[newId] = newData;
     var circle = new AMap.Circle({
       center: newData.center, radius: newData.radius,
-      fillColor: "#E67E22", fillOpacity: 0,
+      fillColor: "#E67E22", fillOpacity: 0.05,
       strokeColor: "#E67E22", strokeWeight: 2,
-      strokeOpacity: 0.7, zIndex: 85,
+      strokeOpacity: 0.7, zIndex: 85, bubble: true,
+      cursor: "pointer",
     });
     circle._dataId = newId;
     circle.on("click", function(e) {
-      if (!isOnCircleEdge(e.lnglat, newData.center, newData.radius)) return;
+      if (e && e.originalEvent && e.originalEvent.stopPropagation) e.originalEvent.stopPropagation();
+      window._suppressClear = true;
       toggleSelectCircle(newId);
+      setTimeout(function() { window._suppressClear = false; }, 100);
     });
     map.add(circle);
     circles.push(circle);
@@ -1233,38 +1998,50 @@ function unmergeCircle(id) {
 
 function restoreCircles() {
   Object.values(circleDataMap).forEach(function(data) {
-    var shape, isMerged = !!data.mergedFrom;
-    if (isMerged) {
-      shape = new AMap.Polygon({
-        path: data.path,
-        fillColor: "#27AE60", fillOpacity: 0,
-        strokeColor: "#27AE60", strokeWeight: 2,
-        strokeOpacity: 0.8, zIndex: 85,
-      });
-      shape._isMerged = true;
-      shape.on("click", (function(p, id) {
-        return function(e) {
-          if (distanceToPolygonEdge(e.lnglat, p) > 15) return;
-          toggleSelectCircle(id);
-        };
-      })(data.path, data.id));
-    } else {
-      shape = new AMap.Circle({
-        center: data.center, radius: data.radius,
-        fillColor: "#E67E22", fillOpacity: 0,
-        strokeColor: "#E67E22", strokeWeight: 2,
-        strokeOpacity: 0.7, zIndex: 85,
-      });
-      shape.on("click", (function(c, r, id) {
-        return function(e) {
-          if (!isOnCircleEdge(e.lnglat, c, r)) return;
-          toggleSelectCircle(id);
-        };
-      })(data.center, data.radius, data.id));
+    try {
+      var shape, isMerged = !!data.mergedFrom;
+      var strokeColor = data.color || (isMerged ? "#27AE60" : "#E67E22");
+      if (isMerged) {
+        if (!data.path || !data.path.length) return;
+        shape = new AMap.Polygon({
+          path: data.path,
+          fillColor: "#27AE60", fillOpacity: 0,
+          strokeColor: strokeColor, strokeWeight: 3,
+          strokeOpacity: 0.9, zIndex: 89, bubble: true,
+        });
+        shape._isMerged = true;
+        shape.on("click", (function(p, id) {
+          return function(e) {
+            if (e && e.originalEvent && e.originalEvent.stopPropagation) e.originalEvent.stopPropagation();
+            window._suppressClear = true;
+            toggleSelectCircle(id);
+            setTimeout(function() { window._suppressClear = false; }, 100);
+          };
+        })(data.path, data.id));
+      } else {
+        if (!data.center || !data.radius) return;
+        shape = new AMap.Circle({
+          center: data.center, radius: data.radius,
+          fillColor: "#E67E22", fillOpacity: 0,
+          strokeColor: strokeColor, strokeWeight: 3,
+          strokeOpacity: 0.9, zIndex: 89, bubble: true,
+        });
+        shape.on("click", (function(c, r, id) {
+          return function(e) {
+            if (!isOnCircleEdge(e.lnglat, c, r)) return;
+            if (e && e.originalEvent && e.originalEvent.stopPropagation) e.originalEvent.stopPropagation();
+            window._suppressClear = true;
+            toggleSelectCircle(id);
+            setTimeout(function() { window._suppressClear = false; }, 100);
+          };
+        })(data.center, data.radius, data.id));
+      }
+      shape._dataId = data.id;
+      map.add(shape);
+      circles.push(shape);
+    } catch (err) {
+      console.error("恢复圆失败:", data.id, err);
     }
-    shape._dataId = data.id;
-    map.add(shape);
-    circles.push(shape);
   });
 }
 
@@ -1272,7 +2049,9 @@ addBtn.addEventListener("click", toggleAddMode);
 circleBtn.addEventListener("click", toggleCircleMode);
 document.addEventListener("keydown", e => {
   if (e.key === "Escape") {
-    if (circleMode) toggleCircleMode();
+    if (lineMode) toggleLineMode();
+    else if (poiMode) togglePoiMode();
+    else if (circleMode) toggleCircleMode();
     else if (addMode) toggleAddMode();
   }
 });
@@ -1282,10 +2061,11 @@ const modalOverlay = document.getElementById("modalOverlay");
 const modalNameInput = document.getElementById("modalNameInput");
 let modalResolve = null;
 
-function showNameModal() {
+function showNameModal(title) {
   return new Promise(resolve => {
     modalResolve = resolve;
     modalNameInput.value = "";
+    document.getElementById("modalBox").querySelector("h3").textContent = title || "输入名称";
     modalOverlay.classList.add("show");
     setTimeout(() => modalNameInput.focus(), 100);
   });
@@ -1337,17 +2117,30 @@ function loadAMap() {
   setupMarkerSearch();
   setupFilterPanel();
   setupCircleMenu();
+  setupPoi();
 
   // 地图点击 — 用 DOM 事件避免地图文字标签拦截
+  // 区分"单击"和"拖动地图"：通过 mousedown 到 mouseup 的距离判断
+  var _mouseDown = null;
+  document.getElementById("mapContainer").addEventListener("mousedown", function(e) {
+    _mouseDown = { x: e.clientX, y: e.clientY };
+  });
   document.getElementById("mapContainer").addEventListener("click", async function(e) {
-    if (!addMode && !circleMode) return;
+    if (!addMode && !circleMode && !lineMode && !poiMode) return;
+    // 如果 mousedown 到 click 的位置距离 > 5px，视为拖动地图，不触发操作
+    if (_mouseDown) {
+      var dx = Math.abs(e.clientX - _mouseDown.x);
+      var dy = Math.abs(e.clientY - _mouseDown.y);
+      if (dx > 5 || dy > 5) { _mouseDown = null; return; }
+    }
+    _mouseDown = null;
     var rect = this.getBoundingClientRect();
     var lnglat = map.containerToLngLat(new AMap.Pixel(e.clientX - rect.left, e.clientY - rect.top));
     if (!lnglat) return;
     var pos = [lnglat.getLng(), lnglat.getLat()];
 
     if (addMode) {
-      const name = await showNameModal();
+      const name = await showNameModal("输入小区名称");
       if (!name) return;
       const data = {
         id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
@@ -1378,39 +2171,86 @@ function loadAMap() {
         finalizeCircle(circleCenter, pos);
         toggleCircleMode();
       }
+    } else if (lineMode) {
+      startDrawingLine(pos);
+    } else if (poiMode) {
+      const name = await showNameModal("输入标志名称");
+      if (!name) return;
+      var data = {
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+        type: "poi",
+        name: name,
+        position: pos,
+        category: poiCategory,
+      };
+      poiDataMap[data.id] = data;
+      poiMarkers.push(createPoiMarker(data));
+      saveAll();
     }
   });
 
   // 非添加模式下的地图点击 → 取消选中
   map.on("click", function() {
-    if (!addMode && !circleMode) { deselectMarker(); clearCircleSelection(); }
+    if (!addMode && !circleMode && !lineMode && !poiMode) {
+      deselectMarker();
+      clearCircleSelection();
+    }
   });
 
   // 鼠标移动 → 实时预览圆（用 document 事件避免圆遮挡 map 事件）
   document.addEventListener("mousemove", function(e) {
-    if (!circleMode || !circleCenter) return;
-    var rect = document.getElementById("mapContainer").getBoundingClientRect();
-    var px = new AMap.Pixel(e.clientX - rect.left, e.clientY - rect.top);
-    var lnglat = map.containerToLngLat(px);
-    if (!lnglat) return;
-    var radius = Math.round(AMap.GeometryUtil.distance(circleCenter, [lnglat.getLng(), lnglat.getLat()]));
-    if (radius < 5) { clearDrawingCircle(); addHint.textContent = "移动鼠标调整半径 → 点击定型"; return; }
-    var distText = radius >= 1000 ? (radius / 1000).toFixed(2) + " 公里" : radius + " 米";
-    addHint.textContent = "半径 " + distText + " → 点击定型";
-    if (drawingCircle) { drawingCircle.setMap(null); drawingCircle = null; }
-    drawingCircle = new AMap.Circle({
-      center: circleCenter, radius: radius,
-      fillColor: "#E67E22", fillOpacity: 0,
-      strokeColor: "#E67E22", strokeWeight: 2,
-      strokeOpacity: 0.7, strokeStyle: "dashed", zIndex: 90,
-    });
-    drawingCircle._isPreview = true;
-    map.add(drawingCircle);
+    if (circleMode && circleCenter) {
+      var rect = document.getElementById("mapContainer").getBoundingClientRect();
+      var px = new AMap.Pixel(e.clientX - rect.left, e.clientY - rect.top);
+      var lnglat = map.containerToLngLat(px);
+      if (!lnglat) return;
+      var radius = Math.round(AMap.GeometryUtil.distance(circleCenter, [lnglat.getLng(), lnglat.getLat()]));
+      if (radius < 5) { clearDrawingCircle(); addHint.textContent = "移动鼠标调整半径 → 点击定型"; return; }
+      var distText = radius >= 1000 ? (radius / 1000).toFixed(2) + " 公里" : radius + " 米";
+      addHint.textContent = "半径 " + distText + " → 点击定型";
+      if (drawingCircle) { drawingCircle.setMap(null); drawingCircle = null; }
+      drawingCircle = new AMap.Circle({
+        center: circleCenter, radius: radius,
+        fillColor: "#E67E22", fillOpacity: 0,
+        strokeColor: "#E67E22", strokeWeight: 2,
+        strokeOpacity: 0.7, strokeStyle: "dashed", zIndex: 90,
+      });
+      drawingCircle._isPreview = true;
+      map.add(drawingCircle);
+    } else if (lineMode && drawingNodes.length > 0) {
+      // 画线模式下实时预览：从最后一个节点到鼠标当前位置的虚线
+      var rect2 = document.getElementById("mapContainer").getBoundingClientRect();
+      var px2 = new AMap.Pixel(e.clientX - rect2.left, e.clientY - rect2.top);
+      var lnglat2 = map.containerToLngLat(px2);
+      if (!lnglat2) return;
+      var previewPath = drawingNodes.map(function(n) { return [n.lng, n.lat]; });
+      previewPath.push([lnglat2.getLng(), lnglat2.getLat()]);
+      if (window._previewLine) {
+        window._previewLine.setPath(previewPath);
+      } else {
+        window._previewLine = new AMap.Polyline({
+          path: previewPath,
+          strokeColor: "#9B59B6",
+          strokeWeight: 3,
+          strokeStyle: "dashed",
+          strokeOpacity: 0.6,
+          zIndex: 77,
+        });
+        map.add(window._previewLine);
+      }
+    } else {
+      if (window._previewLine) {
+        window._previewLine.setMap(null);
+        window._previewLine = null;
+      }
+    }
   });
 
   // 右键 → 退出模式
   map.on("rightclick", () => {
-    if (circleMode) toggleCircleMode();
+    if (lineMode) toggleLineMode();
+    else if (poiMode) togglePoiMode();
+    else if (circleMode) toggleCircleMode();
     else if (addMode) toggleAddMode();
   });
 
