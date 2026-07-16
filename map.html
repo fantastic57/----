@@ -6,7 +6,7 @@
 <title>看房地图</title>
 <style>
   :root {
-    --panel-width: 360px;
+    --panel-width: 420px;
     --topbar-height: 56px;
     --color-blue: #4A90D9;
     --color-red: #E74C3C;
@@ -279,7 +279,7 @@
     flex: 1; display: flex; align-items: center; justify-content: center;
     color: #ccc; font-size: 15px; text-align: center; padding: 40px; line-height: 1.8;
   }
-  #panelContent { display: none; flex-direction: column; padding: 24px; gap: 20px; }
+  #panelContent { display: none; flex-direction: column; padding: 24px; gap: 6px; }
   #panelContent.show { display: flex; }
 
   /* 名称 */
@@ -311,7 +311,7 @@
   .exclude-btn.nohouse.active { background: #d0e8f0; border-color: #5a8aa0; color: #4a7088; font-weight: 600; }
 
   /* 分隔 */
-  .section-divider { border: none; border-top: 1px solid var(--color-border); margin: 4px 0; }
+  .section-divider { border: none; border-top: 1px solid var(--color-border); margin: 0; }
 
   /* 字段 */
   .field-group { display: flex; flex-direction: column; gap: 10px; }
@@ -347,6 +347,100 @@
   }
   #noteInput:focus { border-color: var(--color-blue); }
 
+  /* ===== v2 详情面板：第 1 行 ===== */
+  .top-row-1 {
+    display: flex; align-items: center; gap: 12px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--color-border);
+    margin-bottom: 12px;
+  }
+  .top-row-1 #nameInput {
+    flex: 1; min-width: 0; font-size: 18px; padding: 6px 0;
+    border-bottom: 2px solid transparent;
+  }
+  .top-row-2 {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 0 12px;
+  }
+  .total-score-quick {
+    font-size: 14px; font-weight: 600; color: var(--color-text-light);
+    white-space: nowrap;
+  }
+  .total-score-quick b {
+    color: var(--color-blue); font-size: 16px; font-weight: 700;
+  }
+  #deleteMarkerBtn {
+    padding: 6px 12px; font-size: 13px; flex-shrink: 0; width: auto; margin-top: 0;
+  }
+
+  /* ===== v2 价格追踪行 ===== */
+  .price-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px; padding: 0; margin-bottom: -4px;
+  }
+  .price-row label {
+    font-size: 11px; color: var(--color-text-light);
+    display: flex; flex-direction: column; gap: 3px;
+    min-width: 0;
+  }
+  .price-row input {
+    padding: 5px 6px; border: 1px solid var(--color-border);
+    border-radius: 4px; font-size: 13px; color: var(--color-text);
+    width: 100%; box-sizing: border-box;
+    min-width: 0;
+  }
+  .price-row .price-drop {
+    display: block; padding: 5px 4px;
+    background: #fff5f5; border: 1px solid var(--color-border);
+    border-radius: 4px; font-size: 13px; font-weight: 700;
+    color: var(--color-red); text-align: center;
+    width: 100%; box-sizing: border-box;
+  }
+
+  /* ===== v2 标题行 ===== */
+  .title-row {
+    display: grid;
+    grid-template-columns: 68px 46px 1fr 46px;
+    gap: 6px; padding: 0 0 2px;
+    font-weight: 700; font-size: 12px;
+    color: var(--color-text-light);
+    border-bottom: 2px solid var(--color-border);
+  }
+  .title-row > div { text-align: center; }
+  .title-row > div:first-child { text-align: left; }
+
+  /* ===== v2 评分行 ===== */
+  .score-row {
+    display: grid;
+    grid-template-columns: 68px 46px 1fr 46px;
+    gap: 6px; padding: 6px 0;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .score-row.data-row { grid-template-columns: 68px 1fr 1fr; }
+  .score-row.data-row label { font-size: 13px; }
+  .score-row.data-row input {
+    padding: 4px 6px; border: 1px solid var(--color-border);
+    border-radius: 4px; font-size: 12px;
+  }
+  .score-row label {
+    font-size: 12px; color: var(--color-text); font-weight: 500;
+  }
+  .score-row select.weight,
+  .score-row select.value,
+  .score-row input.value {
+    width: 100%; padding: 4px 6px; border: 1px solid var(--color-border);
+    border-radius: 4px; font-size: 12px;
+    background: #fff;
+  }
+  .score-row select.weight {
+    text-align: center;
+  }
+  .score-row .auto-score {
+    text-align: center; font-weight: 700;
+    color: var(--color-blue); font-size: 14px;
+    background: #f0f8ff; padding: 4px; border-radius: 4px;
+  }
+
   /* 详情面板底部危险按钮 */
   .danger-btn {
     width: 100%; padding: 10px; margin-top: 8px;
@@ -356,6 +450,278 @@
     transition: all 0.15s;
   }
   .danger-btn:hover { background: var(--color-red); color: #fff; }
+
+  /* ===== v2 排名面板 ===== */
+  #panelRanking {
+    display: none; flex-direction: column; height: 100%;
+  }
+  #panelRanking.show { display: flex; }
+
+  .ranking-header {
+    display: flex; align-items: center; gap: 6px;
+    padding: 16px 24px; border-bottom: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+  .ranking-title { font-size: 16px; font-weight: 700; color: var(--color-text); margin-right: auto; }
+  #rankingScope, #rankingSort {
+    padding: 4px 8px; border: 1px solid var(--color-border);
+    border-radius: 4px; font-size: 13px; background: #fff;
+    color: var(--color-text); outline: none;
+    height: 28px; line-height: 1.2;
+    cursor: pointer;
+  }
+  #rankingScope:focus, #rankingSort:focus { border-color: var(--color-blue); }
+
+  #rankingList {
+    flex: 1; overflow-y: auto; padding: 4px 0;
+  }
+
+  .ranking-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 24px; cursor: pointer;
+    border-bottom: 1px solid #f5f5f5;
+    transition: background 0.1s;
+  }
+  .ranking-item:hover { background: #f8f6f2; }
+
+  .ranking-num { width: 24px; font-size: 13px; font-weight: 700; color: var(--color-text-light); text-align: center; flex-shrink: 0; }
+  .ranking-num.top1 { color: #FFD700; }
+  .ranking-num.top2 { color: #C0C0C0; }
+  .ranking-num.top3 { color: #CD7F32; }
+
+  .ranking-name { flex: 1; font-size: 14px; font-weight: 500; color: var(--color-text); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .ranking-score { font-size: 14px; font-weight: 700; color: var(--color-blue); white-space: nowrap; flex-shrink: 0; }
+
+  .ranking-empty { padding: 40px; text-align: center; color: #ccc; font-size: 14px; }
+
+  /* ===== v2 房子面板 ===== */
+  .add-house-btn {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    font-size: 22px; font-weight: 700;
+    border: 1.5px solid var(--color-blue);
+    background: #fff; color: var(--color-blue);
+    border-radius: 50%;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: all 0.15s;
+  }
+  .add-house-btn:hover { background: var(--color-blue); color: #fff; }
+
+  .house-panel {
+    position: absolute; top: 0; bottom: 0;
+    width: var(--panel-width);
+    background: var(--color-white);
+    border-left: 1px solid var(--color-border);
+    display: flex; flex-direction: column;
+    box-shadow: -2px 0 16px rgba(0,0,0,0.08);
+    overflow-y: auto; z-index: 98;
+    padding: 20px;
+    gap: 12px;
+  }
+
+  .house-row-1 {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .house-row-1 .star-group { display: flex; gap: 4px; cursor: pointer; font-size: 26px; user-select: none; }
+  .house-row-1 .star { color: #ddd; }
+  .house-row-1 .star.active { color: #f0c040; }
+  .house-row-1 .house-delete-btn {
+    width: auto; padding: 6px 12px; font-size: 13px;
+    border: 1.5px solid var(--color-red); border-radius: 6px;
+    background: #fff5f5; color: var(--color-red);
+    cursor: pointer; font-weight: 600;
+  }
+  .house-row-1 .house-delete-btn:hover { background: var(--color-red); color: #fff; }
+
+  .house-row-2 {
+    display: flex; gap: 12px;
+  }
+  .house-layout-image {
+    flex: 1; height: 200px;
+    border: 1.5px dashed var(--color-border);
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-text-light); font-size: 13px;
+    background: #fafafa;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+  }
+  .house-layout-image img {
+    width: 100%; height: 100%; object-fit: contain;
+  }
+  .house-layout-image .placeholder {
+    text-align: center; padding: 20px;
+  }
+
+  .house-price-block {
+    width: 140px; flex-shrink: 0;
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 8px;
+    background: #fafafa;
+    border-radius: var(--radius);
+  }
+  .house-price-input {
+    font-size: 36px; font-weight: 700;
+    color: var(--color-blue);
+    text-align: center;
+    border: none;
+    border-bottom: 2px solid var(--color-border);
+    background: transparent;
+    width: 100%; padding: 4px 0;
+    outline: none;
+  }
+  .house-price-input:focus { border-bottom-color: var(--color-blue); }
+  .house-price-unit {
+    text-align: center; font-size: 14px;
+    color: var(--color-text-light); margin-top: -4px;
+  }
+  .house-avg-price, .house-internal-avg {
+    font-size: 13px; color: var(--color-text);
+    text-align: center;
+  }
+  .house-avg-price b, .house-internal-avg b {
+    color: var(--color-blue); font-weight: 700;
+  }
+
+  .house-row-3 {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .house-row-3 .link-label {
+    font-size: 13px; color: var(--color-text-light);
+    flex-shrink: 0;
+  }
+  .house-link-input {
+    flex: 1; padding: 6px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px; font-size: 13px;
+    background: #fff;
+    outline: none;
+  }
+  .house-link-input:focus { border-color: var(--color-blue); }
+
+  .house-link-preview {
+    font-size: 12px; margin-top: 2px;
+    word-break: break-all;
+  }
+  .house-link-preview a {
+    color: var(--color-blue);
+    text-decoration: none;
+    display: inline-block;
+    padding: 4px 6px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background: #f0f8ff;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .house-link-preview a:hover {
+    background: var(--color-blue);
+    color: #fff;
+  }
+
+  /* ===== 房子卡片（小区面板内） ===== */
+  .house-cards-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 8px;
+    font-size: 13px; font-weight: 600;
+    color: var(--color-text-light);
+  }
+  .house-card {
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    background: #fafafa;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .house-card:hover {
+    border-color: var(--color-blue);
+    background: #f0f8ff;
+  }
+  .house-card .house-card-tag {
+    font-weight: 700; font-size: 14px;
+    color: var(--color-blue); flex-shrink: 0;
+  }
+  .house-card .house-card-info {
+    flex: 1; min-width: 0;
+    font-size: 12px;
+    color: var(--color-text-light);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .house-card .house-card-score {
+    font-size: 14px; font-weight: 700;
+    color: var(--color-blue); flex-shrink: 0;
+  }
+  .house-cards-empty {
+    padding: 12px; text-align: center;
+    color: #ccc; font-size: 13px;
+    background: #fafafa; border-radius: var(--radius);
+    border: 1px dashed var(--color-border);
+  }
+
+  /* 多选 checkbox（地铁线路） */
+  .multi-checkbox {
+    position: relative; width: 100%;
+  }
+  .multi-checkbox-toggle {
+    padding: 4px 6px; border: 1px solid var(--color-border);
+    border-radius: 4px; font-size: 12px;
+    background: #fff; cursor: pointer;
+    user-select: none; min-height: 20px;
+    color: var(--color-text);
+  }
+  .multi-checkbox-toggle:hover { border-color: var(--color-blue); }
+  .multi-checkbox-dropdown {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: #fff; border: 1px solid var(--color-border);
+    border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 100; padding: 4px 0; margin-top: 2px;
+  }
+  .multi-checkbox-item {
+    display: flex; align-items: center; gap: 6px;
+    padding: 4px 8px; cursor: pointer; font-size: 12px;
+  }
+  .multi-checkbox-item:hover { background: #f0f8ff; }
+  .multi-checkbox-item input { cursor: pointer; }
+
+  /* 房子面板里复用小区面板的字段行样式 */
+  .house-panel .title-row {
+    display: grid;
+    grid-template-columns: 68px 46px 1fr 46px;
+    gap: 6px; padding: 0 0 2px;
+    font-weight: 700; font-size: 12px;
+    color: var(--color-text-light);
+    border-bottom: 2px solid var(--color-border);
+  }
+  .house-panel .score-row {
+    display: grid;
+    grid-template-columns: 68px 46px 1fr 46px;
+    gap: 6px; padding: 6px 0;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .house-panel .score-row .room-layout-inputs {
+    display: flex; gap: 2px; align-items: center;
+    flex-wrap: nowrap;
+  }
+  .house-panel .score-row .room-layout-inputs input {
+    width: 36%; padding: 4px 4px; min-width: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 4px; font-size: 12px;
+    text-align: center;
+  }
+  .house-panel .score-row .room-layout-inputs .room-unit {
+    font-size: 12px; color: var(--color-text-light);
+    padding: 0 2px; white-space: nowrap;
+  }
 
   /* ===== 弹窗 ===== */
   #modalOverlay {
@@ -382,7 +748,87 @@
   .modal-btn.cancel:hover { background: #e0e0e0; }
   .modal-btn.confirm { background: var(--color-blue); color: #fff; }
   .modal-btn.confirm:hover { opacity: 0.9; }
+
+  /* ========== 对比表格弹窗 ========== */
+  #compareOverlay {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 300;
+    background: rgba(0,0,0,0.5);
+    flex-direction: column;
+  }
+  #compareOverlay.show { display: flex; }
+
+  #compareToolbar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 20px;
+    background: #fff;
+    border-bottom: 2px solid #e0e0e0;
+    flex-shrink: 0;
+  }
+  #compareToolbar .compare-title {
+    font-size: 18px; font-weight: 700; margin-right: 16px;
+  }
+  .compare-tab {
+    padding: 6px 16px; border: 1px solid #ccc; border-radius: 6px;
+    background: #f5f5f5; cursor: pointer; font-size: 14px;
+    transition: all 0.15s;
+  }
+  .compare-tab:hover { background: #e8e8e8; }
+  .compare-tab.active {
+    background: var(--color-blue); color: #fff; border-color: var(--color-blue);
+  }
+  #compareToolbar .spacer { flex: 1; }
+  #compareExportBtn {
+    padding: 6px 16px; border: none; border-radius: 6px;
+    background: #27ae60; color: #fff; cursor: pointer; font-size: 14px;
+  }
+  #compareExportBtn:hover { background: #219a52; }
+  #compareCloseBtn {
+    padding: 6px 12px; border: none; border-radius: 6px;
+    background: #e74c3c; color: #fff; cursor: pointer; font-size: 16px;
+  }
+  #compareCloseBtn:hover { background: #c0392b; }
+
+  #compareTableWrap {
+    flex: 1; overflow: auto;
+    margin: 16px; background: #fff; border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  }
+  #compareTable {
+    border-collapse: collapse; table-layout: auto;
+    min-width: 100%;
+  }
+  #compareTable th, #compareTable td {
+    padding: 6px 12px; font-size: 13px; line-height: 32px;
+    white-space: nowrap; border: 1px solid #e8e8e8;
+  }
+  #compareTable thead th {
+    position: sticky; top: 0; z-index: 3;
+    background: #f0f0f0; font-weight: 600;
+    color: #333; text-align: center;
+    min-width: 90px;
+  }
+  #compareTable thead th:first-child {
+    left: 0; z-index: 4; min-width: 100px; max-width: 100px;
+  }
+  #compareTable tbody th {
+    position: sticky; left: 0; z-index: 2;
+    background: #fafafa; font-weight: 600;
+    color: #555; text-align: left;
+    cursor: pointer; user-select: none;
+    min-width: 100px; max-width: 100px;
+  }
+  #compareTable tbody th:hover { background: #e8f0fe; color: var(--color-blue); }
+  #compareTable tbody th .sort-arrow { margin-left: 4px; font-size: 11px; }
+  #compareTable tbody td { text-align: center; }
+  #compareTable tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  /* 斑马纹：偶数列 */
+  #compareTable tbody td:nth-child(even) { background: #fafafa; }
+  /* 表头左上角双重sticky */
+  #compareTable thead th.corner { z-index: 5; }
 </style>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -397,6 +843,7 @@
     <button id="poiBtn">📍 添加标志</button>
     <button id="lineBtn">➖ 添加线</button>
     <button id="circleBtn">⭕ 添加面</button>
+    <button id="compareBtn">📊 对比</button>
   </div>
 </div>
 <div id="searchDropdown"></div>
@@ -474,10 +921,32 @@
 <!-- 详情面板 -->
 <div id="panel">
   <div id="panelEmpty">👆 点击地图上的标记<br>查看详细信息</div>
+  <div id="panelRanking">
+    <div class="ranking-header">
+      <span class="ranking-title">排名</span>
+      <select id="rankingScope">
+        <option value="community">小区</option>
+        <option value="house">房子</option>
+      </select>
+      <select id="rankingSort">
+        <option value="score">总分</option>
+        <option value="price">均价</option>
+        <option value="drop">跌幅比</option>
+      </select>
+    </div>
+    <div id="rankingList"></div>
+  </div>
   <div id="panelContent">
-    <input id="nameInput" type="text" placeholder="小区名称" maxlength="30">
+    <!-- 第 1 行：小区名 + 总分 + 删除 -->
+    <div class="top-row-1">
+      <input id="nameInput" type="text" placeholder="小区名称" maxlength="30">
+      <button id="addHouseBtn" class="add-house-btn" title="新增房子">+</button>
+      <span class="total-score-quick">总分 <b id="totalScoreQuick">--</b> / 10</span>
+      <button id="deleteMarkerBtn" class="danger-btn">🗑 删除</button>
+    </div>
 
-    <div class="rating-exclude-row">
+    <!-- 第 2 行：⭐ + 太贵/太老/无房 -->
+    <div class="top-row-2">
       <div id="starGroup">
         <span class="star" data-idx="0">☆</span>
         <span class="star" data-idx="1">☆</span>
@@ -492,45 +961,28 @@
 
     <hr class="section-divider">
 
-    <div class="field-group">
-      <span class="field-label">小区年代</span>
-      <div class="field-options" id="eraGroup">
-        <button class="radio-btn" data-val="00后">00后</button>
-        <button class="radio-btn" data-val="95后">95后</button>
-        <button class="radio-btn" data-val="90后">90后</button>
-        <button class="radio-btn" data-val="80后">80后</button>
-        <button class="radio-btn" data-val="其他">其他</button>
-      </div>
+    <!-- 第 3 行：价格追踪 -->
+    <div class="price-row">
+      <label>挂牌均价 <input id="priceInput" type="number" step="0.01" placeholder="万/㎡"></label>
+      <label>前挂牌均价 <input id="prevPriceInput" type="number" step="0.01" placeholder="万/㎡"></label>
+      <label>跌幅比 <span id="priceDropLabel" class="price-drop">--</span></label>
     </div>
+
+    <!-- 标题行：项目 | 权重 | 情况 | 得分 -->
+    <div class="title-row">
+      <div>项目</div><div>权重</div><div>情况</div><div>得分</div>
+    </div>
+
+    <!-- 11 行评分（由 JS 动态渲染到 #scoreRows） -->
+    <div id="scoreRows"></div>
 
     <hr class="section-divider">
 
-    <div class="field-group">
-      <span class="field-label">楼型（多选）</span>
-      <div class="field-options" id="buildingGroup">
-        <button class="check-btn" data-val="板楼"><span class="check-mark">✓</span>板楼</button>
-        <button class="check-btn" data-val="塔楼"><span class="check-mark">✓</span>塔楼</button>
-        <button class="check-btn" data-val="电梯板楼"><span class="check-mark">✓</span>电梯板楼</button>
-      </div>
-    </div>
-
-    <hr class="section-divider">
-
-    <div class="field-group">
-      <span class="field-label">小区停车</span>
-      <div class="field-options" id="parkingGroup">
-        <button class="radio-btn" data-val="随便停">随便停</button>
-        <button class="radio-btn" data-val="稍微找">稍微找</button>
-        <button class="radio-btn" data-val="难停">难停</button>
-      </div>
-    </div>
-
+    <!-- 备注 textarea（最底部） -->
     <div class="field-group">
       <span class="field-label">备注</span>
       <textarea id="noteInput" placeholder="可以写一些额外信息..." maxlength="500"></textarea>
     </div>
-
-    <button id="deleteMarkerBtn" class="danger-btn">🗑 删除该点</button>
 
     <!-- POI 面板（与标记面板互斥） -->
     <div id="poiPanel" style="display:none; flex-direction:column; gap:20px;">
@@ -574,6 +1026,22 @@
       <button class="modal-btn cancel" id="modalCancel">取消</button>
       <button class="modal-btn confirm" id="modalConfirm">确认</button>
     </div>
+  </div>
+</div>
+
+<!-- 对比表格弹窗 -->
+<div id="compareOverlay">
+  <div id="compareToolbar">
+    <span class="compare-title">📊 对比表格</span>
+    <button class="compare-tab active" data-view="community">小区</button>
+    <button class="compare-tab" data-view="house">房子</button>
+    <button class="compare-tab" data-view="combined">综合</button>
+    <span class="spacer"></span>
+    <button id="compareExportBtn">📥 导出Excel</button>
+    <button id="compareCloseBtn">✕</button>
+  </div>
+  <div id="compareTableWrap">
+    <table id="compareTable"></table>
   </div>
 </div>
 
@@ -639,17 +1107,27 @@ function getMarkerBorder(data) {
   return "#3A7BC8";
 }
 
-function buildBubbleHTML(name, color, border, highlight) {
+function buildBubbleHTML(name, color, border, highlight, houseCount) {
   const bw = highlight ? "3px" : "2px";
   const shadow = highlight
     ? "0 0 14px rgba(0,0,0,0.4)"
     : "0 2px 8px rgba(0,0,0,0.2)";
   const fw = highlight ? "700" : "600";
+  const badge = (houseCount && houseCount > 0)
+    ? `<span style="
+        position:absolute;top:-6px;right:-6px;
+        min-width:18px;height:18px;padding:0 5px;
+        background:#E74C3C;color:#fff;font-size:11px;font-weight:700;
+        border-radius:9px;display:flex;align-items:center;justify-content:center;
+        box-shadow:0 1px 3px rgba(0,0,0,0.3);
+        line-height:1;
+      ">${houseCount}</span>`
+    : '';
   return `<div style="
     background:${color};color:#fff;padding:6px 14px;border-radius:20px;
     font-size:13px;font-weight:${fw};white-space:nowrap;cursor:pointer;
     border:${bw} solid ${border};box-shadow:${shadow};position:relative;
-  ">${escapeHTML(name)}<div style="
+  ">${escapeHTML(name)}${badge}<div style="
     position:absolute;bottom:-7px;left:50%;transform:translateX(-50%) rotate(45deg);
     width:10px;height:10px;background:${color};
     border-right:${bw} solid ${border};border-bottom:${bw} solid ${border};
@@ -660,7 +1138,8 @@ function buildBubbleHTML(name, color, border, highlight) {
 function createMarker(data) {
   const color = getMarkerColor(data);
   const border = getMarkerBorder(data);
-  const html = buildBubbleHTML(data.name || "未命名", color, border, false);
+  const houseCount = (data.houses || []).length;
+  const html = buildBubbleHTML(data.name || "未命名", color, border, false, houseCount);
 
   const marker = new AMap.Marker({
     position: data.position,
@@ -679,31 +1158,47 @@ function updateMarkerContent(marker, data) {
   const isSelected = marker._dataId === selectedMarkerId;
   const color = getMarkerColor(data);
   const border = getMarkerBorder(data);
-  const html = buildBubbleHTML(data.name || "未命名", color, border, isSelected);
+  const houseCount = (data.houses || []).length;
+  const html = buildBubbleHTML(data.name || "未命名", color, border, isSelected, houseCount);
   marker.setContent(html);
   marker.setzIndex(data.exclude ? 80 : (isSelected ? 110 : 100));
 }
 
 // ---- API ----
+let GLOBAL_WEIGHTS = {};
+
 async function loadAll() {
   try {
-    const res = await fetch("/api/markers");
+    const res = await fetch("/api/data");
     const data = await res.json();
-    return Array.isArray(data) ? data : [];
+    if (data && typeof data === 'object') {
+      GLOBAL_WEIGHTS = data.weights || {};
+      GLOBAL_HOUSE_WEIGHTS = data.house_weights || {};
+      const all = [
+        ...(data.markers || []).map(m => ({ ...m, _category: 'marker' })),
+        ...(data.others || []).map(o => ({ ...o, _category: o.type }))
+      ];
+      return all;
+    }
+    return [];
   } catch (e) { console.error("加载失败:", e); return []; }
 }
 async function saveAll() {
   try {
-    const allData = [
-      ...Object.values(markerDataMap),
-      ...Object.values(circleDataMap),
-      ...Object.values(lineDataMap),
-      ...Object.values(poiDataMap),
-    ];
-    const res = await fetch("/api/markers", {
+    const payload = {
+      weights: GLOBAL_WEIGHTS,
+      house_weights: GLOBAL_HOUSE_WEIGHTS,
+      markers: Object.values(markerDataMap),
+      others: [
+        ...Object.values(circleDataMap),
+        ...Object.values(lineDataMap),
+        ...Object.values(poiDataMap),
+      ],
+    };
+    const res = await fetch("/api/data", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(allData),
+      body: JSON.stringify(payload),
     });
     if (!res.ok) {
       const err = await res.json().catch(function() { return {}; });
@@ -711,6 +1206,20 @@ async function saveAll() {
       alert("保存失败：" + (err.error || res.status));
     }
   } catch (e) { console.error("保存失败:", e); alert("保存失败：" + e.message); }
+}
+
+// 仅保存权重（不保存 markers）
+async function saveWeights() {
+  try {
+    const res = await fetch("/api/weights", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(GLOBAL_WEIGHTS),
+    });
+    if (!res.ok) {
+      console.error("权重保存失败:", res.status);
+    }
+  } catch (e) { console.error("权重保存失败:", e); }
 }
 
 // ---- 初始化标记 ----
@@ -735,12 +1244,15 @@ async function initMarkers() {
   });
   try { restoreCircles(); } catch (e) { console.error("restoreCircles:", e); }
   try { restorePolylines(); } catch (e) { console.error("restorePolylines:", e); }
+  showRanking();
 }
 
 // ---- 选中/取消选中 ----
 function selectMarker(id) {
   // 切换到标记点，清除线/圆选中
   clearAllSelection();
+  hideRanking();
+  closeAllHousePanels();
   // 取消旧选中
   if (selectedMarkerId && selectedMarkerId !== id) {
     const prev = markers.find(m => m._dataId === selectedMarkerId);
@@ -754,28 +1266,611 @@ function selectMarker(id) {
 
   renderPanel(data);
 
+  // 自动弹出该小区下所有房子面板
+  if (data.houses && data.houses.length > 0) {
+    data.houses.forEach(h => openHousePanel(h, data));
+  }
+
   // 高亮当前
   const marker = markers.find(m => m._dataId === id);
   if (marker) updateMarkerContent(marker, data);
 }
 
 function deselectMarker() {
+  closeAllHousePanels();
   if (selectedMarkerId) {
     const prev = markers.find(m => m._dataId === selectedMarkerId);
     if (prev && markerDataMap[selectedMarkerId]) {
       updateMarkerContent(prev, markerDataMap[selectedMarkerId]);
     }
     clearPoiSelection();
-    clearPoiSelection();
     selectedMarkerId = null;
     panelDataId = null;
     currentRating = 0;
-    document.getElementById("panelEmpty").style.display = "flex";
-    document.getElementById("panelContent").classList.remove("show");
+    showRanking();
   }
 }
 
 // ---- 面板渲染 ----
+// ============== v2 评分系统 ==============
+
+// 工具函数（必须定义在 SCORE_FIELDS 之前）
+function positionScore(buckets) {
+  return (value) => {
+    const N = buckets.length;
+    if (N === 1) return 5;
+    const idx = buckets.findIndex(test => test(value));
+    if (idx === -1) return 0;
+    return +(5 - (5 * idx) / (N - 1)).toFixed(2);
+  };
+}
+
+function metroLinesScore(value) {
+  const set = new Set(Array.isArray(value) ? value : []);
+  let s = 0;
+  if (set.has('3')) s += 2.5;
+  ['8', '19', '20'].forEach(l => { if (set.has(l)) s += 2.5 / 3; });
+  return +s.toFixed(2);
+}
+
+// 10 项评分字段定义
+const SCORE_FIELDS = [
+  { key: 'school_quality', label: '学区质量', type: 'select',
+    options: ['好', '一般', '差'],
+    scoreFn: positionScore([v => v === '好', v => v === '一般', v => true]) },
+
+  { key: 'metro_lines', label: '地铁线路', type: 'multi-select',
+    options: ['3', '8', '19', '20'],
+    scoreFn: metroLinesScore },
+
+  { key: 'metro_line3_walk_min', label: '三号线步行', type: 'select',
+    options: ['≤5分钟', '5–10分钟', '10–15分钟', '>15分钟'],
+    scoreFn: positionScore([v => v === '≤5分钟', v => v === '5–10分钟', v => v === '10–15分钟', v => true]) },
+
+  { key: 'metro_nearest_walk_min', label: '最近地铁', type: 'select',
+    options: ['≤5分钟', '5–10分钟', '10–15分钟', '>15分钟'],
+    scoreFn: positionScore([v => v === '≤5分钟', v => v === '5–10分钟', v => v === '10–15分钟', v => true]) },
+
+  { key: 'school_cycling_min', label: '学校骑行', type: 'select',
+    options: ['≤15分钟', '15–20分钟', '20–25分钟', '>25分钟'],
+    scoreFn: positionScore([v => v === '≤15分钟', v => v === '15–20分钟', v => v === '20–25分钟', v => true]) },
+
+  { key: 'work_bus_min', label: '上班公交', type: 'select',
+    options: ['≤75分钟', '75–90分钟', '90–105分钟', '>105分钟'],
+    scoreFn: positionScore([v => v === '≤75分钟', v => v === '75–90分钟', v => v === '90–105分钟', v => true]) },
+
+  { key: 'work_car_min', label: '上班开车', type: 'select',
+    options: ['≤50分钟', '50–60分钟', '60–70分钟', '>70分钟'],
+    scoreFn: positionScore([v => v === '≤50分钟', v => v === '50–60分钟', v => v === '60–70分钟', v => true]) },
+
+  { key: 'parking', label: '停车', type: 'select',
+    options: ['随便停', '稍微找', '难停'],
+    scoreFn: positionScore([v => v === '随便停', v => v === '稍微找', v => true]) },
+
+  { key: 'environment', label: '小区环境', type: 'select',
+    options: ['美丽家园', '中规中矩', '差'],
+    scoreFn: positionScore([v => v === '美丽家园', v => v === '中规中矩', v => true]) },
+
+  { key: 'amenities_level', label: '周边配套', type: 'select',
+    options: ['齐全', '一般', '缺'],
+    scoreFn: positionScore([v => v === '齐全', v => v === '一般', v => true]) },
+];
+
+function valueToScore(field, value) {
+  // 未填（null/undefined/空字符串/空数组）→ 0 分，而非默认满分
+  if (value === null || value === undefined) return 0;
+  if (typeof value === 'string' && value.trim() === '') return 0;
+  if (Array.isArray(value) && value.length === 0) return 0;
+  return field.scoreFn(value);
+}
+
+function getWeight(fieldKey) {
+  return GLOBAL_WEIGHTS[fieldKey] ?? 3;
+}
+
+function calcTotal(d) {
+  let weightedSum = 0, weightSum = 0;
+  for (const f of SCORE_FIELDS) {
+    const score = valueToScore(f, d[f.key]);
+    const weight = getWeight(f.key);
+    weightedSum += score * weight;
+    weightSum += weight;
+  }
+  return +((weightedSum / weightSum) * 2).toFixed(2);
+}
+
+function calcPriceDrop(d) {
+  if (!d.prev_price_wan || !d.avg_price_wan) return null;
+  // 跌幅比：(现 - 原) / 原 × 100
+  // 现 < 原 → 负数（降价，红色）
+  // 现 > 原 → 正数（涨价，绿色）
+  return +(((d.avg_price_wan - d.prev_price_wan) / d.prev_price_wan) * 100).toFixed(2);
+}
+
+// ============== 排名面板 ==============
+const RANKING_SORTS = {
+  score: (a, b) => (calcTotal(b) - calcTotal(a)),
+  price: (a, b) => {
+    const pa = a.avg_price_wan || 0, pb = b.avg_price_wan || 0;
+    if (!pa && !pb) return calcTotal(b) - calcTotal(a);
+    if (!pa) return 1;
+    if (!pb) return -1;
+    return pa - pb;
+  },
+  drop: (a, b) => {
+    const da = calcPriceDrop(a), db = calcPriceDrop(b);
+    if (da == null && db == null) return calcTotal(b) - calcTotal(a);
+    if (da == null) return 1;
+    if (db == null) return -1;
+    return db - da;  // 跌得少的排前面
+  },
+};
+
+const HOUSE_RANKING_SORTS = {
+  score: (a, b) => (b.score - a.score) || a.communityName.localeCompare(b.communityName),
+  composite: (a, b) => {
+    const ca = calcCompositeScore(a.community, a.house);
+    const cb = calcCompositeScore(b.community, b.house);
+    return cb - ca;
+  },
+  price: (a, b) => {
+    const pa = a.house.price_wan, pb = b.house.price_wan;
+    if (!pa && !pb) return b.score - a.score;
+    if (!pa) return 1;
+    if (!pb) return -1;
+    return pa - pb;
+  },
+  drop: (a, b) => {
+    const da = calcPriceDrop(a.house);
+    const db = calcPriceDrop(b.house);
+    const va = da == null ? Infinity : da;
+    const vb = db == null ? Infinity : db;
+    return vb - va;  // 跌得少的排前面
+  },
+  internal_avg_price: (a, b) => {
+    const pa = calcHouseInternalAvgPrice(a.house);
+    const pb = calcHouseInternalAvgPrice(b.house);
+    const va = pa == null ? Infinity : pa;
+    const vb = pb == null ? Infinity : pb;
+    return va - vb;  // 套内均价低的排前面
+  },
+  internal_area: (a, b) => {
+    const ia = a.house.internal_area_sqm || 0;
+    const ib = b.house.internal_area_sqm || 0;
+    return ib - ia;  // 套内面积大的排前面
+  },
+};
+
+function renderRanking() {
+  const scope = document.getElementById('rankingScope').value;
+  const sortEl = document.getElementById('rankingSort');
+
+  // 根据 scope 动态切换 sort 选项（保留当前选中值）
+  const currentSort = sortEl.value;
+  if (scope === 'house') {
+    sortEl.innerHTML = `
+      <option value="score">总分</option>
+      <option value="composite">综合</option>
+      <option value="price">总价</option>
+      <option value="internal_avg_price">套内均价</option>
+      <option value="internal_area">套内面积</option>
+    `;
+    // 恢复旧值（如果当前选中项在新选项列表中）
+    if (['score','composite','price','internal_avg_price','internal_area'].includes(currentSort)) {
+      sortEl.value = currentSort;
+    } else {
+      sortEl.value = 'score';
+    }
+  } else {
+    sortEl.innerHTML = `
+      <option value="score">总分</option>
+      <option value="price">均价</option>
+      <option value="drop">跌幅比</option>
+    `;
+    if (['score','price','drop'].includes(currentSort)) {
+      sortEl.value = currentSort;
+    } else {
+      sortEl.value = 'score';
+    }
+  }
+
+  if (scope === 'house') {
+    renderHouseRanking();
+  } else {
+    renderCommunityRanking();
+  }
+}
+
+function rankingDisplayValue(d, sortBy, community) {
+  if (sortBy === 'price') {
+    if (community) return d.price_wan ? d.price_wan + '万' : '--';
+    return d.avg_price_wan ? d.avg_price_wan.toFixed(2) + '万/㎡' : '--';
+  }
+  if (sortBy === 'drop') {
+    const drop = calcPriceDrop(d);
+    return drop != null ? drop.toFixed(2) + '%' : '--';
+  }
+  if (sortBy === 'composite') {
+    return calcCompositeScore(community, d).toFixed(1);
+  }
+  if (sortBy === 'internal_avg_price') {
+    const iap = calcHouseInternalAvgPrice(d);
+    return iap != null ? iap.toFixed(2) + '万/㎡' : '--';
+  }
+  if (sortBy === 'internal_area') {
+    return d.internal_area_sqm ? d.internal_area_sqm + '㎡' : '--';
+  }
+  // score / default
+  if (community) return calcHouseScore(d).toFixed(1);
+  return calcTotal(d).toFixed(1);
+}
+
+function renderCommunityRanking() {
+  const sortBy = document.getElementById('rankingSort').value;
+  const list = Object.values(markerDataMap)
+    .filter(d => !d.exclude)
+    .sort(RANKING_SORTS[sortBy] || RANKING_SORTS.score);
+
+  const html = list.map((d, i) => {
+    const rankClass = i < 3 ? ` top${i + 1}` : '';
+    const displayVal = rankingDisplayValue(d, sortBy, null);
+    return `<div class="ranking-item" data-id="${d.id}">
+      <span class="ranking-num${rankClass}">${i + 1}</span>
+      <span class="ranking-name">${escHtml(d.name || '未命名')}</span>
+      <span class="ranking-score">${displayVal}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('rankingList').innerHTML = html || '<div class="ranking-empty">暂无小区数据</div>';
+
+  document.querySelectorAll('.ranking-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectMarker(item.dataset.id);
+    });
+  });
+}
+
+function renderHouseRanking() {
+  const sortBy = document.getElementById('rankingSort').value;
+  const list = [];
+  Object.values(markerDataMap).forEach(community => {
+    (community.houses || []).forEach(h => {
+      list.push({
+        house: h,
+        community: community,
+        communityId: community.id,
+        communityName: community.name || '未命名',
+        score: calcHouseScore(h),
+      });
+    });
+  });
+
+  if (list.length === 0) {
+    document.getElementById('rankingList').innerHTML =
+      '<div class="ranking-empty">还没有录入任何房子</div>';
+    return;
+  }
+
+  list.sort(HOUSE_RANKING_SORTS[sortBy] || HOUSE_RANKING_SORTS.score);
+
+  const html = list.map((item, i) => {
+    const h = item.house;
+    const displayVal = rankingDisplayValue(h, sortBy, item.community);
+    const rankClass = i < 3 ? ` top${i + 1}` : '';
+
+    const meta = [];
+    if (h.price_wan) meta.push(h.price_wan + '万');
+    if (h.area_sqm) meta.push(h.area_sqm + '㎡');
+    if (h.floor_num) meta.push(h.floor_num + '层');
+    if (h.price_tier) meta.push(h.price_tier);
+    const metaStr = meta.join(' · ') || '未填';
+
+    return `<div class="ranking-item" data-id="${item.communityId}" data-house-id="${h.id}">
+      <span class="ranking-num${rankClass}">${i + 1}</span>
+      <span class="ranking-name">${escHtml(item.communityName)} <span style="color:#999;font-size:11px;margin-left:4px;">${escHtml(metaStr)}</span></span>
+      <span class="ranking-score">${displayVal}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('rankingList').innerHTML = html;
+
+  document.querySelectorAll('.ranking-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const communityId = item.dataset.id;
+      const community = markerDataMap[communityId];
+      if (community) selectMarker(communityId);
+    });
+  });
+}
+
+function showRanking() {
+  document.getElementById('panelEmpty').style.display = 'none';
+  document.getElementById('panelContent').classList.remove('show');
+  document.getElementById('panelRanking').classList.add('show');
+  renderRanking();
+}
+
+function hideRanking() {
+  document.getElementById('panelRanking').classList.remove('show');
+}
+
+// ============== 房子评分系统 ==============
+const HOUSE_SCORING = [
+  { key: 'built_year', label: '房龄', type: 'number', unit: '年',
+    scoreFn: ageScore },
+  { key: 'price_tier', label: '总价档次', type: 'select',
+    options: ['300w+', '325w+', '350w+', '375w+', '400w+'],
+    scoreFn: positionScore([v => v === '300w+', v => v === '325w+', v => v === '350w+', v => v === '375w+', v => true]) },
+  { key: 'area_sqm', label: '面积', type: 'number', unit: '㎡',
+    scoreFn: areaScore },
+  { key: 'internal_area_sqm', label: '套内面积', type: 'number', unit: '㎡',
+    scoreFn: internalAreaScore },
+  { key: 'floor_num', label: '楼层', type: 'number-with-elevator', unit: '层',
+    scoreFn: (h, ctx) => floorScore(h.floor_num, ctx.has_elevator) },
+  { key: 'has_elevator', label: '电梯', type: 'select',
+    options: ['有', '可能', '没可能'],
+    scoreFn: positionScore([v => v === '有', v => v === '可能', v => true]) },
+  { key: 'stairwell', label: '楼梯间', type: 'select',
+    options: ['非常好', '正常', '差'],
+    scoreFn: positionScore([v => v === '非常好', v => v === '正常', v => true]) },
+  { key: 'households_per_floor', label: '一梯几户', type: 'select',
+    options: ['2户', '3户', '4户+'],
+    scoreFn: positionScore([v => v === '2户', v => v === '3户', v => true]) },
+  { key: 'room_layout', label: '房型', type: 'room-layout', unit: '室_厅',
+    scoreFn: roomScore },
+  { key: 'layout_type', label: '户型', type: 'select',
+    options: ['好', '一般', '差'],
+    scoreFn: positionScore([v => v === '好', v => v === '一般', v => true]) },
+  { key: 'daylight', label: '采光', type: 'select',
+    options: ['很好', '一般', '差'],
+    scoreFn: positionScore([v => v === '很好', v => v === '一般', v => true]) },
+  { key: 'north_south_transparent', label: '南北通透', type: 'select',
+    options: ['很好', '一般', '差'],
+    scoreFn: positionScore([v => v === '很好', v => v === '一般', v => true]) },
+  { key: 'noise', label: '噪音', type: 'select',
+    options: ['很好', '一般', '差'],
+    scoreFn: positionScore([v => v === '很好', v => v === '一般', v => true]) },
+  { key: 'privacy', label: '私密性', type: 'select',
+    options: ['很好', '一般', '差'],
+    scoreFn: positionScore([v => v === '很好', v => v === '一般', v => true]) },
+  { key: 'decoration', label: '装修', type: 'select',
+    options: ['很好', '一般', '差'],
+    scoreFn: positionScore([v => v === '很好', v => v === '一般', v => true]) },
+  { key: 'seller_mood', label: '诚意度', type: 'select',
+    options: ['诚意', '一般', '不急'],
+    scoreFn: positionScore([v => v === '诚意', v => v === '一般', v => true]) },
+];
+
+let GLOBAL_HOUSE_WEIGHTS = {};
+
+function getHouseWeight(key) {
+  return GLOBAL_HOUSE_WEIGHTS[key] ?? 3;
+}
+
+function ageScore(year) {
+  if (!year) return 0;
+  const y = +year;
+  if (y >= 2000) return 5;
+  if (y <= 1980) return 0;
+  return +((y - 1980) * (5 / 20)).toFixed(2);
+}
+
+function areaScore(v) {
+  if (!v) return 0;
+  const n = +v;
+  if (n >= 80) return 5;
+  if (n >= 75) return 3.75;
+  if (n >= 70) return 2.5;
+  if (n >= 65) return 1.25;
+  return 0;
+}
+
+function internalAreaScore(v) {
+  if (!v) return 0;
+  const n = +v;
+  if (n >= 65) return 5;
+  if (n >= 60) return 3.75;
+  if (n >= 55) return 2.5;
+  if (n >= 50) return 1.25;
+  return 0;
+}
+
+function floorScore(floor, hasElevator) {
+  if (!floor) return 0;
+  const n = +floor;
+  if (n === 3 || n === 4) return 5;
+  if (n === 5 || n === 6) return hasElevator === '有' ? 5 : 3.33;
+  if (n === 1 || n === 2) return 0;
+  return 0;
+}
+
+function roomScore(h) {
+  const rooms = h.rooms != null ? +h.rooms : null;
+  const halls = h.halls != null ? +h.halls : null;
+  if (rooms == null || halls == null) return 0;
+  const sum = rooms + halls;
+  if (sum >= 5) return 5;
+  if (sum === 4) return 3.33;
+  if (sum === 3) return 1.67;
+  return 0;
+}
+
+function houseFieldValue(f, h) {
+  if (f.key === 'room_layout') return { rooms: h.rooms, halls: h.halls };
+  return h[f.key];
+}
+
+function houseFieldScore(f, h) {
+  const v = houseFieldValue(f, h);
+  if (f.key === 'floor_num') return floorScore(v, h.has_elevator);
+  if (f.key === 'room_layout') return roomScore(v);
+  if (v === null || v === undefined) return 0;
+  if (typeof v === 'string' && v.trim() === '') return 0;
+  return f.scoreFn(v);
+}
+
+function calcHouseScore(h) {
+  let weightedSum = 0, weightSum = 0;
+  for (const f of HOUSE_SCORING) {
+    const score = houseFieldScore(f, h);
+    const weight = getHouseWeight(f.key);
+    weightedSum += score * weight;
+    weightSum += weight;
+  }
+  return weightSum > 0 ? +((weightedSum / weightSum) * 2).toFixed(2) : 0;
+}
+
+function calcHouseAvgPrice(h) {
+  if (!h.price_wan || !h.area_sqm) return null;
+  return +(h.price_wan / h.area_sqm).toFixed(2);
+}
+
+function calcHouseInternalAvgPrice(h) {
+  if (!h.price_wan || !h.internal_area_sqm) return null;
+  return +(h.price_wan / h.internal_area_sqm).toFixed(2);
+}
+
+// 综合分 = (小区分 + 房子分) / 2（50:50 比例）
+function calcCompositeScore(community, house) {
+  if (!community || !house) return 0;
+  const c = calcTotal(community);
+  const h = calcHouseScore(house);
+  return +((c + h) / 2).toFixed(2);
+}
+
+// ============== 房子面板管理 ==============
+let openHousePanels = [];  // [{house, community, el}, ...]
+
+function openHousePanel(house, community) {
+  const idx = openHousePanels.length;
+  const el = document.createElement('div');
+  el.className = 'house-panel';
+  el.style.right = (420 * (idx + 1)) + 'px';
+  el.dataset.houseId = house.id;
+  el.dataset.communityId = community.id;
+  el.innerHTML = renderHousePanelHTML(house, community);
+  document.body.appendChild(el);
+  openHousePanels.push({ house, community, el });
+  bindHousePanelEvents(el, house, community);
+  adjustLayoutForPanels();
+}
+
+function closeHousePanel(idx) {
+  const removed = openHousePanels.splice(idx, 1)[0];
+  if (removed && removed.el) removed.el.remove();
+  openHousePanels.forEach((p, i) => { p.el.style.right = (420 * (i + 1)) + 'px'; });
+  adjustLayoutForPanels();
+}
+
+function closeAllHousePanels() {
+  openHousePanels.forEach(p => { if (p.el) p.el.remove(); });
+  openHousePanels = [];
+  adjustLayoutForPanels();
+}
+
+function adjustLayoutForPanels() {
+  const offset = 420 * (1 + openHousePanels.length) + 'px';
+  const mc = document.getElementById('mapContainer');
+  const tb = document.getElementById('topbar');
+  if (mc) mc.style.right = offset;
+  if (tb) tb.style.right = offset;
+}
+
+function onAddHouseClick() {
+  const community = markerDataMap[panelDataId];
+  if (!community) return;
+  community.houses = community.houses || [];
+  const tag = String.fromCharCode(65 + community.houses.length);
+  const newHouse = {
+    id: 'h_' + Date.now() + Math.random().toString(36).slice(2, 6),
+    tag,
+    rating: 0,
+    viewed_at: new Date().toISOString().slice(0, 10),
+  };
+  community.houses.push(newHouse);
+  saveAll();
+  // 刷新小区 marker 角标
+  const marker = markers.find(m => m._dataId === panelDataId);
+  if (marker) updateMarkerContent(marker, community);
+  openHousePanel(newHouse, community);
+}
+
+function onDeleteHouse(el) {
+  const idx = openHousePanels.findIndex(p => p.el === el);
+  if (idx < 0) return;
+  if (!confirm('确定要删除此房吗？')) return;
+  const p = openHousePanels[idx];
+  p.community.houses = p.community.houses.filter(h => h.id !== p.house.id);
+  // 刷新小区 marker 角标
+  const marker = markers.find(m => m._dataId === p.community.id);
+  if (marker) updateMarkerContent(marker, p.community);
+  saveAll();
+  closeHousePanel(idx);
+}
+
+// ============== 渲染 11 行评分（区 1 数据行 + 10 评分行）
+function renderScoreRows(d) {
+  const html = [];
+
+  // 学区数据行（小学 + 初中 inputs）
+  html.push(`
+    <div class="score-row data-row">
+      <label>学区</label>
+      <input class="value" data-key="school_elementary" value="${escHtml(d.school_elementary || '')}" placeholder="小学名">
+      <input class="value" data-key="school_middle" value="${escHtml(d.school_middle || '')}" placeholder="初中名">
+    </div>
+  `);
+
+  // 10 个评分字段
+  for (const f of SCORE_FIELDS) {
+    const weight = getWeight(f.key);
+    const score = valueToScore(f, d[f.key]);
+    const optsHtml = renderValueOptions(f, d[f.key]);
+    html.push(`
+      <div class="score-row">
+        <label>${f.label}</label>
+        <select class="weight" data-key="${f.key}">
+          ${[1,2,3,4,5].map(w => `<option value="${w}" ${w === weight ? 'selected' : ''}>×${w}</option>`).join('')}
+        </select>
+        ${optsHtml}
+        <span class="auto-score">${score.toFixed(2)}</span>
+      </div>
+    `);
+  }
+  return html.join('');
+}
+
+function renderValueOptions(f, value) {
+  if (f.type === 'select') {
+    const opts = ['<option value="">--</option>'].concat(
+      f.options.map(o => `<option value="${o}" ${o === value ? 'selected' : ''}>${o}</option>`)
+    );
+    return `<select class="value" data-key="${f.key}">${opts.join('')}</select>`;
+  }
+  if (f.type === 'multi-select') {
+    const arr = Array.isArray(value) ? value : [];
+    // checkbox 列表，下拉打开，勾选什么最后显示什么（如 "3, 8"）
+    return `<div class="multi-checkbox" data-key="${f.key}">
+      <div class="multi-checkbox-toggle">${arr.length ? arr.join(' · ') : '-- 点击选择'}</div>
+      <div class="multi-checkbox-dropdown" style="display:none;">
+        ${f.options.map(o => `<label class="multi-checkbox-item">
+          <input type="checkbox" value="${o}" ${arr.includes(o) ? 'checked' : ''}>
+          <span>${o}</span>
+        </label>`).join('')}
+      </div>
+    </div>`;
+  }
+  return '';
+}
+
+function escHtml(s) {
+  return String(s).replace(/[&<>"']/g, m => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[m]);
+}
+
 function renderPanel(data) {
   panelDataId = data.id;
   document.getElementById("panelEmpty").style.display = "none";
@@ -783,32 +1878,529 @@ function renderPanel(data) {
 
   document.getElementById("nameInput").value = data.name || "";
 
-  // 评分
+  // ⭐ 评分
   currentRating = data.rating || 0;
   renderStars(currentRating);
 
-  // 排除
+  // 太贵/太老/无房
   document.querySelectorAll(".exclude-btn").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.val === data.exclude);
   });
 
-  // 年代
-  document.querySelectorAll("#eraGroup .radio-btn").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.val === data.era);
-  });
+  // 价格行（手动输入，自动算跌幅比）
+  document.getElementById("priceInput").value = data.avg_price_wan ?? '';
+  document.getElementById("prevPriceInput").value = data.prev_price_wan ?? '';
+  updatePriceDropLabel(data);
 
-  // 楼型
-  document.querySelectorAll("#buildingGroup .check-btn").forEach(btn => {
-    btn.classList.toggle("active", (data.buildingTypes || []).includes(btn.dataset.val));
-  });
+  // 评分系统 11 行
+  document.getElementById("scoreRows").innerHTML = renderScoreRows(data);
 
-  // 停车
-  document.querySelectorAll("#parkingGroup .radio-btn").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.val === data.parking);
-  });
+  // 总分
+  document.getElementById("totalScoreQuick").textContent = calcTotal(data).toFixed(2);
 
   // 备注
   document.getElementById("noteInput").value = data.note || "";
+
+  // 绑定评分系统事件
+  bindScoreEvents(data);
+  bindPriceRow(data);
+}
+
+function updatePriceDropLabel(d) {
+  const label = document.getElementById("priceDropLabel");
+  const drop = calcPriceDrop(d);
+  if (drop === null) {
+    label.textContent = '--';
+    label.style.color = 'var(--color-text-light)';
+  } else {
+    const sign = drop > 0 ? '+' : '';
+    label.textContent = sign + drop.toFixed(2) + '%';
+    label.style.color = drop > 0 ? 'var(--color-green)' : 'var(--color-red)';
+  }
+}
+
+function renderHouseCards(community) {
+  const houses = community.houses || [];
+  const container = document.getElementById('houseCardsList');
+  if (!container) return;
+  if (houses.length === 0) {
+    container.innerHTML = `
+      <div class="house-cards-header">
+        <span>房子</span>
+        <span style="color: #ccc; font-weight: 400;">（无）</span>
+      </div>`;
+    return;
+  }
+  const cardsHtml = houses.map(h => {
+    const score = calcHouseScore(h);
+    const info = [
+      h.price_wan ? `${h.price_wan}万` : '',
+      h.area_sqm ? `${h.area_sqm}㎡` : '',
+      h.layout_type || '',
+    ].filter(Boolean).join(' · ') || '未填';
+    return `<div class="house-card" data-house-id="${h.id}">
+      <span class="house-card-tag">${escHtml(h.tag || '?')}</span>
+      <span class="house-card-info">${escHtml(info)}</span>
+      <span class="house-card-score">${score.toFixed(1)}</span>
+    </div>`;
+  }).join('');
+  container.innerHTML = `
+    <div class="house-cards-header">
+      <span>房子 (${houses.length})</span>
+    </div>
+    ${cardsHtml}`;
+
+  // 绑定点击 → 打开对应房子面板（如已开则置顶；否则新开）
+  container.querySelectorAll('.house-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const houseId = card.dataset.houseId;
+      const existing = openHousePanels.find(p => p.house.id === houseId);
+      if (existing) {
+        // 已开：闪烁一下
+        existing.el.style.boxShadow = '-2px 0 16px rgba(74, 144, 217, 0.6)';
+        setTimeout(() => { existing.el.style.boxShadow = ''; }, 600);
+      } else {
+        const house = houses.find(h => h.id === houseId);
+        if (house) openHousePanel(house, community);
+      }
+    });
+  });
+}
+
+// 局部刷新（不重新渲染整个面板）
+function recalcAndRefresh(d) {
+  for (const f of SCORE_FIELDS) {
+    const row = document.querySelector(`.score-row select.weight[data-key="${f.key}"]`)?.closest('.score-row');
+    if (!row) continue;
+    const scoreCell = row.querySelector('.auto-score');
+    if (scoreCell) scoreCell.textContent = valueToScore(f, d[f.key]).toFixed(2);
+  }
+  document.getElementById("totalScoreQuick").textContent = calcTotal(d).toFixed(2);
+  // 同步刷新所有打开的房子面板的综合分（小区权重变了）
+  openHousePanels.forEach(p => {
+    if (p.community.id === d.id) {
+      const compositeEl = p.el.querySelector('.house-composite-score');
+      if (compositeEl) {
+        compositeEl.textContent = '综合 ' + calcCompositeScore(d, p.house).toFixed(2);
+      }
+    }
+  });
+}
+
+function bindScoreEvents(d) {
+  // 字段值变化 → 重算
+  document.querySelectorAll('#scoreRows .value').forEach(input => {
+    input.addEventListener('change', e => {
+      const key = e.target.dataset.key;
+      if (e.target.multiple) {
+        d[key] = Array.from(e.target.selectedOptions).map(o => o.value);
+      } else if (input.tagName === 'INPUT' && input.type === 'number') {
+        d[key] = e.target.value === '' ? null : +e.target.value;
+      } else {
+        d[key] = e.target.value;
+      }
+      recalcAndRefresh(d);
+      saveAll();
+    });
+  });
+
+  // 权重变化 → 重算总分 + 全局保存
+  document.querySelectorAll('#scoreRows select.weight').forEach(sel => {
+    sel.addEventListener('change', e => {
+      const key = e.target.dataset.key;
+      GLOBAL_WEIGHTS[key] = +e.target.value;
+      // 刷新地图上**所有** marker 的总分显示
+      recalcAndRefresh(d);
+      // 重算所有可见 marker 的总分
+      recalcAllMarkerTotals();
+      saveWeights();
+      if (document.getElementById('panelRanking').classList.contains('show')) {
+        renderRanking();
+      }
+    });
+  });
+
+  // 多选 checkbox（地铁线路）
+  document.querySelectorAll('#scoreRows .multi-checkbox').forEach(box => {
+    const key = box.dataset.key;
+    const toggle = box.querySelector('.multi-checkbox-toggle');
+    const dropdown = box.querySelector('.multi-checkbox-dropdown');
+
+    toggle.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = dropdown.style.display !== 'none';
+      // 关闭所有其他 dropdown
+      document.querySelectorAll('.multi-checkbox-dropdown').forEach(d => d.style.display = 'none');
+      dropdown.style.display = isOpen ? 'none' : 'block';
+    });
+
+    box.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const selected = Array.from(box.querySelectorAll('input:checked')).map(i => i.value);
+        d[key] = selected;
+        // 更新 toggle 显示
+        toggle.textContent = selected.length ? selected.join(' · ') : '-- 点击选择';
+        recalcAndRefresh(d);
+        saveAll();
+      });
+    });
+  });
+  // 点击其他地方关闭 dropdown
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.multi-checkbox-dropdown').forEach(d => d.style.display = 'none');
+  });
+}
+
+// ============== 房子面板渲染 ==============
+function renderHousePanelHTML(house, community) {
+  const score = calcHouseScore(house);
+  const composite = calcCompositeScore(community, house);
+  const avgPrice = calcHouseAvgPrice(house);
+  const internalAvg = calcHouseInternalAvgPrice(house);
+  const rating = house.rating || 0;
+
+  // 户型图（base64）
+  const imgHtml = house.layout_image
+    ? `<img src="${house.layout_image}" alt="户型图">`
+    : `<div class="placeholder">📋 户型图<br><small>Ctrl+V 粘贴 或 拖入图片</small></div>`;
+
+  // 标题行
+  const titleRow = `
+    <div class="title-row">
+      <div>项目</div><div>权重</div><div>情况</div><div>得分</div>
+    </div>`;
+
+  // 16 行评分
+  const rowsHtml = HOUSE_SCORING.map(f => {
+    const weight = getHouseWeight(f.key);
+    const s = houseFieldScore(f, house);
+    const valueHtml = renderHouseValueInput(f, house);
+    return `
+      <div class="score-row">
+        <label>${f.label}</label>
+        <select class="weight" data-key="${f.key}">
+          ${[1,2,3,4,5].map(w => `<option value="${w}" ${w === weight ? 'selected' : ''}>×${w}</option>`).join('')}
+        </select>
+        ${valueHtml}
+        <span class="auto-score">${s.toFixed(2)}</span>
+      </div>`;
+  }).join('');
+
+  return `
+    <div class="house-row-1">
+      <div class="star-group">
+        ${[0,1,2].map(i => `<span class="star ${i < rating ? 'active' : ''}" data-idx="${i}">${i < rating ? '★' : '☆'}</span>`).join('')}
+      </div>
+      <span class="house-composite-score" style="font-size: 22px; font-weight: 700; color: var(--color-green); margin-left: 12px;">综合 ${composite.toFixed(2)}</span>
+      <span class="house-total-score" style="font-size: 14px; font-weight: 600; color: var(--color-text-light); margin-left: 6px;">/ 房子 ${score.toFixed(2)}</span>
+      <button class="house-delete-btn">🗑 删除</button>
+    </div>
+
+    <div class="house-row-2">
+      <div class="house-layout-image">${imgHtml}</div>
+      <div class="house-price-block">
+        <input class="house-price-input" type="number" placeholder="0" value="${house.price_wan ?? ''}">
+        <div class="house-price-unit">万</div>
+        <div class="house-avg-price">均价 <b>${avgPrice != null ? avgPrice.toFixed(2) : '--'}</b> 万/㎡</div>
+        <div class="house-internal-avg">套内均价 <b>${internalAvg != null ? internalAvg.toFixed(2) : '--'}</b> 万/㎡</div>
+      </div>
+    </div>
+
+    <div class="house-row-3">
+      <span class="link-label">链接：</span>
+      <input class="house-link-input" type="text" placeholder="https://..." value="${escHtml(house.link || '')}">
+    </div>
+    <div class="house-link-preview">${
+      house.link && /^https?:\/\//.test(house.link.trim())
+        ? `<a href="${escHtml(house.link)}" target="_blank" rel="noopener noreferrer">🔗 ${escHtml(house.link)}</a>`
+        : ''
+    }</div>
+
+    ${titleRow}
+    <div class="house-score-rows">${rowsHtml}</div>
+
+    <div class="field-group" style="margin-top: 8px;">
+      <span class="field-label">备注</span>
+      <textarea class="house-note" placeholder="看房笔记...">${escHtml(house.note || '')}</textarea>
+    </div>
+
+    <div class="field-group" style="margin-top: 8px;">
+      <span class="field-label">看房日期</span>
+      <input class="house-viewed-at" type="date" value="${escHtml(house.viewed_at || '')}">
+    </div>
+  `;
+}
+
+function renderHouseValueInput(f, h) {
+  if (f.type === 'select') {
+    const opts = ['<option value="">--</option>'].concat(
+      f.options.map(o => `<option value="${escHtml(o)}" ${o === h[f.key] ? 'selected' : ''}>${escHtml(o)}</option>`)
+    );
+    return `<select class="value" data-key="${f.key}">${opts.join('')}</select>`;
+  }
+  if (f.type === 'number' || f.type === 'number-with-elevator') {
+    const v = h[f.key] == null ? '' : h[f.key];
+    return `<input class="value" type="number" data-key="${f.key}" value="${v}" placeholder="${f.unit || ''}">`;
+  }
+  if (f.type === 'room-layout') {
+    const rooms = h.rooms != null ? h.rooms : '';
+    const halls = h.halls != null ? h.halls : '';
+    return `<div class="room-layout-inputs">
+      <input class="value" type="number" min="0" step="1" data-key="rooms" value="${rooms}" placeholder="0">
+      <span class="room-unit">室</span>
+      <input class="value" type="number" min="0" step="1" data-key="halls" value="${halls}" placeholder="0">
+      <span class="room-unit">厅</span>
+    </div>`;
+  }
+  return '';
+}
+
+function bindHousePanelEvents(el, house, community) {
+  // ⭐ 打星
+  el.querySelectorAll('.star-group .star').forEach(star => {
+    star.addEventListener('mouseenter', () => {
+      const idx = +star.dataset.idx;
+      el.querySelectorAll('.star-group .star').forEach((s, i) => {
+        s.textContent = i <= idx ? '★' : '☆';
+        s.classList.toggle('active', i <= idx);
+      });
+    });
+    star.addEventListener('mouseleave', () => {
+      el.querySelectorAll('.star-group .star').forEach((s, i) => {
+        const active = i < house.rating;
+        s.textContent = active ? '★' : '☆';
+        s.classList.toggle('active', active);
+      });
+    });
+    star.addEventListener('click', () => {
+      const idx = +star.dataset.idx;
+      house.rating = (idx + 1 === house.rating) ? 0 : idx + 1;
+      el.querySelectorAll('.star-group .star').forEach((s, i) => {
+        const active = i < house.rating;
+        s.textContent = active ? '★' : '☆';
+        s.classList.toggle('active', active);
+      });
+      saveAll();
+    });
+  });
+
+  // 删除按钮
+  el.querySelector('.house-delete-btn').addEventListener('click', () => {
+    onDeleteHouse(el);
+  });
+
+  // 总价输入
+  const priceInput = el.querySelector('.house-price-input');
+  if (priceInput) {
+    priceInput.addEventListener('input', () => {
+      house.price_wan = priceInput.value === '' ? null : +priceInput.value;
+      updateHouseAvgPrices(el, house);
+      saveAll();
+    });
+  }
+
+  // 链接
+  const linkInput = el.querySelector('.house-link-input');
+  const linkPreview = el.querySelector('.house-link-preview');
+  if (linkInput) {
+    linkInput.addEventListener('input', () => {
+      house.link = linkInput.value;
+      // 实时刷新可点击链接
+      if (linkPreview) {
+        const val = linkInput.value.trim();
+        if (/^https?:\/\//.test(val)) {
+          linkPreview.innerHTML = `<a href="${escHtml(val)}" target="_blank" rel="noopener noreferrer">🔗 ${escHtml(val)}</a>`;
+        } else {
+          linkPreview.innerHTML = '';
+        }
+      }
+      saveAll();
+    });
+  }
+
+  // 评分字段值变化
+  el.querySelectorAll('.value').forEach(input => {
+    input.addEventListener('change', () => {
+      const key = input.dataset.key;
+      if (key === 'rooms' || key === 'halls') {
+        house[key] = input.value === '' ? null : +input.value;
+      } else if (input.type === 'number') {
+        house[key] = input.value === '' ? null : +input.value;
+      } else {
+        house[key] = input.value;
+      }
+      refreshHouseRowScore(el, house);
+      saveAll();
+    });
+  });
+
+  // 权重变化
+  el.querySelectorAll('select.weight').forEach(sel => {
+    sel.addEventListener('change', () => {
+      const key = sel.dataset.key;
+      GLOBAL_HOUSE_WEIGHTS[key] = +sel.value;
+      // 刷新所有可见房子面板的总分
+      openHousePanels.forEach(p => {
+        const totalEl = p.el.querySelector('.house-total-score');
+        if (totalEl) totalEl.textContent = calcHouseScore(p.house).toFixed(2) + ' / 10';
+      });
+      saveHouseWeights();
+    });
+  });
+
+  // 备注 / 看房日期
+  const noteEl = el.querySelector('.house-note');
+  if (noteEl) {
+    noteEl.addEventListener('input', () => { house.note = noteEl.value; saveAll(); });
+  }
+  const dateEl = el.querySelector('.house-viewed-at');
+  if (dateEl) {
+    dateEl.addEventListener('change', () => { house.viewed_at = dateEl.value; saveAll(); });
+  }
+
+  // 户型图：粘贴 + 拖入
+  bindHouseImageEvents(el, house);
+}
+
+function refreshHouseRowScore(el, house) {
+  HOUSE_SCORING.forEach(f => {
+    const row = el.querySelector(`select.weight[data-key="${f.key}"]`)?.closest('.score-row');
+    if (!row) return;
+    const score = houseFieldScore(f, house);
+    const cell = row.querySelector('.auto-score');
+    if (cell) cell.textContent = score.toFixed(2);
+  });
+  // 房子总分（顶部"房子 X.X"）
+  const totalEl = el.querySelector('.house-total-score');
+  if (totalEl) {
+    totalEl.textContent = '/ 房子 ' + calcHouseScore(house).toFixed(2);
+  }
+  // 综合分（顶部"综合 X.X"）
+  const compositeEl = el.querySelector('.house-composite-score');
+  if (compositeEl) {
+    const communityId = el.dataset.communityId;
+    const community = markerDataMap[communityId];
+    if (community) {
+      compositeEl.textContent = '综合 ' + calcCompositeScore(community, house).toFixed(2);
+    }
+  }
+  // 刷新总价区
+  updateHouseAvgPrices(el, house);
+}
+
+function updateHouseAvgPrices(el, house) {
+  const avg = calcHouseAvgPrice(house);
+  const iavg = calcHouseInternalAvgPrice(house);
+  const avgEl = el.querySelector('.house-avg-price b');
+  const iavgEl = el.querySelector('.house-internal-avg b');
+  if (avgEl) avgEl.textContent = avg != null ? avg.toFixed(2) : '--';
+  if (iavgEl) iavgEl.textContent = iavg != null ? iavg.toFixed(2) : '--';
+  // 总分（房子面板底部的）
+  const totalBox = el.querySelector('[style*="房子评分"]');
+  if (totalBox) {
+    const total = calcHouseScore(house);
+    totalBox.innerHTML = `<span style="font-size: 14px; color: var(--color-text-light);">房子评分</span><span style="font-size: 24px; font-weight: 700; color: var(--color-blue); margin-left: 8px;">${total.toFixed(2)} / 10</span>`;
+  }
+}
+
+function bindHouseImageEvents(el, house) {
+  const imgEl = el.querySelector('.house-layout-image');
+  if (!imgEl) return;
+
+  // 点击 → 弹出文件选择（也可直接拖入或 Ctrl+V）
+  imgEl.addEventListener('click', () => {
+    if (house.layout_image) {
+      // 已粘图：提示用户可点击"更换"
+      if (confirm('要更换户型图吗？\n\n确定 = 选择新图片\n取消 = 关闭')) {
+        replaceHouseImage(el, house);
+      }
+    } else {
+      replaceHouseImage(el, house);
+    }
+  });
+
+  // 拖入
+  imgEl.addEventListener('dragover', e => { e.preventDefault(); imgEl.style.background = '#f0f8ff'; });
+  imgEl.addEventListener('dragleave', () => { imgEl.style.background = ''; });
+  imgEl.addEventListener('drop', e => {
+    e.preventDefault();
+    imgEl.style.background = '';
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      readImageFile(file, base64 => {
+        house.layout_image = base64;
+        imgEl.innerHTML = `<img src="${base64}" alt="户型图">`;
+        saveAll();
+      });
+    }
+  });
+
+  // 全局 Ctrl+V 监听（只有当前 focused 元素在此面板时才响应）
+  document.addEventListener('paste', e => {
+    // 找当前 focus 元素属于哪个房子面板
+    const active = document.activeElement;
+    if (!el.contains(active)) return;
+    const items = e.clipboardData.items;
+    for (const item of items) {
+      if (item.type.startsWith('image/')) {
+        const file = item.getAsFile();
+        if (file) {
+          readImageFile(file, base64 => {
+            house.layout_image = base64;
+            imgEl.innerHTML = `<img src="${base64}" alt="户型图">`;
+            saveAll();
+          });
+        }
+        e.preventDefault();
+        break;
+      }
+    }
+  });
+}
+
+function readImageFile(file, cb) {
+  const reader = new FileReader();
+  reader.onload = () => cb(reader.result);
+  reader.readAsDataURL(file);
+}
+
+function replaceHouseImage(el, house) {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      readImageFile(file, (base64) => {
+        house.layout_image = base64;
+        const imgEl = el.querySelector('.house-layout-image');
+        if (imgEl) {
+          imgEl.innerHTML = `<img src="${base64}" alt="户型图">`;
+        }
+        saveAll();
+      });
+    }
+  };
+  input.click();
+}
+
+function saveHouseWeights() {
+  fetch('/api/house_weights', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(GLOBAL_HOUSE_WEIGHTS),
+  }).catch(e => console.error('save house weights:', e));
+  // 同步刷新房子排名榜（如果显示的是综合分）
+  if (document.getElementById('rankingScope').value === 'house') {
+    renderRanking();
+  }
+}
+
+function recalcAllMarkerTotals() {
+  // 更新地图上每个 marker 对应的总分（若 markerContent 中显示了分数）
+  Object.values(markerDataMap).forEach(m => {
+    m.total_score = calcTotal(m);
+  });
 }
 
 function renderStars(rating) {
@@ -851,6 +2443,11 @@ function renderStars(rating) {
   });
 })();
 
+// ---- + 新增房子按钮 ----
+document.getElementById("addHouseBtn").addEventListener("click", function() {
+  onAddHouseClick();
+});
+
 // ---- 名称编辑 ----
 document.getElementById("nameInput").addEventListener("input", function() {
   if (!panelDataId || !markerDataMap[panelDataId]) return;
@@ -858,6 +2455,38 @@ document.getElementById("nameInput").addEventListener("input", function() {
   const marker = markers.find(m => m._dataId === panelDataId);
   if (marker) updateMarkerContent(marker, markerDataMap[panelDataId]);
   saveAll();
+});
+
+// ---- 价格行（手动输入 → 自动算跌幅比，只绑定一次）----
+let _priceRowBound = false;
+function bindPriceRow(d) {
+  if (_priceRowBound) return;
+  _priceRowBound = true;
+  document.getElementById("priceInput").addEventListener("input", function() {
+    if (!panelDataId || !markerDataMap[panelDataId]) return;
+    markerDataMap[panelDataId].avg_price_wan = this.value === '' ? null : +this.value;
+    d.avg_price_wan = markerDataMap[panelDataId].avg_price_wan;
+    markerDataMap[panelDataId].price_drop_pct = calcPriceDrop(markerDataMap[panelDataId]);
+    d.price_drop_pct = markerDataMap[panelDataId].price_drop_pct;
+    updatePriceDropLabel(d);
+    saveAll();
+  });
+  document.getElementById("prevPriceInput").addEventListener("input", function() {
+    if (!panelDataId || !markerDataMap[panelDataId]) return;
+    markerDataMap[panelDataId].prev_price_wan = this.value === '' ? null : +this.value;
+    d.prev_price_wan = markerDataMap[panelDataId].prev_price_wan;
+    markerDataMap[panelDataId].price_drop_pct = calcPriceDrop(markerDataMap[panelDataId]);
+    d.price_drop_pct = markerDataMap[panelDataId].price_drop_pct;
+    updatePriceDropLabel(d);
+    saveAll();
+  });
+}
+
+// ---- 排名排序切换（事件委托，避免 innerHTML 替换后丢失）----
+document.getElementById('panelRanking').addEventListener('change', function(e) {
+  if (e.target.id === 'rankingSort' || e.target.id === 'rankingScope') {
+    renderRanking();
+  }
 });
 
 // ---- 排除按钮 ----
@@ -871,35 +2500,12 @@ document.querySelectorAll(".exclude-btn").forEach(btn => {
     const marker = markers.find(m => m._dataId === panelDataId);
     if (marker) updateMarkerContent(marker, markerDataMap[panelDataId]);
     saveAll();
+    if (document.getElementById('panelRanking').classList.contains('show')) {
+      renderRanking();
+    }
   });
 });
 
-// ---- 年代 ----
-document.querySelectorAll("#eraGroup .radio-btn").forEach(btn => {
-  btn.addEventListener("click", function() {
-    if (!panelDataId || !markerDataMap[panelDataId]) return;
-    const val = this.dataset.val;
-    const cur = markerDataMap[panelDataId].era;
-    markerDataMap[panelDataId].era = cur === val ? "" : val;
-    renderPanel(markerDataMap[panelDataId]);
-    saveAll();
-    applyFilters();
-  });
-});
-
-// ---- 楼型 ----
-document.querySelectorAll("#buildingGroup .check-btn").forEach(btn => {
-  btn.addEventListener("click", function() {
-    if (!panelDataId || !markerDataMap[panelDataId]) return;
-    const val = this.dataset.val;
-    let types = markerDataMap[panelDataId].buildingTypes || [];
-    types = types.includes(val) ? types.filter(t => t !== val) : [...types, val];
-    markerDataMap[panelDataId].buildingTypes = types;
-    renderPanel(markerDataMap[panelDataId]);
-    saveAll();
-    applyFilters();
-  });
-});
 
 // ---- 停车 ----
 document.querySelectorAll("#parkingGroup .radio-btn").forEach(btn => {
@@ -932,8 +2538,7 @@ document.getElementById("deleteMarkerBtn").addEventListener("click", function() 
   selectedMarkerId = null;
   panelDataId = null;
   currentRating = 0;
-  document.getElementById("panelEmpty").style.display = "flex";
-  document.getElementById("panelContent").classList.remove("show");
+  showRanking();
   saveAll();
   applyFilters();
 });
@@ -1402,6 +3007,7 @@ function createPoiMarker(data) {
 
 function selectPoi(id) {
   deselectMarker();
+  hideRanking();
   clearAllSelection();
   selectedPoiId = id;
   var data = poiDataMap[id];
@@ -1433,8 +3039,7 @@ function clearPoiSelection() {
   document.querySelectorAll("#panelContent > .field-group, #panelContent > .rating-exclude-row, #panelContent > .section-divider, #panelContent > #deleteMarkerBtn").forEach(function(el) {
     if (el._poiHidden) { el.style.display = ""; el._poiHidden = false; }
   });
-  document.getElementById("panelEmpty").style.display = "flex";
-  document.getElementById("panelContent").classList.remove("show");
+  showRanking();
 }
 
 function deletePoi(id) {
@@ -2053,6 +3658,7 @@ document.addEventListener("keydown", e => {
     else if (poiMode) togglePoiMode();
     else if (circleMode) toggleCircleMode();
     else if (addMode) toggleAddMode();
+    else if (selectedMarkerId) deselectMarker();
   }
 });
 
@@ -2256,6 +3862,268 @@ function loadAMap() {
 
   console.log("✅ 看房地图就绪，已加载 " + markers.length + " 个标记 + " + circles.length + " 个圆");
 })();
+
+// ============== 对比表格 ==============
+let compareView = 'community';
+let compareSortState = {};
+
+function getCommunityEntries() {
+  return Object.values(markerDataMap).filter(d => !d._category || d._category === 'marker');
+}
+
+function getHouseEntries() {
+  const entries = [];
+  Object.values(markerDataMap).forEach(c => {
+    if (c._category === 'poi') return;
+    if (!c.houses || !c.houses.length) return;
+    c.houses.forEach(h => entries.push({ community: c, house: h }));
+  });
+  return entries;
+}
+
+function fieldVal(val) { return val == null || val === '' ? '' : val; }
+
+function isNumberish(s) {
+  if (s == null || s === '') return false;
+  if (typeof s === 'number') return true;
+  const v = parseFloat(String(s).replace(/[%室厅,，]/g, ''));
+  return !isNaN(v) && isFinite(v);
+}
+
+function toNum(s) {
+  if (typeof s === 'number') return s;
+  return parseFloat(String(s).replace(/[%室厅,，]/g, '')) || 0;
+}
+
+function buildCommunityRows() {
+  const communities = getCommunityEntries();
+  const headers = ['字段 \\ 小区', ...communities.map(d => d.name)];
+
+  const defs = [
+    ...SCORE_FIELDS.map(f => ({ label: f.label, get: d => {
+      if (f.key === 'metro_lines') return (d.metro_lines || []).join(',');
+      return fieldVal(d[f.key]);
+    }})),
+    { label: '总分', get: d => calcTotal(d).toFixed(2) },
+    { label: '均价(万)', get: d => fieldVal(d.avg_price_wan) },
+    { label: '跌幅比', get: d => { const v = calcPriceDrop(d); return v != null ? v.toFixed(1) + '%' : ''; } },
+    { label: '年代', get: d => fieldVal(d.era) },
+    { label: '建筑类型', get: d => (d.buildingTypes || []).join(',') },
+    { label: '小学', get: d => fieldVal(d.school_elementary) },
+    { label: '中学', get: d => fieldVal(d.school_middle) },
+    { label: '房子数', get: d => (d.houses || []).length },
+    { label: '备注', get: d => fieldVal(d.note) },
+  ];
+
+  const rows = defs.map(f => [f.label, ...communities.map(d => f.get(d))]);
+  return { headers, rows };
+}
+
+function buildHouseRows() {
+  const entries = getHouseEntries();
+  const headers = ['字段 \\ 房子', ...entries.map(e => e.community.name + '-' + e.house.tag)];
+
+  const defs = [
+    { label: '小区名', get: e => e.community.name },
+    ...HOUSE_SCORING.map(f => ({
+      label: f.label,
+      get: e => {
+        if (f.key === 'room_layout') return (e.house.rooms || 0) + '室' + (e.house.halls || 0) + '厅';
+        return fieldVal(e.house[f.key]);
+      }
+    })),
+    { label: '房子总分', get: e => calcHouseScore(e.house).toFixed(2) },
+    { label: '小区总分', get: e => calcTotal(e.community).toFixed(2) },
+    { label: '综合分', get: e => calcCompositeScore(e.community, e.house).toFixed(2) },
+    { label: '总价(万)', get: e => fieldVal(e.house.price_wan) },
+    { label: '均价', get: e => { const v = calcHouseAvgPrice(e.house); return v != null ? v.toFixed(2) : ''; } },
+    { label: '套内均价', get: e => { const v = calcHouseInternalAvgPrice(e.house); return v != null ? v.toFixed(2) : ''; } },
+  ];
+
+  const rows = defs.map(f => [f.label, ...entries.map(e => f.get(e))]);
+  return { headers, rows };
+}
+
+function buildCombinedRows() {
+  const entries = getHouseEntries();
+  const headers = ['字段 \\ 房子', ...entries.map(e => e.community.name + '-' + e.house.tag)];
+
+  const defs = [
+    { label: '小区名', get: e => e.community.name },
+    ...SCORE_FIELDS.map(f => ({ label: '小区-' + f.label, get: e => {
+      if (f.key === 'metro_lines') return (e.community.metro_lines || []).join(',');
+      return fieldVal(e.community[f.key]);
+    }})),
+    { label: '小区总分', get: e => calcTotal(e.community).toFixed(2) },
+    { label: '均价(万)', get: e => fieldVal(e.community.avg_price_wan) },
+    { label: '跌幅比', get: e => { const v = calcPriceDrop(e.community); return v != null ? v.toFixed(1) + '%' : ''; } },
+    { label: '年代', get: e => fieldVal(e.community.era) },
+    ...HOUSE_SCORING.map(f => ({ label: '房子-' + f.label, get: e => {
+      if (f.key === 'room_layout') return (e.house.rooms || 0) + '室' + (e.house.halls || 0) + '厅';
+      return fieldVal(e.house[f.key]);
+    }})),
+    { label: '房子总分', get: e => calcHouseScore(e.house).toFixed(2) },
+    { label: '综合分', get: e => calcCompositeScore(e.community, e.house).toFixed(2) },
+    { label: '总价(万)', get: e => fieldVal(e.house.price_wan) },
+    { label: '均价', get: e => { const v = calcHouseAvgPrice(e.house); return v != null ? v.toFixed(2) : ''; } },
+  ];
+
+  const rows = defs.map(f => [f.label, ...entries.map(e => f.get(e))]);
+  return { headers, rows };
+}
+
+function renderCompareTable() {
+  let headers, rows;
+  if (compareView === 'community') ({ headers, rows } = buildCommunityRows());
+  else if (compareView === 'house') ({ headers, rows } = buildHouseRows());
+  else ({ headers, rows } = buildCombinedRows());
+
+  // Apply sort if active
+  const sk = compareSortState[compareView];
+  if (sk && sk.rowIndex < rows.length) {
+    const dataRow = rows[sk.rowIndex];
+    const vals = dataRow.slice(1);
+    const idx = headers.slice(1).map((_, i) => i);
+    const numeric = isNumberish(dataRow[0]) || /总分|均价|综合|跌幅|年限|房子数|房龄|面积|套内|总价|楼层/.test(dataRow[0]);
+
+    idx.sort((a, b) => {
+      let va = numeric ? toNum(vals[a]) : String(fieldVal(vals[a]));
+      let vb = numeric ? toNum(vals[b]) : String(fieldVal(vals[b]));
+      if (va < vb) return sk.dir === 'asc' ? -1 : 1;
+      if (va > vb) return sk.dir === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    headers = [headers[0], ...idx.map(i => headers[i + 1])];
+    rows = rows.map(r => [r[0], ...idx.map(i => r[i + 1])]);
+  }
+
+  // Build table HTML
+  let html = '<thead><tr><th class="corner">' + escHtml(headers[0]) + '</th>';
+  for (let i = 1; i < headers.length; i++) {
+    html += '<th>' + escHtml(String(headers[i])) + '</th>';
+  }
+  html += '</tr></thead><tbody>';
+
+  for (let ri = 0; ri < rows.length; ri++) {
+    html += '<tr>';
+    let arrow = '';
+    if (sk && sk.rowIndex === ri) {
+      arrow = ' <span class="sort-arrow">' + (sk.dir === 'desc' ? '▲' : '▼') + '</span>';
+    }
+    html += '<th data-row="' + ri + '">' + escHtml(String(rows[ri][0])) + arrow + '</th>';
+    for (let ci = 1; ci < rows[ri].length; ci++) {
+      const v = rows[ri][ci];
+      const numCls = isNumberish(v) ? ' class="num"' : '';
+      html += '<td' + numCls + '>' + escHtml(String(v == null ? '' : v)) + '</td>';
+    }
+    html += '</tr>';
+  }
+  html += '</tbody>';
+
+  document.getElementById('compareTable').innerHTML = html;
+
+  // Bind sort clicks
+  document.getElementById('compareTable').querySelectorAll('tbody th').forEach(th => {
+    th.addEventListener('click', function() {
+      sortByField(parseInt(this.dataset.row));
+    });
+  });
+}
+
+function sortByField(rowIndex) {
+  const cur = compareSortState[compareView];
+  if (cur && cur.rowIndex === rowIndex) {
+    if (cur.dir === 'desc') compareSortState[compareView] = { rowIndex: rowIndex, dir: 'asc' };
+    else compareSortState[compareView] = null;
+  } else {
+    compareSortState[compareView] = { rowIndex: rowIndex, dir: 'desc' };
+  }
+  renderCompareTable();
+}
+
+function switchCompareView(view) {
+  compareView = view;
+  compareSortState = {};
+  renderCompareTable();
+  document.querySelectorAll('.compare-tab').forEach(t => t.classList.toggle('active', t.dataset.view === view));
+}
+
+function openCompareTable() {
+  compareSortState = {};
+  compareView = 'community';
+  document.querySelectorAll('.compare-tab').forEach(t => t.classList.toggle('active', t.dataset.view === 'community'));
+  renderCompareTable();
+  document.getElementById('compareOverlay').classList.add('show');
+}
+
+function closeCompareTable() {
+  document.getElementById('compareOverlay').classList.remove('show');
+}
+
+function getCurrentSortedData() {
+  let headers, rows;
+  if (compareView === 'community') ({ headers, rows } = buildCommunityRows());
+  else if (compareView === 'house') ({ headers, rows } = buildHouseRows());
+  else ({ headers, rows } = buildCombinedRows());
+
+  const sk = compareSortState[compareView];
+  if (sk && sk.rowIndex < rows.length) {
+    const dataRow = rows[sk.rowIndex];
+    const vals = dataRow.slice(1);
+    const idx = headers.slice(1).map((_, i) => i);
+    const numeric = isNumberish(dataRow[0]) || /总分|均价|综合|跌幅|年限|房子数|房龄|面积|套内|总价|楼层/.test(dataRow[0]);
+    idx.sort((a, b) => {
+      let va = numeric ? toNum(vals[a]) : String(fieldVal(vals[a]));
+      let vb = numeric ? toNum(vals[b]) : String(fieldVal(vals[b]));
+      if (va < vb) return sk.dir === 'asc' ? -1 : 1;
+      if (va > vb) return sk.dir === 'asc' ? 1 : -1;
+      return 0;
+    });
+    headers = [headers[0], ...idx.map(i => headers[i + 1])];
+    rows = rows.map(r => [r[0], ...idx.map(i => r[i + 1])]);
+  }
+  return { headers, rows };
+}
+
+function exportToExcel() {
+  const { headers, rows } = getCurrentSortedData();
+  const data = [headers, ...rows];
+
+  if (typeof XLSX !== 'undefined') {
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    const nameMap = { community: '小区对比', house: '房子对比', combined: '综合对比' };
+    XLSX.utils.book_append_sheet(wb, ws, nameMap[compareView]);
+    const today = new Date().toISOString().slice(0, 10);
+    XLSX.writeFile(wb, '买房对比_' + nameMap[compareView] + '_' + today + '.xlsx');
+  } else {
+    exportToCSV(data);
+  }
+}
+
+function exportToCSV(data) {
+  const csv = data.map(r => r.map(c => '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"').join(',')).join('\n');
+  const nameMap = { community: '小区对比', house: '房子对比', combined: '综合对比' };
+  const today = new Date().toISOString().slice(0, 10);
+  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = '买房对比_' + nameMap[compareView] + '_' + today + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Bind compare table events
+document.getElementById('compareBtn').addEventListener('click', openCompareTable);
+document.getElementById('compareCloseBtn').addEventListener('click', closeCompareTable);
+document.getElementById('compareExportBtn').addEventListener('click', exportToExcel);
+document.getElementById('compareOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeCompareTable();
+});
+document.querySelectorAll('.compare-tab').forEach(tab => {
+  tab.addEventListener('click', function() { switchCompareView(this.dataset.view); });
+});
 </script>
 </body>
 </html>
